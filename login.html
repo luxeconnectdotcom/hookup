@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxeConnect — Sign In</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Inter,sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:#0f172a;
+      overflow-x:hidden;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+      color:white;
+    }
+
+    body::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+      linear-gradient(rgba(0,0,0,0.72),rgba(0,0,0,0.72)),
+      url('Images/slide-6.jpg');
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.05);
+      filter:blur(2px);
+    }
+
+    .glow{
+      position:absolute;
+      width:700px;
+      height:700px;
+      border-radius:50%;
+      background:radial-gradient(circle,#8b5cf655,transparent 70%);
+      top:-250px;
+      left:-180px;
+      z-index:0;
+    }
+
+    .signin-card{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:500px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.12);
+      backdrop-filter:blur(22px);
+      border-radius:34px;
+      padding:42px;
+      box-shadow:0 35px 80px rgba(0,0,0,0.45);
+      animation:fadeUp 0.7s ease;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(35px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .logo{
+      text-align:center;
+      font-size:2.2rem;
+      font-weight:800;
+      margin-bottom:14px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:rgba(255,255,255,0.72);
+      line-height:1.7;
+      margin-bottom:34px;
+      font-size:0.97rem;
+    }
+
+    .form-group{
+      margin-bottom:18px;
+    }
+
+    .form-label{
+      display:block;
+      margin-bottom:10px;
+      font-size:0.95rem;
+      font-weight:600;
+      color:white;
+    }
+
+    .form-input{
+      width:100%;
+      height:58px;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      padding:0 18px;
+      background:rgba(255,255,255,0.1);
+      color:white;
+      font-size:1rem;
+      border:1px solid rgba(255,255,255,0.08);
+      transition:0.3s ease;
+    }
+
+    .form-input::placeholder{
+      color:rgba(255,255,255,0.42);
+    }
+
+    .form-input:focus{
+      border-color:#8b5cf6;
+      background:rgba(255,255,255,0.14);
+      box-shadow:0 0 0 4px rgba(139,92,246,0.16);
+    }
+
+    .options-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:6px;
+      margin-bottom:24px;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:rgba(255,255,255,0.7);
+      font-size:0.92rem;
+    }
+
+    .remember input{
+      width:16px;
+      height:16px;
+      accent-color:#8b5cf6;
+    }
+
+    .forgot-link{
+      color:#ff73b3;
+      text-decoration:none;
+      font-size:0.92rem;
+      font-weight:600;
+    }
+
+    .signin-btn{
+      width:100%;
+      height:60px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-size:1rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.3s ease;
+      box-shadow:0 16px 35px rgba(139,92,246,0.35);
+    }
+
+    .signin-btn:hover{
+      transform:translateY(-3px);
+    }
+
+    .divider{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin:28px 0;
+      color:rgba(255,255,255,0.45);
+      font-size:0.9rem;
+    }
+
+    .divider::before,
+    .divider::after{
+      content:'';
+      flex:1;
+      height:1px;
+      background:rgba(255,255,255,0.12);
+    }
+
+    .social-buttons{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .social-btn{
+      width:100%;
+      height:56px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.06);
+      color:white;
+      font-size:0.96rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s ease;
+    }
+
+    .social-btn:hover{
+      background:rgba(255,255,255,0.12);
+    }
+
+    .bottom-text{
+      text-align:center;
+      margin-top:28px;
+      color:rgba(255,255,255,0.65);
+      font-size:0.94rem;
+    }
+
+    .bottom-text a{
+      color:#ff73b3;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .secure-note{
+      text-align:center;
+      margin-top:24px;
+      color:rgba(255,255,255,0.42);
+      font-size:0.82rem;
+      line-height:1.7;
+    }
+
+    @media(max-width:600px){
+
+      .signin-card{
+        padding:34px 24px;
+      }
+
+      .logo{
+        font-size:1.9rem;
+      }
+
+      .options-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+    }
+  </style>
+
+<style>
+.password-wrapper{
+  position:relative;
+  width:100%;
+}
+
+.password-wrapper .form-input{
+  padding-right:55px;
+}
+
+.password-toggle{
+  position:absolute;
+  top:50%;
+  right:20px;
+  transform:translateY(-50%);
+  color:rgba(255,255,255,0.55);
+  cursor:pointer;
+  font-size:1rem;
+  transition:0.3s ease;
+}
+
+.password-toggle:hover{
+  color:white;
+}
+</style>      
+
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <div class="signin-card">
+
+    <div class="logo">LuxeConnect</div>
+
+    <p class="subtitle">
+      Sign in to continue exploring premium profiles,
+      luxury experiences and exclusive private access.
+    </p>
+
+    <form>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input
+          type="email"
+          class="form-input"
+          placeholder="Enter your email"
+        />
+      </div>
+
+
+
+<div class="form-group">
+  <label class="form-label">Password</label>
+
+  <div class="password-wrapper">
+    <input
+      type="password"
+      class="form-input"
+      id="passwordInput"
+      placeholder="Enter your password"
+    />
+
+    <i class="fa-solid fa-eye password-toggle" id="togglePassword"></i>
+  </div>
+</div>
+
+
+
+
+
+      <div class="options-row">
+
+        <label class="remember">
+          <input type="checkbox">
+          Remember me
+        </label>
+
+        <a href="#" class="forgot-link">
+          Forgot Password?
+        </a>
+
+      </div>
+
+      <button class="signin-btn">
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="divider">
+      or continue with
+    </div>
+
+    <div class="social-buttons">
+
+      <button class="social-btn">
+        Continue with Google
+      </button>
+
+      <button class="social-btn">
+        Continue with Apple
+      </button>
+
+    </div>
+
+    <div class="bottom-text">
+      Don't have an account?
+      <a href="signup.html">Create Account</a>
+    </div>
+
+    <div class="secure-note">
+      Secure encrypted authentication powered by LuxeConnect.
+      <br><br>
+      You must be at least 18 years old to access this platform.
+    </div>
+
+  </div>
+
+<script>
+  const passwordInput = document.getElementById('passwordInput');
+  const togglePassword = document.getElementById('togglePassword');
+
+  togglePassword.addEventListener('click', () => {
+
+    const isPassword =
+      passwordInput.getAttribute('type') === 'password';
+
+    passwordInput.setAttribute(
+      'type',
+      isPassword ? 'text' : 'password'
+    );
+
+    togglePassword.classList.toggle('fa-eye');
+    togglePassword.classList.toggle('fa-eye-slash');
+
+  });
+</script>
+
+</body>
+</html>

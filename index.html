@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuxeConnect — Premium Social Booking Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!--  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">-->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #111827;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 6%;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 14px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color: white;
+      box-shadow: 0 10px 25px rgba(139,92,246,0.25);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.58);
+      z-index: 1;
+    }
+
+    .slides {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      animation: slideshow 30s infinite;
+      transform: scale(1.08);
+    }
+
+    .slide:nth-child(1) {
+      background-image: url('Images/slide-6.jpg');
+      animation-delay: 0s;
+    }
+
+    .slide:nth-child(2) {
+      background-image: url('Images/slide-7.jpg');
+      animation-delay: 5s;
+    }
+
+    .slide:nth-child(3) {
+      background-image: url('Images/slide-1.jpg');
+      animation-delay: 10s;
+    }
+
+    .slide:nth-child(4) {
+      background-image: url('Images/slide-2.jpg');
+      animation-delay: 15s;
+    }
+
+    .slide:nth-child(5) {
+      background-image: url('Images/slide-3.jpg');
+      animation-delay: 20s;
+    }
+
+    .slide:nth-child(6) {
+      background-image: url('Images/slide-4.jpg');
+      animation-delay: 25s;
+    }
+
+    .slide:nth-child(7) {
+      background-image: url('Images/slide-5.jpg');
+      animation-delay: 30s;
+    }
+
+    @keyframes slideshow {
+      0% {
+        opacity: 0;
+        transform: scale(1.08);
+      }
+      5% {
+        opacity: 1;
+      }
+      15% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+      20% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .hero-content {
+        margin-top: 40px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 860px;
+      padding:  20px;
+      animation: floatUp 1.2s ease;
+    }
+
+    @keyframes floatUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      line-height: 1;
+      margin-bottom: 24px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(18px);
+      color: white;
+      padding: 16px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    }
+
+    .profiles-section {
+      padding: 90px 6%;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .section-heading h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+    }
+
+    .section-heading p {
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    .live-badge {
+      background: #ecfdf5;
+      color: #059669;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid #a7f3d0;
+    }
+
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(290px,1fr));
+      gap: 26px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 18px;
+      transition: 0.35s ease;
+      border: 1px solid #eef2f7;
+    }
+
+
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-info img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-info h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .profile-info span {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .follow-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .caption {
+      color: #374151;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .hashtags {
+      color: #8b5cf6;
+      font-weight: 600;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+
+.main-photo {
+  height: 280px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.small-grid {
+  display: grid;
+  gap: 8px;
+  height: 140px;
+}
+
+.small-grid img {
+  height: calc(70px - 4px);
+  width: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+    .engagement {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      color: #4b5563;
+      font-weight: 600;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f9fafb;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .booking-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .booking-count {
+      color: #6b7280;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .book-btn {
+      background: linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(139,92,246,0.25);
+    }
+
+    .features {
+      padding: 0 6% 90px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap: 26px;
+    }
+
+    .feature-box {
+      background: white;
+      padding: 34px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(15,23,42,0.05);
+      border: 1px solid #eef2f7;
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#ff4d6d,#8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-box h3 {
+      margin-bottom: 14px;
+      font-size: 1.2rem;
+    }
+
+    .feature-box p {
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    footer {
+      background: #000000;
+      padding: 80px 6% 30px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand h3 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .footer-brand p,
+    .footer-links a {
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .footer-links h4 {
+      margin-bottom: 18px;
+      font-size: 1rem;
+      color: #9ca6b9;      
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      color: #6b7280;
+    }
+
+    @media (max-width: 900px) {
+      .hero h1 {
+        font-size: 3.3rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .hero h1 {
+        font-size: 2.7rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .small-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .small-grid img {
+        height: 120px;
+
+      }
+      
+      .main-photo {
+  height: 400px;
+}
+    }
+  </style>
+
+<!-- ADD THIS CSS -->
+<style>
+  .menu-toggle {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 14px;
+    background: #f3f4f6;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #111827;
+  }
+
+  .mobile-buttons {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+
+    .desktop-buttons {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 300px;
+      height: 100vh;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(18px);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 100px 30px 40px;
+      gap: 24px;
+      transition: 0.4s ease;
+      z-index: 999;
+    }
+
+    .nav-links.active {
+      right: 0;
+    }
+
+    .nav-links a {
+      font-size: 1.05rem;
+      font-weight: 600;
+      width: 100%;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .mobile-buttons {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .mobile-buttons .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<style>
+  @media (max-width: 900px) {
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100vh;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 110px 30px 40px;
+      transition: right 0.35s ease;
+      z-index: 9999;
+    }
+
+    .nav-links.active {
+      right: 0;
+    }
+
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 14px;
+      background: #f3f4f6;
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    .nav-links a {
+      width: 100%;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .mobile-buttons {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .mobile-buttons .btn {
+      width: 100%;
+    }
+
+    body.drawer-open::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 999;
+      backdrop-filter: blur(3px);
+    }
+  }
+</style>
+
+
+<style>
+  /* AUTH MODAL */
+.auth-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 30000;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+
+.auth-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.auth-modal {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 30px;
+  padding: 35px;
+  text-align: center;
+  transform: translateY(30px) scale(0.95);
+  transition: 0.35s ease;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+}
+
+.auth-modal-overlay.active .auth-modal {
+  transform: translateY(0) scale(1);
+}
+
+.auth-modal h2 {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+.auth-modal p {
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+}
+</style>
+
+
+<style>
+
+ /* AGE MODAL */
+
+.age-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  padding: 20px;
+}
+
+.age-modal {
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border-radius: 30px;
+  padding: 38px 30px;
+  text-align: center;
+  animation: modalFade 0.35s ease;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+}
+
+.age-modal h2 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.age-modal p {
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+.age-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.age-btn {
+  border: none;
+  padding: 15px 20px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.age-btn:hover {
+  transform: translateY(-2px);
+}
+
+.underage-btn {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.adult-btn {
+  background: linear-gradient(90deg,#ff4d6d,#8b5cf6);
+  color: white;
+  box-shadow: 0 12px 25px rgba(139,92,246,0.28);
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+} 
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">LuxeConnect</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#">Discover</a>
+    <a href="#">Trending</a>
+    <a href="#">Premium</a>
+    <a href="#">Experiences</a>
+    <a href="#">Safety</a>
+
+    <div class="mobile-buttons">
+      <a href="login.html">
+      <button class="btn btn-outline">Login</button>
+    </a>
+    <a href="signup.html">
+      <button class="btn btn-primary">Create Profile</button>
+    </a>
+    </div>
+  </div>
+
+  <div class="nav-buttons desktop-buttons">
+    <a href="login.html">
+    <button class="btn btn-outline">Login</button>
+  </a>
+  <a href="signup.html">
+    <button class="btn btn-primary">Create Profile</button>
+  </a>
+  </div>
+
+  <button class="menu-toggle" id="menuToggle">
+    ☰
+  </button>
+</nav>
+
+  <section class="hero">
+    <div class="slides">
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+    </div>
+
+    <div class="hero-content">
+        <h1>Are you horny?</h1>
+      <p>Connect, Match & Book Exclusive Divas</p>
+      <p>
+        Discover verified profiles, premium sexy girls ready to fuck you, instant bookings,
+        and Satisfaction in one elegant platform built to satisfy your urges.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn btn-primary">Start Exploring</button>
+        <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.3);">
+          Watch Demo
+        </button>
+      </div>
+    </div>
+<!--
+    <div class="hero-stat">
+      Trusted by 1.5 Million Monthly Global Users
+    </div>
+-->
+  </section>
+
+  <section class="profiles-section">
+    <div class="section-heading">
+      <div>
+        <h2>Available Profiles For Booking</h2>
+        <p>Trending profiles currently online and accepting bookings.</p>
+      </div>
+
+      <div class="live-badge">● 12,490 Profiles Active Now</div>
+    </div>
+
+<div class="profiles-grid" id="profilesGrid"></div>
+
+  </section>
+
+  <section class="features">
+    <div class="feature-box">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Booking</h3>
+      <p>Book premium social experiences in seconds with smooth real-time availability and secure confirmations.</p>
+    </div>
+
+    <div class="feature-box">
+      <div class="feature-icon">✔</div>
+      <h3>Verified Profiles</h3>
+      <p>Every featured account passes advanced verification to maintain trust, quality and authenticity.</p>
+    </div>
+
+    <div class="feature-box">
+      <div class="feature-icon">🌍</div>
+      <h3>Global Community</h3>
+      <p>Connect with trending creators and professionals from major cities around the world.</p>
+    </div>
+
+    <div class="feature-box">
+      <div class="feature-icon">🔒</div>
+      <h3>Private & Secure</h3>
+      <p>Enjoy encrypted messaging, secure transactions and privacy-focused account management tools.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>LuxeConnect</h3>
+        <p>
+          A premium social booking and creator discovery platform designed with modern aesthetics,
+          seamless interaction and elevated user experiences.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Platform</h4>
+        <a href="#">Discover</a>
+        <a href="#">Creators</a>
+        <a href="#">Bookings</a>
+        <a href="#">Premium Access</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Partnerships</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Community</a>
+        <a href="#">Terms & Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 LuxeConnect. All rights reserved.</div>
+      <div>Designed for modern social discovery experiences.</div>
+    </div>
+  </footer>
+
+<!-- SIGN IN MODAL -->
+<div class="auth-modal-overlay" id="authModal">
+  <div class="auth-modal">
+    
+    <h2>Sign in required</h2>
+
+    <p>
+      You need an account to follow profiles, access premium content
+      and unlock bookings.
+    </p>
+
+    <div class="auth-buttons">
+
+      <!-- LOGIN -->
+      <a href="login.html">
+        <button class="btn btn-primary auth-btn">
+          Sign In
+        </button>
+      </a>
+
+      <!-- SIGNUP -->
+      <a href="signup.html">
+        <button class="btn btn-outline auth-btn">
+          Create Account
+        </button>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- AGE VERIFICATION MODAL -->
+<div class="age-modal-overlay" id="ageModal">
+  <div class="age-modal">
+    <h2>Adults Only</h2>
+    <p>
+      This platform contains adult-oriented content and is intended only for visitors who are 18 years or older.
+    </p>
+
+    <div class="age-modal-buttons">
+      <button class="age-btn underage-btn" id="under18Btn">
+        No, I'm Under 18
+      </button>
+
+      <button class="age-btn adult-btn" id="adultBtn">
+        Yes, I'm 18+
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--age verification modal-->
+<script>
+  const ageModal = document.getElementById('ageModal');
+  const adultBtn = document.getElementById('adultBtn');
+  const under18Btn = document.getElementById('under18Btn');
+
+  // lock scrolling while modal is open
+  document.body.style.overflow = 'hidden';
+
+  // user is 18+
+  adultBtn.addEventListener('click', () => {
+    ageModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+
+  // user is under 18
+  under18Btn.addEventListener('click', () => {
+    window.location.href = 'https://www.google.com';
+  });
+</script>
+
+<script src="profilesdata.js"></script>
+
+<script>
+
+  const profilesGrid = document.getElementById('profilesGrid');
+
+  profiles.forEach(profile => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="profile-info">
+          <img src="${profile.avatar}" alt="profile">
+          <div>
+            <h4>${profile.name}</h4>
+            <span>${profile.status}</span>
+          </div>
+        </div>
+
+        <button class="follow-btn">Follow</button>
+      </div>
+
+      <div class="caption">
+        ${profile.caption}
+      </div>
+
+      <div class="hashtags">${profile.hashtags}</div>
+
+      <div class="photo-grid">
+        <img class="main-photo" src="${profile.photos[0]}" alt="">
+
+        <div class="small-grid">
+          <img src="${profile.photos[1]}" alt="">
+          <img src="${profile.photos[2]}" alt="">
+        </div>
+      </div>
+
+      <div class="engagement">
+        <div class="actions">
+
+          <!-- LIKE BUTTON -->
+          <div class="action-btn like-btn">
+            ❤ ${profile.likes}
+          </div>
+
+          <div class="action-btn">
+            ↗ Share
+          </div>
+
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <div class="booking-count">${profile.bookings}</div>
+
+        <!-- BOOK BUTTON -->
+        <button class="book-btn">
+          Book
+        </button>
+      </div>
+    `;
+
+    profilesGrid.appendChild(card);
+  });
+
+  // AUTH MODAL
+  const authModal = document.getElementById('authModal');
+
+  // OPEN MODAL
+  document.addEventListener('click', (e) => {
+
+    // FOLLOW BUTTON
+    if (e.target.classList.contains('follow-btn')) {
+      authModal.classList.add('active');
+    }
+
+    // BOOK BUTTON
+    if (e.target.classList.contains('book-btn')) {
+      authModal.classList.add('active');
+    }
+
+    // LIKE BUTTON
+    if (e.target.classList.contains('like-btn')) {
+      authModal.classList.add('active');
+    }
+
+  });
+
+  // CLOSE MODAL WHEN CLICKING OUTSIDE
+  authModal.addEventListener('click', (e) => {
+    if (e.target === authModal) {
+      authModal.classList.remove('active');
+    }
+  });
+
+</script>
+
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    document.body.classList.toggle('drawer-open');
+
+    menuToggle.innerHTML = navLinks.classList.contains('active')
+      ? '✕'
+      : '☰';
+  });
+
+  document.querySelectorAll('#navLinks a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      document.body.classList.remove('drawer-open');
+      menuToggle.innerHTML = '☰';
+    });
+  });
+
+  // close drawer when clicking outside
+  document.addEventListener('click', (e) => {
+    const clickedInsideDrawer = navLinks.contains(e.target);
+    const clickedToggle = menuToggle.contains(e.target);
+
+    if (!clickedInsideDrawer && !clickedToggle && navLinks.classList.contains('active')) {
+      navLinks.classList.remove('active');
+      document.body.classList.remove('drawer-open');
+      menuToggle.innerHTML = '☰';
+    }
+  });
+</script>
+
+
+
+
+<style>
+  /* AUTH MODAL */
+.auth-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 30000;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+
+.auth-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.auth-modal {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 30px;
+  padding: 35px;
+  text-align: center;
+  transform: translateY(30px) scale(0.95);
+  transition: 0.35s ease;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+}
+
+.auth-modal-overlay.active .auth-modal {
+  transform: translateY(0) scale(1);
+}
+
+.auth-modal h2 {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+.auth-modal p {
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+}
+</style>
+
+
+
+
+</body>
+</html>
