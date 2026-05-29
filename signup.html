@@ -17,22 +17,22 @@
       font-family:Inter,sans-serif;
     }
 
-    body{
-      min-height:100vh;
+    section{
+      width: 100%;
       background:#0f172a;
-      overflow-x:hidden;
       position:relative;
       color:white;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:40px 20px;
+      overflow: hidden;
     }
 
-    body::before{
+    section::before{
       content:'';
       position:absolute;
-      width: 100%;
+      max-width: 100%;
       inset:0;
       background:
       linear-gradient(rgba(0,0,0,0.68),rgba(0,0,0,0.68)),
@@ -45,8 +45,8 @@
 
     .bg-gradient{
       position:absolute;
-      width:700px;
-      height:700px;
+      width:px;
+      height:px;
       border-radius:50%;
       background:radial-gradient(circle,#ff4d6d55,#8b5cf600,transparent);
       top:-250px;
@@ -304,7 +304,10 @@
     </style>
 
 </head>
+
 <body>
+
+ <section>
 
   <div class="bg-gradient"></div>
 
@@ -484,7 +487,7 @@
 
   </div>
 
-
+</section> 
 
 
 
