@@ -16,29 +16,30 @@
       font-family:Inter,sans-serif;
     }
 
-    body{
-      min-height:100vh;
+    section{
+      width: 100%;
       background:#0f172a;
-      overflow-x:hidden;
       position:relative;
+      color:white;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:40px 20px;
-      color:white;
+      overflow: hidden;
     }
 
-    body::before{
+    section::before{
       content:'';
       position:absolute;
+      max-width: 100%;
       inset:0;
       background:
-      linear-gradient(rgba(0,0,0,0.72),rgba(0,0,0,0.72)),
-      url('Images/slide-6.jpg');
+      linear-gradient(rgba(0,0,0,0.68),rgba(0,0,0,0.68)),
+      url('Images/slide-3.jpg');
       background-size:cover;
       background-position:center;
-      transform:scale(1.05);
       filter:blur(2px);
+      transform:scale(1.05);
     }
 
     .glow{
@@ -321,6 +322,10 @@
 
 <body>
 
+  <section>
+
+
+
   <div class="glow"></div>
 
   <div class="signin-card">
@@ -416,7 +421,7 @@
 
   </div>
 
-
+  </section>
 
 <script>
 
