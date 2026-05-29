@@ -283,9 +283,42 @@
 .password-toggle:hover{
   color:white;
 }
-</style>      
+</style> 
 
+  <style>
+  .login-status{
+    margin-top:20px;
+    padding:16px 18px;
+    border-radius:16px;
+    font-size:0.95rem;
+    display:none;
+    line-height:1.6;
+    font-weight:600;
+  }
+
+  .login-status.success{
+    display:block;
+    background:rgba(34,197,94,0.14);
+    border:1px solid rgba(34,197,94,0.35);
+    color:#86efac;
+  }
+
+  .login-status.error{
+    display:block;
+    background:rgba(239,68,68,0.14);
+    border:1px solid rgba(239,68,68,0.35);
+    color:#fca5a5;
+  }
+
+  .login-status.loading{
+    display:block;
+    background:rgba(139,92,246,0.14);
+    border:1px solid rgba(139,92,246,0.35);
+    color:#d8b4fe;
+  }
+  </style>
 </head>
+
 <body>
 
   <div class="glow"></div>
@@ -299,56 +332,60 @@
       luxury experiences and exclusive private access.
     </p>
 
-    <form>
+<form id="loginForm">
 
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input
-          type="email"
-          class="form-input"
-          placeholder="Enter your email"
-        />
-      </div>
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
 
-
-
-<div class="form-group">
-  <label class="form-label">Password</label>
-
-  <div class="password-wrapper">
     <input
-      type="password"
+      type="email"
       class="form-input"
-      id="passwordInput"
-      placeholder="Enter your password"
+      id="email"
+      placeholder="Enter your email"
+      required
     />
-
-    <i class="fa-solid fa-eye password-toggle" id="togglePassword"></i>
   </div>
-</div>
 
+  <div class="form-group">
+    <label class="form-label">Password</label>
 
+    <div class="password-wrapper">
 
+      <input
+        type="password"
+        class="form-input"
+        id="passwordInput"
+        placeholder="Enter your password"
+        required
+      />
 
+      <i class="fa-solid fa-eye password-toggle"
+         id="togglePassword"></i>
 
-      <div class="options-row">
+    </div>
+  </div>
 
-        <label class="remember">
-          <input type="checkbox">
-          Remember me
-        </label>
+  <div class="options-row">
 
-        <a href="#" class="forgot-link">
-          Forgot Password?
-        </a>
+    <label class="remember">
+      <input type="checkbox" id="rememberMe">
+      Remember me
+    </label>
 
-      </div>
+    <a href="#" class="forgot-link">
+      Forgot Password?
+    </a>
 
-      <button class="signin-btn">
-        Sign In
-      </button>
+  </div>
 
-    </form>
+  <button class="signin-btn" id="loginBtn">
+    Sign In
+  </button>
+
+</form>
+
+<!-- LOGIN STATUS -->
+<div class="login-status" id="loginStatus"></div>
 
     <div class="divider">
       or continue with
@@ -397,6 +434,118 @@
     togglePassword.classList.toggle('fa-eye-slash');
 
   });
+</script>
+
+<script>
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+/* =========================
+   STATUS UI
+========================= */
+
+function showStatus(type, message){
+
+  const box =
+  document.getElementById("loginStatus");
+
+  box.className = "login-status " + type;
+  box.innerHTML = message;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", async (e)=>{
+
+  e.preventDefault();
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const password =
+  document.getElementById("passwordInput").value.trim();
+
+  if(!email || !password){
+
+    showStatus(
+      "error",
+      "Please enter your email and password."
+    );
+
+    return;
+  }
+
+  showStatus(
+    "loading",
+    "Signing you in..."
+  );
+
+  document.getElementById("loginBtn").disabled = true;
+
+  try{
+
+    const res = await fetch(SCRIPT_URL,{
+
+      method:"POST",
+
+      body:JSON.stringify({
+        action:"login",
+        email,
+        password
+      })
+
+    });
+
+    const data = await res.json();
+
+    if(data.status){
+
+      /* ======================
+         SAVE USER SESSION
+      ====================== */
+
+      localStorage.setItem(
+        "luxeUser",
+        JSON.stringify(data.user)
+      );
+
+      showStatus(
+        "success",
+        "✅ Login successful. Redirecting..."
+      );
+
+      setTimeout(()=>{
+
+        window.location.href = "home.html";
+
+      },1500);
+
+    }else{
+
+      showStatus(
+        "error",
+        "Invalid email or password."
+      );
+
+    }
+
+  }catch(err){
+
+    showStatus(
+      "error",
+      "Network error. Please try again."
+    );
+
+  }
+
+  document.getElementById("loginBtn").disabled = false;
+
+});
 </script>
 
 </body>
