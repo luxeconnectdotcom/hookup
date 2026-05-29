@@ -131,7 +131,7 @@
 
     /* NOTIFICATION */
 
-    .notification-btn{
+    .mobile-nav-btn{
       width:52px;
       height:52px;
       border:none;
@@ -143,11 +143,11 @@
       box-shadow:0 10px 30px rgba(0,0,0,0.08);
     }
 
-    .notification-btn::after{
+    .alert-dot::after{
       content:'';
       position:absolute;
-      top:13px;
-      right:14px;
+      top:10px;
+      right:10px;
       width:10px;
       height:10px;
       border-radius:50%;
@@ -183,6 +183,15 @@
       transition:0.35s ease;
       overflow-y:auto;
     }
+
+.mobile-drawer{
+  z-index: 9999;
+}
+
+.menu-toggle{
+  position: relative;
+  z-index: 10001;
+}
 
     .mobile-drawer.active{
       right:0;
@@ -527,9 +536,19 @@
       color:#6b7280;
     }
 
+button i {
+  pointer-events: none;
+}
+
+
     /* RESPONSIVE */
 
     @media(max-width:900px){
+
+.mobile-drawer a {
+  font-size: 0.95rem;
+  padding: 14px 0;
+}
 
       .nav-links{
         display:none;
@@ -552,6 +571,23 @@
       .footer-grid{
         grid-template-columns:1fr 1fr;
       }
+
+
+      .nav-links a {
+  font-size: 0.9rem;
+}
+
+.menu-toggle,
+.mobile-nav-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 1rem;
+}
+
+.logo {
+  font-size: 1.4rem;
+}
+
     }
 
     @media(max-width:650px){
@@ -600,7 +636,6 @@
       <a href="#">Discover</a>
       <a href="#">Trending</a>
       <a href="#">Premium</a>
-      <a href="#">Booked</a>
       <a href="#">Safety</a>
     </div>
 
@@ -624,13 +659,17 @@
 
       </div>
 
-      <button class="notification-btn">
+      <button class="mobile-nav-btn">
+        <i class="fa-solid fa-bookmark"></i>
+      </button>      
+
+      <button class="mobile-nav-btn alert-dot">
         <i class="fa-regular fa-bell"></i>
       </button>
 
-      <button class="menu-toggle" id="menuToggle">
+      <div class="menu-toggle" id="menuToggle">
         <i class="fa-solid fa-bars"></i>
-      </button>
+      </div>
 
     </div>
 
@@ -656,7 +695,6 @@
     <a href="#"><i class="fa-solid fa-compass"></i> Discover</a>
     <a href="#"><i class="fa-solid fa-fire"></i> Trending</a>
     <a href="#"><i class="fa-solid fa-crown"></i> Premium</a>
-    <a href="#"><i class="fa-solid fa-bookmark"></i> Booked</a>
     <a href="#"><i class="fa-solid fa-shield-halved"></i> Safety</a>
     <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
 
