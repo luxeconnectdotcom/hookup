@@ -729,9 +729,35 @@ body:JSON.stringify({
         "✅ Account created successfully. Redirecting to login..."
       );
 
+
+
+// CREATE LOGIN SESSION AFTER SIGNUP
+localStorage.setItem(
+  "luxeUser",
+  JSON.stringify(data.user)
+);
+
+localStorage.setItem(
+  "luxeUserUID",
+  data.user.uid
+);
+
+localStorage.setItem(
+  "luxeUserEmail",
+  data.user.email
+);
+
+localStorage.setItem(
+  "luxeRemember",
+  "true"
+);
+
       setTimeout(()=>{
-        window.location.href = "home.html";
+        window.location.href = "dashboard.html";
       },2000);
+
+
+
 
     }else{
 

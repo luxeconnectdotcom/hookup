@@ -416,136 +416,143 @@
 
   </div>
 
-<script>
-  const passwordInput = document.getElementById('passwordInput');
-  const togglePassword = document.getElementById('togglePassword');
 
-  togglePassword.addEventListener('click', () => {
-
-    const isPassword =
-      passwordInput.getAttribute('type') === 'password';
-
-    passwordInput.setAttribute(
-      'type',
-      isPassword ? 'text' : 'password'
-    );
-
-    togglePassword.classList.toggle('fa-eye');
-    togglePassword.classList.toggle('fa-eye-slash');
-
-  });
-</script>
 
 <script>
+
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+const passwordInput = document.getElementById("passwordInput");
+const togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener("click", () => {
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+
+  togglePassword.classList.toggle("fa-eye");
+  togglePassword.classList.toggle("fa-eye-slash");
+});
 
 /* =========================
    STATUS UI
 ========================= */
 
-function showStatus(type, message){
-
-  const box =
-  document.getElementById("loginStatus");
-
+function showStatus(type, message) {
+  const box = document.getElementById("loginStatus");
   box.className = "login-status " + type;
   box.innerHTML = message;
 }
 
-
 /* =========================
-   LOGIN
+   REDIRECT IF ALREADY LOGGED IN
 ========================= */
 
-document
-.getElementById("loginForm")
-.addEventListener("submit", async (e)=>{
+const existingUser = localStorage.getItem("luxeUser");
+
+if (existingUser) {
+  try {
+    const parsed = JSON.parse(existingUser);
+    if (parsed?.uid) {
+      window.location.href = "dashboard.html";
+    }
+  } catch (e) {
+    localStorage.removeItem("luxeUser");
+  }
+}
+
+/* =========================
+   SAFE API CALL
+========================= */
+
+async function postData(payload) {
+
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  console.log("RAW RESPONSE:", text);
+
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    throw new Error("Server returned invalid response");
+  }
+}
+
+/* =========================
+   LOGIN FORM
+========================= */
+
+document.getElementById("loginForm")
+.addEventListener("submit", async (e) => {
 
   e.preventDefault();
 
-  const email =
-  document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("passwordInput").value.trim();
+  const rememberMe = document.getElementById("rememberMe").checked;
 
-  const password =
-  document.getElementById("passwordInput").value.trim();
-
-  if(!email || !password){
-
-    showStatus(
-      "error",
-      "Please enter your email and password."
-    );
-
+  if (!email || !password) {
+    showStatus("error", "Please enter email and password.");
     return;
   }
 
-  showStatus(
-    "loading",
-    "Signing you in..."
-  );
+  showStatus("loading", "Signing you in...");
 
-  document.getElementById("loginBtn").disabled = true;
+  const btn = document.getElementById("loginBtn");
+  btn.disabled = true;
+  btn.innerHTML = "Signing In...";
 
-  try{
+  try {
 
-    const res = await fetch(SCRIPT_URL,{
-
-      method:"POST",
-
-      body:JSON.stringify({
-        action:"login",
-        email,
-        password
-      })
-
+    const data = await postData({
+      action: "login",
+      email,
+      password
     });
 
-    const data = await res.json();
+    if (data?.status && data?.user) {
 
-    if(data.status){
+      const user = data.user;
 
-      /* ======================
-         SAVE USER SESSION
-      ====================== */
+      // save session
+      localStorage.setItem("luxeUser", JSON.stringify(user));
+      localStorage.setItem("luxeUserUID", user.uid);
+      localStorage.setItem("luxeUserEmail", user.email);
 
-      localStorage.setItem(
-        "luxeUser",
-        JSON.stringify(data.user)
-      );
+      if (rememberMe) {
+        localStorage.setItem("luxeRemember", "true");
+      } else {
+        localStorage.removeItem("luxeRemember");
+      }
 
-      showStatus(
-        "success",
-        "✅ Login successful. Redirecting..."
-      );
+      showStatus("success", "Login successful. Redirecting...");
 
-      setTimeout(()=>{
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1000);
 
-        window.location.href = "home.html";
-
-      },1500);
-
-    }else{
-
-      showStatus(
-        "error",
-        "Invalid email or password."
-      );
-
+    } else {
+      showStatus("error", data?.message || "Invalid email or password.");
     }
 
-  }catch(err){
-
-    showStatus(
-      "error",
-      "Network error. Please try again."
-    );
-
+  } catch (err) {
+    console.log(err);
+    showStatus("error", "Network or server error. Try again.");
   }
 
-  document.getElementById("loginBtn").disabled = false;
+  btn.disabled = false;
+  btn.innerHTML = "Sign In";
 
 });
+
 </script>
 
 </body>

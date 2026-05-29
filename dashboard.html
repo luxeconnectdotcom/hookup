@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxeConnect — Home</title>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Inter,sans-serif;
+    }
+
+    body{
+      background:#f5f7fb;
+      color:#111827;
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* NAVBAR */
+
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 6%;
+      backdrop-filter:blur(18px);
+      background:rgba(255,255,255,0.75);
+      border-bottom:1px solid rgba(255,255,255,0.4);
+    }
+
+    .logo{
+      font-size:1.7rem;
+      font-weight:800;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      color:#374151;
+      font-weight:600;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    /* ACCOUNT PILL */
+
+    .account-wrapper{
+      position:relative;
+    }
+
+    .account-pill{
+      border:none;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:white;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      cursor:pointer;
+      font-weight:700;
+      color:#111827;
+    }
+
+    .account-pill i{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-size:0.95rem;
+    }
+
+    .dropdown{
+      position:absolute;
+      top:70px;
+      right:0;
+      width:220px;
+      background:white;
+      border-radius:24px;
+      padding:10px;
+      box-shadow:0 25px 50px rgba(0,0,0,0.15);
+      display:none;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .dropdown.active{
+      display:flex;
+    }
+
+    .dropdown a{
+      padding:14px 16px;
+      border-radius:16px;
+      font-weight:600;
+      color:#374151;
+      transition:0.25s ease;
+    }
+
+    .dropdown a:hover{
+      background:#f3f4f6;
+    }
+
+    /* NOTIFICATION */
+
+    .notification-btn{
+      width:52px;
+      height:52px;
+      border:none;
+      border-radius:18px;
+      background:white;
+      font-size:1.15rem;
+      cursor:pointer;
+      position:relative;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .notification-btn::after{
+      content:'';
+      position:absolute;
+      top:13px;
+      right:14px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#ff4d6d;
+    }
+
+    /* MENU */
+
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border:none;
+      border-radius:18px;
+      background:white;
+      font-size:1.3rem;
+      cursor:pointer;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      z-index: 20000;
+    }
+
+    /* MOBILE DRAWER */
+
+    .mobile-drawer{
+      position:fixed;
+      top:0;
+      right:-100%;
+      width:310px;
+      height:100vh;
+      background:white;
+      z-index:9999;
+      padding:100px 26px 40px;
+      transition:0.35s ease;
+      overflow-y:auto;
+    }
+
+    .mobile-drawer.active{
+      right:0;
+    }
+
+    .drawer-account{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:16px;
+      border-radius:22px;
+      background:#f8fafc;
+      margin-bottom:28px;
+      font-weight:700;
+    }
+
+    .drawer-account i{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#ff4d6d,#8b5cf6);
+      color:white;
+    }
+
+    .mobile-drawer a{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:16px 0;
+      border-bottom:1px solid #eef2f7;
+      font-weight:600;
+      color:#374151;
+    }
+
+    .logout-btn{
+      margin-top:25px;
+      width:100%;
+      border:none;
+      padding:15px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    body.drawer-open::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.4);
+      z-index:999;
+      backdrop-filter:blur(3px);
+    }
+
+    /* MAIN */
+
+    .main-content{
+      padding:130px 6% 60px;
+    }
+
+    .section-header{
+      margin-bottom:30px;
+    }
+
+    .section-header h1{
+      font-size:2.8rem;
+      margin-bottom:10px;
+    }
+
+    .section-header p{
+      color:#6b7280;
+      line-height:1.7;
+    }
+
+    /* FILTERS */
+
+    .filters{
+      display:flex;
+      gap:18px;
+      margin-bottom:35px;
+      
+    }
+
+    .search-box,
+    .location-filter{
+      background:white;
+      border-radius:20px;
+      padding:0 18px;
+      height:60px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .search-box{
+      width: 100%;
+    }
+
+    .search-box input{
+      border:none;
+      outline:none;
+      width:100%;
+      font-size:1rem;
+      background:transparent;
+    }
+
+    .location-filter select{
+      border:none;
+      outline:none;
+      background:transparent;
+      font-size:1rem;
+      font-weight:600;
+      color:#374151;
+      cursor:pointer;
+    }
+
+    /* GRID */
+
+    .profiles-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+      gap:26px;
+    }
+
+    .card{
+      background:white;
+      border-radius:28px;
+      padding:18px;
+      border:1px solid #eef2f7;
+      transition:0.35s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 20px 50px rgba(15,23,42,0.08);
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:14px;
+    }
+
+    .profile-info{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .profile-info img{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .profile-info h4{
+      margin-bottom:4px;
+    }
+
+    .profile-info span{
+      color:#6b7280;
+      font-size:0.85rem;
+    }
+
+    .follow-btn{
+      border:none;
+      background:#f3f4f6;
+      padding:10px 16px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .caption{
+      color:#374151;
+      line-height:1.7;
+      margin-bottom:14px;
+      font-size:0.95rem;
+    }
+
+    .hashtags{
+      color:#8b5cf6;
+      font-weight:700;
+      margin-bottom:16px;
+      font-size:0.9rem;
+    }
+
+    .photo-grid{
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    .main-photo{
+      width:100%;
+      height:280px;
+      object-fit:cover;
+      border-radius:18px;
+    }
+
+    .small-grid{
+      display:grid;
+      gap:8px;
+    }
+
+    .small-grid img{
+      width:100%;
+      height:136px;
+      object-fit:cover;
+      border-radius:18px;
+    }
+
+    .engagement{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:16px;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+    }
+
+    .action-btn{
+      padding:10px 16px;
+      border-radius:999px;
+      background:#f9fafb;
+      font-size:0.9rem;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .booking-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .booking-count{
+      color:#6b7280;
+      font-weight:600;
+      font-size:0.92rem;
+    }
+
+    .book-btn{
+      border:none;
+      padding:12px 22px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 12px 24px rgba(139,92,246,0.25);
+    }
+
+    /* PAGINATION */
+
+    .pagination{
+      margin-top:45px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:14px;
+    }
+
+    .page-btn{
+      border:none;
+      background:white;
+      padding:14px 22px;
+      border-radius:18px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .page-number{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      border:none;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-weight:700;
+    }
+
+    /* FOOTER */
+
+    footer{
+      background:#000;
+      padding:80px 6% 30px;
+      margin-top:80px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:40px;
+      margin-bottom:50px;
+    }
+
+    .footer-brand h3{
+      font-size:2rem;
+      margin-bottom:16px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .footer-brand p,
+    .footer-links a{
+      color:#6b7280;
+      line-height:1.8;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .footer-links h4{
+      color:#9ca6b9;
+      margin-bottom:12px;
+    }
+
+    .footer-bottom{
+      border-top:1px solid #1f2937;
+      padding-top:24px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:15px;
+      color:#6b7280;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:900px){
+
+      .nav-links{
+        display:none;
+      }
+
+      .account-wrapper{
+        display:none;
+      }
+
+      .menu-toggle{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+
+      .section-header h1{
+        font-size:2.1rem;
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:650px){
+
+      .photo-grid{
+        grid-template-columns:1fr;
+      }
+
+      .small-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .small-grid img{
+        height:120px;
+      }
+
+      .main-photo{
+        height:380px;
+      }
+
+
+
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .pagination{
+        flex-wrap:wrap;
+      }
+    }
+
+  </style>
+
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <div class="logo">LuxeConnect</div>
+
+    <div class="nav-links">
+      <a href="#">Discover</a>
+      <a href="#">Trending</a>
+      <a href="#">Premium</a>
+      <a href="#">Booked</a>
+      <a href="#">Safety</a>
+    </div>
+
+    <div class="top-right">
+
+      <div class="account-wrapper">
+
+<button class="account-pill" id="accountBtn">
+  <i class="fa-solid fa-user"></i>
+  <span id="userFullName">Loading...</span>
+
+  <i class="fa-solid fa-chevron-down"
+    style="background:none;color:#6b7280;width:auto;height:auto;"></i>
+</button>
+
+        <div class="dropdown" id="dropdownMenu">
+          <a href="#"><i class="fa-regular fa-user"></i> Profile</a>
+          <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+          <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
+        </div>
+
+      </div>
+
+      <button class="notification-btn">
+        <i class="fa-regular fa-bell"></i>
+      </button>
+
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+    </div>
+
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+
+  <div class="mobile-drawer" id="mobileDrawer">
+
+<div class="drawer-account">
+  <i class="fa-solid fa-user"></i>
+
+  <div>
+    <div id="drawerUserName">Loading...</div>
+
+    <small style="color:#6b7280;"
+      id="drawerUserEmail">
+      loading@email.com
+    </small>
+  </div>
+</div>
+
+    <a href="#"><i class="fa-solid fa-compass"></i> Discover</a>
+    <a href="#"><i class="fa-solid fa-fire"></i> Trending</a>
+    <a href="#"><i class="fa-solid fa-crown"></i> Premium</a>
+    <a href="#"><i class="fa-solid fa-bookmark"></i> Booked</a>
+    <a href="#"><i class="fa-solid fa-shield-halved"></i> Safety</a>
+    <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+
+    <button class="logout-btn">
+      Logout
+    </button>
+
+  </div>
+
+
+
+  <!-- MAIN -->
+
+  <main class="main-content">
+  <!-- PAGE NAVIGATION -->
+
+
+
+
+    <div class="section-header">
+      <h1>Available Profiles</h1>
+      <p>
+        Browse trending verified profiles currently available and accepting bookings.
+      </p>
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search profiles..." />
+      </div>
+
+      <div class="location-filter">
+        <i class="fa-solid fa-location-dot"></i>
+
+        <select>
+          <option>All Locations</option>
+          <option>Dubai</option>
+          <option>London</option>
+          <option>Paris</option>
+          <option>Tokyo</option>
+          <option>New York</option>
+        </select>
+      </div>
+
+    </div>
+
+  
+
+    <!-- GRID -->
+
+    <div class="profiles-grid" id="profilesGrid"></div>
+
+    <!-- PAGINATION -->
+
+    <div class="pagination">
+      <button class="page-btn">← Previous</button>
+      <button class="page-number">1</button>
+      <button class="page-btn">Next →</button>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <h3>LuxeConnect</h3>
+
+        <p>
+          A premium social booking and creator discovery platform designed
+          with modern aesthetics, seamless interaction and elevated user experiences.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Platform</h4>
+        <a href="#">Discover</a>
+        <a href="#">Creators</a>
+        <a href="#">Bookings</a>
+        <a href="#">Premium Access</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Partnerships</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Community</a>
+        <a href="#">Terms & Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 LuxeConnect. All rights reserved.</div>
+      <div>Designed for modern social discovery experiences.</div>
+    </div>
+
+  </footer>
+
+  <!-- DATA -->
+
+  <script>
+    const profiles = [
+
+  {
+    name: "Chiara Bellandi",
+    status: "Rome • Verified",
+    avatar: "https://cdni.pornpics.com/1280/3/21/28508943/28508943_008_fad3.jpg",
+    caption: "Silk dresses, late-night wine and a little trouble after midnight… come steal my attention 😘",
+    hashtags: "#SexyGirl #HookupVibes #LateNightFun #BaddieEnergy",
+    likes: "17.5k",
+    bookings: "148.2k Views",
+    photos: [
+      "https://cdni.pornpics.com/1280/3/21/28508943/28508943_007_e7af.jpg",
+      "https://cdni.pornpics.com/1280/3/21/28508943/28508943_006_f972.jpg",
+      "https://cdni.pornpics.com/1280/3/21/28508943/28508943_005_16e8.jpg"
+    ]
+  },
+
+  {
+    name: "Nives Markovic",
+    status: "Split • Online",
+    avatar: "https://i.pinimg.com/1200x/fd/86/96/fd8696d0ef59b161b9f51ee3411cd2fa.jpg",
+    caption: "Tan lines, beach cocktails and me teasing you all summer long 💋",
+    hashtags: "#BeachBaddie #SexyVibes #HookupSeason #GirlsNight",
+    likes: "19.4k",
+    bookings: "171.6k Views",
+    photos: [
+      "https://i.pinimg.com/1200x/fd/86/96/fd8696d0ef59b161b9f51ee3411cd2fa.jpg",
+      "https://i.pinimg.com/736x/f7/0c/0c/f70c0cb28c937f02b4725d551dea2e50.jpg",
+      "https://i.pinimg.com/736x/9a/6d/dc/9a6ddc1f656c264bde2da1974d0b036c.jpg"
+    ]
+  },
+
+  {
+    name: "Emma Rivera",
+    status: "Dubai • Verified",
+    avatar: "https://i.pinimg.com/736x/72/ca/8f/72ca8ffdac1505a55aff7f4481199d7a.jpg",
+    caption: "Soft lips, luxury nights and a dangerous smile that gets me everything ✨",
+    hashtags: "#DubaiBaddie #LuxuryGirl #FlirtyMood #HotGirlEra",
+    likes: "21.2k",
+    bookings: "208.4k Views",
+    photos: [
+      "https://i.pinimg.com/736x/3b/8f/f6/3b8ff6ad0dcdcf0b1fd9ac68e2c2a59f.jpg",
+      "https://i.pinimg.com/736x/a4/fd/63/a4fd6387d356db951ccaecef1fa18bda.jpg",
+      "https://i.pinimg.com/736x/bc/22/27/bc22279da69ebe296e23ce866fb1f26d.jpg"
+    ]
+  },
+
+  {
+    name: "Bianca Moretti",
+    status: "Milan • Verified",
+    avatar: "https://i.pinimg.com/1200x/0f/4c/50/0f4c50c371cadb75881d028c138ea6d1.jpg",
+    caption: "Designer heels, pretty lingerie and afterparty energy that never sleeps 😈",
+    hashtags: "#ItalianBaddie #SexyMood #LuxuryHookups #GirlsGirlsGirls",
+    likes: "21.1k",
+    bookings: "196.8k Views",
+    photos: [
+      "https://i.pinimg.com/1200x/0f/4c/50/0f4c50c371cadb75881d028c138ea6d1.jpg",
+      "https://i.pinimg.com/736x/ec/b7/d8/ecb7d859723c4a6c607c4279572bb5a6.jpg",
+      "https://i.pinimg.com/1200x/be/3e/d3/be3ed313d18b89bb9b01d5b3607efaab.jpg"
+    ]
+  },
+
+  {
+    name: "Cassandra Lucas",
+    status: "Los Angeles • Live",
+    avatar: "https://i.pinimg.com/1200x/8f/31/90/8f31904d3b1f2c157d2b3a51db407bae.jpg",
+    caption: "Come match my energy… tequila, rooftop kisses and bad decisions tonight 🌃",
+    hashtags: "#LAHotGirl #HookupEnergy #SexyNights #PrettyGirls",
+    likes: "9.8k",
+    bookings: "93.7k Views",
+    photos: [
+      "https://i.pinimg.com/736x/72/db/1a/72db1a5880fba88ddf4f5eb93fa5ef43.jpg",
+      "https://i.pinimg.com/736x/ef/93/d4/ef93d4d21c39ce57b1d3e83a9733b122.jpg",
+      "https://i.pinimg.com/736x/09/df/c4/09dfc4d21e48fd86c12f230d8cd7c31b.jpg"
+    ]
+  },
+
+  {
+    name: "Natalie Brooks",
+    status: "Paris • Online",
+    avatar: "https://i.pinimg.com/736x/9f/c4/f1/9fc4f13ca2d5602f21958169791b1bd1.jpg",
+    caption: "Cute face, naughty thoughts and champagne mornings in Paris 🥂",
+    hashtags: "#ParisBaddie #SexyLifestyle #FlirtyGirl #HookupQueen",
+    likes: "15.7k",
+    bookings: "134.9k Views",
+    photos: [
+      "https://i.pinimg.com/736x/d9/1f/7c/d91f7cf5fdc9359997be14474cdf3a83.jpg",
+      "https://i.pinimg.com/736x/74/ec/8f/74ec8f0f963864af7bd313cbd461fbba.jpg",
+      "https://i.pinimg.com/736x/7e/60/aa/7e60aa34d4044c33da55f644981088bf.jpg"
+    ]
+  },
+
+  {
+    name: "Sophia Lane",
+    status: "Miami • Online",
+    avatar: "https://i.pinimg.com/736x/89/77/1f/89771f5f643d4721a0c97372ec7fcd4b.jpg",
+    caption: "Tiny bikini, ocean breeze and me looking for someone fun this weekend 🌴",
+    hashtags: "#MiamiGirl #SexyBeach #HotGirlSummer #HookupVibes",
+    likes: "12.4k",
+    bookings: "118.3k Views",
+    photos: [
+      "https://i.pinimg.com/1200x/90/20/84/9020847820959f683e10e13adadaeaab.jpg",
+      "https://i.pinimg.com/1200x/ba/bd/1e/babd1ebceb8d5b22e9ea8ad88e93bb6c.jpg",
+      "https://i.pinimg.com/1200x/d6/d4/d7/d6d4d76e42ec9efd1505aa06b0156792.jpg"
+    ]
+  },
+
+  {
+    name: "Anouk Verhaegen",
+    status: "Brussels • Verified",
+    avatar: "https://i.pinimg.com/736x/70/82/3a/70823abfbaaa4d4a2b8c0ab4a00c88d3.jpg",
+    caption: "Sweet voice, soft skin and enough flirting to ruin your focus all night 🤍",
+    hashtags: "#SoftGirl #SexyBaddie #LateNightTexts #GirlyVibes",
+    likes: "11.6k",
+    bookings: "97.5k Views",
+    photos: [
+      "https://i.pinimg.com/736x/76/d3/6c/76d36c9c02ade575ebb8208786e0ef9a.jpg",
+      "https://i.pinimg.com/736x/2e/fb/16/2efb16c520ea15b35d0e063a67f77469.jpg",
+      "https://i.pinimg.com/736x/07/a3/18/07a31841c4eccaa32ff4cde3b673d7c7.jpg"
+    ]
+  },
+
+  {
+    name: "Saskia Van Doren",
+    status: "Amsterdam • Live",
+    avatar: "https://i.pinimg.com/736x/0e/94/bd/0e94bd827a1228792736ef7816da9b78.jpg",
+    caption: "Pretty eyes, red lips and enough attitude to keep you addicted 😏",
+    hashtags: "#AmsterdamGirl #SexyMood #BaddieLife #HookupReady",
+    likes: "13.9k",
+    bookings: "126.2k Views",
+    photos: [
+      "https://i.pinimg.com/736x/18/32/4b/18324b69d981130f5bd34b67661fec4c.jpg",
+      "https://i.pinimg.com/736x/16/0f/01/160f0118c30d11e9deca2f0b746d7f5f.jpg",
+      "https://i.pinimg.com/736x/a3/f5/f5/a3f5f55babe0f99c84b226b1a7be6ffc.jpg"
+    ]
+  },
+
+  {
+    name: "Eliska Novakova",
+    status: "Prague • Online",
+    avatar: "https://i.pinimg.com/736x/f0/db/b9/f0dbb9bbd454219a2670f857d1315356.jpg",
+    caption: "I look innocent until the drinks arrive… then the real fun starts 🍸",
+    hashtags: "#PragueGirl #SexyNight #HookupMood #GirlsTrip",
+    likes: "10.1k",
+    bookings: "88.6k Views",
+    photos: [
+      "https://i.pinimg.com/736x/b3/44/f2/b344f28fd24be980c9052c881d6d12c6.jpg",
+      "https://i.pinimg.com/736x/c7/08/fd/c708fddfbd3a51f97d5c728f77e7c433.jpg",
+      "https://i.pinimg.com/736x/fe/b0/0f/feb00fc741ab64c4c8d5404aa12a0e4c.jpg"
+    ]
+  },
+
+  {
+    name: "Maëlle Dufour",
+    status: "Monaco • Online",
+    avatar: "https://cdni.pornpics.com/460/3/26/30959232/30959232_027_0752.jpg",
+    caption: "Late-night yacht parties, teasing smiles and a body made for attention 💎",
+    hashtags: "#MonacoBaddie #SexyLuxury #RichGirlVibes #HookupLife",
+    likes: "24.8k",
+    bookings: "231.7k Views",
+    photos: [
+      "https://cdni.pornpics.com/460/3/26/30959232/30959232_026_88a3.jpg",
+      "https://cdni.pornpics.com/460/3/26/30959232/30959232_017_0d60.jpg",
+      "https://cdni.pornpics.com/460/3/26/30959232/30959232_029_6823.jpg"
+    ]
+  },
+
+  {
+    name: "Zofia Lewandowska",
+    status: "Warsaw • Live",
+    avatar: "https://cdni.pornpics.com/460/3/19/98152222/98152222_006_ba8b.jpg",
+    caption: "Pretty enough to distract you and wild enough to keep you coming back 🔥",
+    hashtags: "#SexyPolishGirl #HookupCulture #BaddieAlert #Nightlife",
+    likes: "14.2k",
+    bookings: "121.4k Views",
+    photos: [
+      "https://cdni.pornpics.com/460/3/19/98152222/98152222_004_6fc4.jpg",
+      "https://cdni.pornpics.com/460/3/19/98152222/98152222_016_1424.jpg",
+      "https://cdni.pornpics.com/460/3/19/98152222/98152222_017_f44d.jpg"
+    ]
+  },
+
+  {
+    name: "Freja Lindholm",
+    status: "Copenhagen • Verified",
+    avatar: "https://cdni.pornpics.com/1280/7/705/49716280/49716280_003_21ad.jpg",
+    caption: "Blonde hair, soft kisses and a little Scandinavian temptation tonight 🤍",
+    hashtags: "#BlondeBaddie #SexyScandinavian #HookupEnergy #GirlsNightOut",
+    likes: "16.9k",
+    bookings: "143.5k Views",
+    photos: [
+      "https://cdni.pornpics.com/1280/7/705/49716280/49716280_012_197e.jpg",
+      "https://cdni.pornpics.com/1280/7/705/49716280/49716280_007_ed96.jpg",
+      "https://cdni.pornpics.com/1280/7/705/49716280/49716280_001_eb99.jpg"
+    ]
+  }
+
+];
+  </script>
+
+  <!-- PROFILE RENDER -->
+
+  <script>
+
+    const profilesGrid = document.getElementById('profilesGrid');
+
+    profiles.forEach(profile => {
+
+      const card = document.createElement('div');
+
+      card.className = 'card';
+
+      card.innerHTML = `
+
+        <div class="card-top">
+
+          <div class="profile-info">
+            <img src="${profile.avatar}" alt="">
+
+            <div>
+              <h4>${profile.name}</h4>
+              <span>${profile.status}</span>
+            </div>
+          </div>
+
+          <button class="follow-btn">
+            Follow
+          </button>
+
+        </div>
+
+        <div class="caption">
+          ${profile.caption}
+        </div>
+
+        <div class="hashtags">
+          ${profile.hashtags}
+        </div>
+
+        <div class="photo-grid">
+
+          <img class="main-photo"
+            src="${profile.photos[0]}" alt="">
+
+          <div class="small-grid">
+            <img src="${profile.photos[1]}" alt="">
+            <img src="${profile.photos[2]}" alt="">
+          </div>
+
+        </div>
+
+        <div class="engagement">
+
+          <div class="actions">
+
+            <div class="action-btn">
+              ❤ ${profile.likes}
+            </div>
+
+            <div class="action-btn">
+              ↗ Share
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="booking-row">
+
+          <div class="booking-count">
+            ${profile.bookings}
+          </div>
+
+          <button class="book-btn">
+            Book
+          </button>
+
+        </div>
+
+      `;
+
+      profilesGrid.appendChild(card);
+
+    });
+
+  </script>
+
+  <!-- DROPDOWN -->
+
+  <script>
+
+    const accountBtn = document.getElementById('accountBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    accountBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+
+      if (
+        !accountBtn.contains(e.target) &&
+        !dropdownMenu.contains(e.target)
+      ) {
+        dropdownMenu.classList.remove('active');
+      }
+
+    });
+
+  </script>
+
+  <!-- MOBILE DRAWER -->
+
+  <script>
+
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+
+    menuToggle.addEventListener('click', () => {
+
+      mobileDrawer.classList.toggle('active');
+
+      document.body.classList.toggle('drawer-open');
+
+      menuToggle.innerHTML =
+        mobileDrawer.classList.contains('active')
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+
+    });
+
+    document.addEventListener('click', (e) => {
+
+      const clickedDrawer = mobileDrawer.contains(e.target);
+      const clickedToggle = menuToggle.contains(e.target);
+
+      if (
+        !clickedDrawer &&
+        !clickedToggle &&
+        mobileDrawer.classList.contains('active')
+      ) {
+
+        mobileDrawer.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+
+        menuToggle.innerHTML =
+          '<i class="fa-solid fa-bars"></i>';
+
+      }
+
+    });
+
+  </script>
+
+
+<script>
+
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+/* ================================
+   GET USER FROM STORAGE
+================================ */
+
+let storedUser = localStorage.getItem("luxeUser");
+
+if (!storedUser) {
+  window.location.href = "login.html";
+}
+
+let currentUser;
+
+try {
+  currentUser = JSON.parse(storedUser);
+} catch (e) {
+  localStorage.removeItem("luxeUser");
+  window.location.href = "login.html";
+}
+
+if (!currentUser?.uid || !currentUser?.email) {
+  localStorage.removeItem("luxeUser");
+  window.location.href = "login.html";
+}
+
+/* ================================
+   SAFE FETCH WRAPPER
+================================ */
+
+async function postData(payload) {
+
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  console.log("RAW RESPONSE:", text);
+
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    throw new Error("Invalid server response: " + text);
+  }
+}
+
+/* ================================
+   LOAD USER PROFILE
+================================ */
+
+async function loadUserProfile() {
+
+  try {
+
+    const data = await postData({
+      action: "getUser",
+      uid: currentUser.uid
+    });
+
+    if (!data || data.status !== true) {
+      localStorage.removeItem("luxeUser");
+      alert("Session expired. Please login again.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const user = data.user;
+
+    localStorage.setItem("luxeUser", JSON.stringify(user));
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+
+    setText("userFullName", user.name || "User");
+    setText("drawerUserName", user.name || "User");
+    setText("drawerUserEmail", user.email || "");
+
+    setText("profileName", user.name || "-");
+    setText("profileEmail", user.email || "-");
+    setText("profilePhone", user.phone || "-");
+    setText("profileCountry", user.country || "-");
+
+    setText("profileCredits", Number(user.credits || 0));
+    setText("profileFollowers", Number(user.followers || 0));
+    setText("profileLikes", Number(user.likes || 0));
+    setText("profileBookings", Number(user.bookings || 0));
+
+    setText("profileStatus", user.statusAcc || "Active");
+    setText("profileVerified", user.verified ? "Verified" : "Unverified");
+
+    loadNotifications(user.uid);
+
+  } catch (err) {
+    console.log(err);
+    alert("Unable to load account.");
+  }
+}
+
+/* ================================
+   LOAD NOTIFICATIONS
+================================ */
+
+async function loadNotifications(uid) {
+
+  try {
+
+    const data = await postData({
+      action: "getNotifications",
+      uid
+    });
+
+    if (!data || !data.status) return;
+
+    const notifications = data.notifications || [];
+
+    const unreadCount = notifications.filter(n => n.status === "Unread").length;
+
+    const countEl = document.getElementById("notificationCount");
+    if (countEl) countEl.textContent = unreadCount;
+
+    const listEl = document.getElementById("notificationList");
+
+    if (listEl) {
+
+      if (notifications.length === 0) {
+        listEl.innerHTML = `<div class="empty-notification">No notifications yet</div>`;
+        return;
+      }
+
+      listEl.innerHTML = notifications.map(n => `
+        <div class="notification-item">
+          <div class="notification-title">${n.title}</div>
+          <div class="notification-message">${n.message}</div>
+          <div class="notification-date">${new Date(n.date).toLocaleString()}</div>
+        </div>
+      `).join("");
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/* ================================
+   LOGOUT
+================================ */
+
+function logout() {
+  localStorage.removeItem("luxeUser");
+  window.location.href = "login.html";
+}
+
+document.querySelectorAll(".logout-btn")
+.forEach(btn => btn.addEventListener("click", logout));
+
+document.querySelectorAll("#dropdownMenu a")
+.forEach(link => {
+  if (link.textContent.toLowerCase().includes("sign out")) {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      logout();
+    });
+  }
+});
+
+/* ================================
+   INIT
+================================ */
+
+loadUserProfile();
+
+</script>
+
+</body>
+
+</html>
