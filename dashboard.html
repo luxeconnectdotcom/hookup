@@ -1267,20 +1267,31 @@ function renderProfiles(profiles) {
           ${profile.bookings || 0}
         </div>
 
-        <button class="book-btn">
-          Book
-        </button>
+<button
+  class="book-btn"
+  onclick='openBooking(${JSON.stringify(profile)})'>
+  Book
+</button>
 
       </div>
     `;
 
+
+
+
     profilesGrid.appendChild(card);
+
+
+    
 
   });
 
 }
 
-
+function openBooking(profile) {
+  localStorage.setItem("selectedProfile", JSON.stringify(profile));
+  window.location.href = "book.html";
+}
 
 /* ================================
    LOGOUT

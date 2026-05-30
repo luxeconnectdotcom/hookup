@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Page</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Inter, sans-serif;
+    }
+
+    body{
+      background:#f5f7fb;
+      overflow-x:hidden;
+    }
+
+    /* FULL WIDTH CONTAINER */
+    section{
+      width:100%;
+      min-height:100vh;
+      background-color: white;
+    }
+
+    /* COVER IMAGE */
+    .cover{
+      width:100%;
+      height:130px;
+      background:#8b5cf6;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    /* PROFILE BOX */
+    .profile-box{
+      width:100%;
+      background:white;
+      padding:20px;
+      position:relative;
+    }
+
+    /* AVATAR */
+    .avatar{
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      border:5px solid white;
+      position:absolute;
+      top:-60px;
+      left:20px;
+      object-fit:cover;
+      background:#ddd;
+    }
+
+    .name{
+      margin-left:160px;
+      font-size:24px;
+      font-weight:700;
+      margin-top:10px;
+    }
+
+    .bio{
+      margin-left:160px;
+      color:#6b7280;
+      margin-top:8px;
+      max-width:700px;
+      font-size: 14px;
+    }
+
+    /* GALLERY */
+    .gallery{
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+      width:100%;
+      overflow-x: auto;
+    }
+
+    .gallery img{
+      max-width: 150px;
+      height:200px;
+      object-fit:cover;
+      border-radius:12px;
+    }
+
+    /* BOOKING */
+    .booking{
+      width:100%;
+      margin-top:20px;
+      background:white;
+      padding:20px;
+    }
+
+    .booking h3{
+      margin-bottom:10px;
+    }
+
+    .booking input,
+    .booking select{
+      width:100%;
+      padding:12px;
+      margin-top:10px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      font-size:1rem;
+    }
+
+    .btn{
+      margin-top:15px;
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* MOBILE FIX */
+    @media(max-width:600px){
+      .avatar{
+        width:150px;
+        height:150px;
+        top:-50px;
+      }
+
+      .name,
+      .bio{
+        margin-left:170px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<section>
+
+  <!-- COVER IMAGE (PROFILE IMAGE 1) -->
+  <div class="cover">
+    <img id="coverImg" src="" alt="">
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile-box">
+
+    <img id="avatar" class="avatar">
+
+    <div class="name" id="name"></div>
+    <div class="bio" id="bio"></div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <!-- BOOKING -->
+  <div class="booking">
+
+    <h3>Book Session</h3>
+
+    <select id="service">
+      <option value="brief">Brief Hangout</option>
+      <option value="long">Long Hangout</option>
+    </select>
+
+    <input id="location" placeholder="Meetup location/address">
+    <input id="date" type="date">
+    <input id="time" type="time">
+    <input id="amount" placeholder="Booking amount">
+
+    <button class="btn" onclick="confirmBooking()">
+      Confirm Booking
+    </button>
+
+  </div>
+
+</section>
+
+
+<script>
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+const profile = JSON.parse(localStorage.getItem("selectedProfile"));
+const user = JSON.parse(localStorage.getItem("luxeUser"));
+
+if(!profile || !user){
+  alert("Missing data");
+  window.location.href = "dashboard.html";
+}
+
+/* =========================
+   RENDER PROFILE
+========================= */
+
+document.getElementById("name").textContent = profile.name || "";
+document.getElementById("bio").textContent = profile.caption || "";
+document.getElementById("avatar").src = profile.avatar || "";
+
+/* COVER IMAGE = IMAGE 1 */
+const coverImg = (profile.photos && profile.photos[0]) 
+  ? profile.photos[0]
+  : profile.avatar;
+
+document.getElementById("coverImg").src = coverImg;
+
+/* GALLERY */
+const gallery = document.getElementById("gallery");
+
+(profile.photos || []).forEach(p => {
+  const img = document.createElement("img");
+  img.src = p;
+  gallery.appendChild(img);
+});
+
+
+/* =========================
+   BOOKING FUNCTION
+========================= */
+
+async function confirmBooking(){
+
+  const payload = {
+    action: "createBooking",
+
+    workerId: profile.id,
+    workerName: profile.name,
+
+    userId: user.uid,
+    userName: user.name,
+
+    service: document.getElementById("service").value,
+    location: document.getElementById("location").value,
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+    amount: document.getElementById("amount").value
+  };
+
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+
+  if(data.status){
+    alert("Booking successful!");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Failed: " + data.message);
+  }
+}
+
+</script>
+
+</body>
+</html>
