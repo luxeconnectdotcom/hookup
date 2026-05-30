@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <title>Booking Page</title>
 
@@ -192,6 +194,97 @@ html,body{
 }
 
 </style>
+
+<style>
+  .stats{
+  display:flex;
+  gap:25px;
+  margin-top:12px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.stat-item{
+  font-size:14px;
+  color:#6b7280;
+}
+
+.stat-item strong{
+  color:#111827;
+  font-size:16px;
+}
+
+.hashtags{
+  margin-top:12px;
+  color:#8b5cf6;
+  font-weight:600;
+  line-height:1.6;
+}
+
+.profile-meta{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.meta-row{
+  color:#374151;
+  font-size:15px;
+  font-weight:500;
+}
+
+.meta-row span{
+  color:#111827;
+  font-weight:700;
+}
+</style>
+
+<style>
+  .name-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.verified-badge{
+  color:#1d9bf0;
+  font-size:18px;
+}
+
+.stat-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#6b7280;
+}
+
+.stat-item i{
+  color:#8b5cf6;
+}
+
+.meta-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#374151;
+  font-size:15px;
+}
+
+.meta-row i{
+  width:18px;
+  color:#8b5cf6;
+}
+
+.meta-row span{
+  color:#111827;
+  font-weight:700;
+}
+</style>
+
+
 </head>
 
 <body>
@@ -212,9 +305,60 @@ html,body{
 
     <img id="avatar" class="avatar">
 
-    <div class="name" id="name"></div>
+<div class="name-row">
 
-    <div class="bio" id="bio"></div>
+  <div class="name" id="name"></div>
+
+  <i
+    class="fa-solid fa-circle-check verified-badge"
+    id="verifiedBadge">
+  </i>
+
+</div>
+
+<div class="stats">
+
+  <div class="stat-item">
+    <i class="fa-solid fa-heart"></i>
+    <strong id="likes">0</strong>
+    Likes
+  </div>
+
+  <div class="stat-item">
+    <i class="fa-solid fa-users"></i>
+    <strong id="followers">0</strong>
+    Followers
+  </div>
+
+</div>
+
+<div class="bio" id="bio"></div>
+
+<div class="hashtags" id="hashtags"></div>
+
+<div class="profile-meta">
+
+  <div class="meta-row">
+
+    <i class="fa-solid fa-location-dot"></i>
+
+    <span id="profileLocation">
+      Not specified
+    </span>
+
+  </div>
+
+  <div class="meta-row">
+
+    <i class="fa-solid fa-money-bill-wave"></i>
+
+    <span id="profilePrice">
+      Not specified
+    </span>
+
+  </div>
+
+</div>
 
     <div class="gallery" id="gallery"></div>
 
@@ -265,6 +409,23 @@ profile?.name || "";
 
 document.getElementById("bio").textContent =
 profile?.caption || "";
+
+document.getElementById("likes").textContent =
+profile?.likes || 0;
+
+document.getElementById("followers").textContent =
+profile?.followers || 0;
+
+document.getElementById("hashtags").textContent =
+profile?.hashtags || "";
+
+document.getElementById("profileLocation").textContent =
+profile?.location || "Not specified";
+
+document.getElementById("profilePrice").textContent =
+profile?.price
+  ? "$" + profile.price
+  : "Not specified";
 
 document.getElementById("avatar").src =
 profile?.avatar || "";
