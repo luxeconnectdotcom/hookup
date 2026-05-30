@@ -659,9 +659,11 @@ button i {
 
       </div>
 
+      <a href="bookedsessions.html">
       <button class="mobile-nav-btn">
         <i class="fa-solid fa-bookmark"></i>
-      </button>      
+      </button>  
+    </a>    
 
       <button class="mobile-nav-btn alert-dot">
         <i class="fa-regular fa-bell"></i>
@@ -1289,7 +1291,32 @@ function renderProfiles(profiles) {
 }
 
 function openBooking(profile) {
-  localStorage.setItem("selectedProfile", JSON.stringify(profile));
+
+  const normalizedProfile = {
+    id: profile.id,
+    name: profile.name,
+    status: profile.status,
+    avatar: profile.avatar,
+    caption: profile.caption,
+    hashtags: profile.hashtags,
+    likes: profile.likes,
+    bookings: profile.bookings,
+    photos: profile.photos,
+
+    location: profile.location || profile.status?.split("•")[0].trim(),
+
+    lowPrice: profile.lowPrice,
+    basicPrice: profile.basicPrice,
+    mediumPrice: profile.mediumPrice,
+    standardPrice: profile.standardPrice,
+    premiumPrice: profile.premiumPrice
+  };
+
+  localStorage.setItem(
+    "selectedProfile",
+    JSON.stringify(normalizedProfile)
+  );
+
   window.location.href = "book.html";
 }
 
