@@ -329,10 +329,6 @@
       transition:0.35s ease;
     }
 
-    .card:hover{
-      transform:translateY(-5px);
-      box-shadow:0 20px 50px rgba(15,23,42,0.08);
-    }
 
     .card-top{
       display:flex;
@@ -731,13 +727,17 @@ button i {
 
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder="Search profiles..." />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search profiles..."
+        />
       </div>
 
       <div class="location-filter">
         <i class="fa-solid fa-location-dot"></i>
 
-        <select>
+        <select id="locationSelect">
           <option>All Locations</option>
           <option>Dubai</option>
           <option>London</option>
@@ -1055,13 +1055,112 @@ async function loadProfiles() {
       return;
     }
 
-    renderProfiles(data.profiles || []);
+    allProfiles = data.profiles || [];
+
+populateLocationFilter(allProfiles);
+
+renderProfiles(allProfiles);
 
   } catch (err) {
 
     console.log("Failed to load profiles", err);
 
   }
+
+}
+
+
+function populateLocationFilter(profiles) {
+
+  const select =
+    document.getElementById("locationSelect");
+
+  if (!select) return;
+
+  const locations = new Set();
+
+  profiles.forEach(profile => {
+
+    if (!profile.status) return;
+
+    // "Dubai • Verified" -> Dubai
+    const location =
+      profile.status.split("•")[0].trim();
+
+    if (location) {
+      locations.add(location);
+    }
+
+  });
+
+  select.innerHTML =
+    `<option value="all">All Locations</option>`;
+
+  [...locations]
+    .sort()
+    .forEach(location => {
+
+      select.innerHTML += `
+        <option value="${location}">
+          ${location}
+        </option>
+      `;
+
+    });
+
+}
+
+
+function filterProfiles() {
+
+  const searchText =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const location =
+    document.getElementById("locationSelect")
+    .value;
+
+  const filtered = allProfiles.filter(profile => {
+
+    const locationName =
+      (profile.status || "")
+      .split("•")[0]
+      .trim();
+
+    const matchesSearch =
+
+      (profile.name || "")
+      .toLowerCase()
+      .includes(searchText)
+
+      ||
+
+      (profile.caption || "")
+      .toLowerCase()
+      .includes(searchText)
+
+      ||
+
+      (profile.hashtags || "")
+      .toLowerCase()
+      .includes(searchText);
+
+    const matchesLocation =
+
+      location === "all"
+
+      ||
+
+      locationName === location;
+
+    return matchesSearch && matchesLocation;
+
+  });
+
+  renderProfiles(filtered);
 
 }
 
@@ -1208,6 +1307,27 @@ document.querySelectorAll("#dropdownMenu a")
 /* ================================
    INIT
 ================================ */
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const search =
+    document.getElementById("searchInput");
+
+  const location =
+    document.getElementById("locationSelect");
+
+  if (search) {
+    search.addEventListener("input", filterProfiles);
+  }
+
+  if (location) {
+    location.addEventListener("change", filterProfiles);
+  }
+
+});
+
 
 loadUserProfile();
 loadProfiles();
