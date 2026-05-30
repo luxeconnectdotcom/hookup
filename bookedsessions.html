@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<title>Booked Sessions</title>
+
+<style>
+
+body{
+  font-family:Inter;
+  background:#f5f7fb;
+  margin:0;
+}
+
+.header{
+  padding:20px;
+  font-size:22px;
+  font-weight:700;
+}
+
+.container{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:16px;
+  display:flex;
+  gap:15px;
+  align-items:flex-start;
+}
+
+.card img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.info{
+  flex:1;
+}
+
+.title{
+  font-weight:700;
+  font-size:16px;
+}
+
+.meta{
+  font-size:13px;
+  color:#666;
+  margin-top:5px;
+}
+
+.badge{
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.pending{
+  background:#fff3cd;
+  color:#856404;
+}
+
+.paid{
+  background:#d4edda;
+  color:#155724;
+}
+
+.loading{
+  text-align:center;
+  padding:50px;
+  color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">My Booked Sessions</div>
+
+<div class="container" id="container">
+  <div class="loading">Loading bookings...</div>
+</div>
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("luxeUser"));
+
+if (!user) {
+  window.location.href = "login.html";
+}
+
+async function loadBookings() {
+
+  const res = await fetch("https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "getUserBookings",
+      userId: user.uid
+    })
+  });
+
+  const data = await res.json();
+
+  const container = document.getElementById("container");
+  container.innerHTML = "";
+
+  if (!data.status || data.bookings.length === 0) {
+    container.innerHTML = "<p>No bookings found</p>";
+    return;
+  }
+
+  data.bookings.forEach(b => {
+
+    const worker = b.worker || {};
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${worker.avatar || ''}">
+      
+      <div class="info">
+
+        <div class="title">
+          ${b.workerName}
+        </div>
+
+        <div class="meta">
+          Service: ${b.service}<br>
+          Date: ${b.date} ${b.time}<br>
+          Location: ${b.location}<br>
+          Amount: $${b.amount}
+        </div>
+
+        <div class="meta">
+          Payment: ${b.paymentMethod || 'N/A'}
+        </div>
+
+      </div>
+
+      <div class="badge ${b.paymentStatus === 'Paid' ? 'paid' : 'pending'}">
+        ${b.paymentStatus}
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+loadBookings();
+
+</script>
+
+</body>
+</html>

@@ -285,6 +285,151 @@ html,body{
 </style>
 
 
+<style>
+  .input-pill{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  margin-top:12px;
+  background:white;
+}
+
+.input-pill input{
+  border:none;
+  outline:none;
+  width:100%;
+  font-size:16px;
+}
+
+.input-pill i{
+  color:#8b5cf6;
+}
+
+.info-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  margin-top:12px;
+  background:white;
+  cursor:pointer;
+}
+
+.info-pill i{
+  color:#8b5cf6;
+}
+
+.fee-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+  margin-top:12px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#f5f3ff,#ffffff);
+  border:1px solid #ede9fe;
+}
+
+.fee-box i{
+  font-size:20px;
+  color:#8b5cf6;
+}
+
+.fee-box small{
+  color:#6b7280;
+}
+
+.fee-box h4{
+  margin:0;
+  font-size:18px;
+}
+
+.pay-title{
+  margin-top:15px;
+  font-size:14px;
+  color:#6b7280;
+}
+
+.payment-details{
+  margin-top:10px;
+  font-size:13px;
+  color:#374151;
+  background:#f9fafb;
+  padding:10px;
+  border-radius:10px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.5);
+}
+
+.modal-content{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.modal-content i{
+  font-size:40px;
+  color:green;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:rgba(0,0,0,0.4);
+  color:white;
+}
+</style>
+
+<style>
+  /* validation */
+.error-field{
+  border:1px solid #ef4444 !important;
+  box-shadow:0 0 0 3px rgba(239,68,68,0.1);
+}
+
+.error-text{
+  font-size:12px;
+  color:#ef4444;
+  margin-top:6px;
+}
+
+/* payment card */
+.payment-card{
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  font-size:13px;
+  color:#374151;
+  display:none;
+  line-height:1.5;
+}
+
+.payment-card strong{
+  color:#111827;
+}
+</style>
+
 </head>
 
 <body>
@@ -366,87 +511,365 @@ html,body{
 
   <!-- BOOKING -->
 
-  <div class="booking">
+<div class="booking">
 
-    <h3>Book Session</h3>
+  <h3>Book Session</h3>
 
-    <select id="service">
-      <option value="brief">Brief Hangout</option>
-      <option value="long">Long Hangout</option>
-    </select>
+  <!-- SERVICE / PACKAGE -->
+  <select id="service">
+    <option value="">Select Service / Package</option>
+  </select>
 
-    <input
-      id="location"
-      type="text"
-      placeholder="Meetup location/address">
-
-    <input id="date" type="date">
-
-    <input id="time" type="time">
-
-    <input
-      id="amount"
-      type="number"
-      placeholder="Booking amount">
-
-    <button
-      class="btn"
-      onclick="confirmBooking()">
-      Confirm Booking
-    </button>
-
+  <!-- LOCATION (icon inside right) -->
+  <div class="input-pill">
+    <input id="location" type="text" placeholder="Meetup location/address">
+    <i class="fa-solid fa-location-dot"></i>
   </div>
+
+  <!-- DATE -->
+  <div class="info-pill">
+    <i class="fa-regular fa-calendar"></i>
+    <p id="dateText">Date: Not selected</p>
+    <input id="date" type="date" hidden>
+  </div>
+
+  <!-- TIME -->
+  <div class="info-pill">
+    <i class="fa-regular fa-clock"></i>
+    <p id="timeText">Time: Not selected</p>
+    <input id="time" type="time" hidden>
+  </div>
+
+  <!-- FEE DISPLAY (NOT INPUT) -->
+  <div class="fee-box">
+    <i class="fa-solid fa-money-bill-wave"></i>
+    <div>
+      <small>Fee</small>
+      <h4 id="feeDisplay">$0</h4>
+    </div>
+  </div>
+
+  <!-- PAYMENT METHODS -->
+  <h4 class="pay-title">Payment Method</h4>
+
+  <select id="paymentMethod">
+    <option value="">Select Payment Method</option>
+    <option value="giftcard">Gift Card</option>
+    <option value="paypal">PayPal</option>
+    <option value="btc">Bitcoin (BTC)</option>
+  </select>
+
+  <!-- PAYMENT DETAILS -->
+  <div class="payment-details" id="paymentDetails">
+    Select a payment method to view details
+  </div>
+
+  <button class="btn" onclick="confirmBooking()">
+    Confirm Booking
+  </button>
+
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal" id="successModal">
+  <div class="modal-content">
+    <i class="fa-solid fa-circle-check"></i>
+    <h2>Booking Successful</h2>
+    <p>Your session has been booked successfully.</p>
+  </div>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div class="overlay" id="loadingOverlay">
+  <div class="loader"></div>
+  <p>Processing booking...</p>
+</div>
 
 </div>
 
 <script>
 
-const profile =
-JSON.parse(localStorage.getItem("selectedProfile"));
+const profile = JSON.parse(localStorage.getItem("selectedProfile"));
 
-document.getElementById("name").textContent =
-profile?.name || "";
+if (!profile) {
+  window.location.href = "dashboard.html";
+}
 
-document.getElementById("bio").textContent =
-profile?.caption || "";
+/* ======================
+   PROFILE
+====================== */
 
-document.getElementById("likes").textContent =
-profile?.likes || 0;
+document.getElementById("name").textContent = profile.name || "";
+document.getElementById("bio").textContent = profile.caption || "";
+document.getElementById("likes").textContent = profile.likes || 0;
+document.getElementById("followers").textContent = profile.followers || 0;
+document.getElementById("hashtags").textContent = profile.hashtags || "";
 
-document.getElementById("followers").textContent =
-profile?.followers || 0;
-
-document.getElementById("hashtags").textContent =
-profile?.hashtags || "";
+const locationValue =
+  profile.location ||
+  (profile.status ? profile.status.split("•")[0].trim() : "");
 
 document.getElementById("profileLocation").textContent =
-profile?.location || "Not specified";
+  locationValue || "Not specified";
+
+const lowestPrice =
+  profile.lowPrice ||
+  profile.basicPrice ||
+  profile.mediumPrice ||
+  profile.standardPrice ||
+  profile.premiumPrice;
 
 document.getElementById("profilePrice").textContent =
-profile?.price
-  ? "$" + profile.price
-  : "Not specified";
+  lowestPrice ? "$" + lowestPrice : "Not specified";
 
-document.getElementById("avatar").src =
-profile?.avatar || "";
+/* ======================
+   IMAGES
+====================== */
+
+document.getElementById("avatar").src = profile.avatar || "";
 
 document.getElementById("coverImg").src =
-(profile?.photos?.[0]) || profile?.avatar || "";
+  (profile.photos && profile.photos.length)
+    ? profile.photos[0]
+    : profile.avatar || "";
 
-const gallery =
-document.getElementById("gallery");
+/* ======================
+   GALLERY
+====================== */
 
-(profile?.photos || []).forEach(photo => {
+const gallery = document.getElementById("gallery");
+gallery.innerHTML = "";
 
+(profile.photos || []).forEach(p => {
   const img = document.createElement("img");
-
-  img.src = photo;
-
+  img.src = p;
   gallery.appendChild(img);
+});
+
+/* ======================
+   SERVICE → PRICE
+====================== */
+
+const serviceSelect = document.getElementById("service");
+const feeDisplay = document.getElementById("feeDisplay");
+
+const packages = [
+  { label: "Low", value: profile.lowPrice },
+  { label: "Basic", value: profile.basicPrice },
+  { label: "Medium", value: profile.mediumPrice },
+  { label: "Standard", value: profile.standardPrice },
+  { label: "Premium", value: profile.premiumPrice }
+];
+
+serviceSelect.innerHTML = `<option value="">Select Service / Package</option>`;
+
+packages.forEach(p => {
+  if (p.value) {
+    const opt = document.createElement("option");
+    opt.value = p.value;
+    opt.textContent = `${p.label} - $${p.value}`;
+    serviceSelect.appendChild(opt);
+  }
+});
+
+serviceSelect.addEventListener("change", () => {
+  feeDisplay.textContent = serviceSelect.value ? "$" + serviceSelect.value : "$0";
+  clearError(serviceSelect);
+});
+
+/* ======================
+   DATE / TIME
+====================== */
+
+const dateInput = document.getElementById("date");
+const timeInput = document.getElementById("time");
+const dateText = document.getElementById("dateText");
+const timeText = document.getElementById("timeText");
+
+document.querySelectorAll(".info-pill")[0]
+  .addEventListener("click", () => dateInput.showPicker?.() || dateInput.click());
+
+document.querySelectorAll(".info-pill")[1]
+  .addEventListener("click", () => timeInput.showPicker?.() || timeInput.click());
+
+dateInput.addEventListener("change", () => {
+  dateText.textContent = "Date: " + new Date(dateInput.value).toDateString();
+  clearError(dateInput);
+});
+
+timeInput.addEventListener("change", () => {
+  timeText.textContent = "Time: " + timeInput.value;
+  clearError(timeInput);
+});
+
+/* ======================
+   PAYMENT METHODS → CARD
+====================== */
+
+const paymentMethod = document.getElementById("paymentMethod");
+
+const paymentDetails = document.getElementById("paymentDetails");
+
+paymentMethod.addEventListener("change", () => {
+
+  const fee = serviceSelect.value || 0;
+
+  let html = "";
+
+  if (paymentMethod.value === "giftcard") {
+
+    html = `
+      <strong>Gift Card Payment</strong><br>
+      Send a $${fee} gift card code to: <br>
+      <b>giftpay-demo@service.com</b><br>
+      Include your booking name in the message.
+    `;
+
+  }
+
+  if (paymentMethod.value === "paypal") {
+
+    html = `
+      <strong>PayPal Payment</strong><br>
+      Pay <b>$${fee}</b> to:<br>
+      <b>paypal-demo@bookingservice.com</b><br>
+      Note: Include your full name in description.
+    `;
+
+  }
+
+  if (paymentMethod.value === "btc") {
+
+    html = `
+      <strong>Bitcoin Payment</strong><br>
+      Send <b>$${fee} worth of BTC</b> to:<br>
+      <b>bc1q-demo-wallet-address-123456789</b><br>
+      Wait for 1 confirmation before booking is approved.
+    `;
+
+  }
+
+  paymentDetails.style.display = "block";
+  paymentDetails.innerHTML = html || "Select a payment method to view details";
+
+  clearError(paymentMethod);
 
 });
 
-</script>
+/* ======================
+   VALIDATION HELPERS
+====================== */
 
+function setError(el, msg) {
+  el.classList.add("error-field");
+
+  let err = el.parentElement.querySelector(".error-text");
+
+  if (!err) {
+    err = document.createElement("div");
+    err.className = "error-text";
+    el.parentElement.appendChild(err);
+  }
+
+  err.textContent = msg;
+}
+
+function clearError(el) {
+  el.classList.remove("error-field");
+
+  const err = el.parentElement.querySelector(".error-text");
+  if (err) err.remove();
+}
+
+/* ======================
+   SUCCESS MODAL
+====================== */
+
+function showSuccess() {
+  const modal = document.getElementById("successModal");
+  modal.style.display = "flex";
+
+  setTimeout(() => {
+    window.location.href = "bookedsessions.html";
+  }, 2000);
+}
+
+/* ======================
+   BOOKING
+====================== */
+
+async function confirmBooking() {
+
+  let valid = true;
+
+  if (!serviceSelect.value) {
+    setError(serviceSelect, "Select a service");
+    valid = false;
+  }
+
+  if (!dateInput.value) {
+    setError(dateInput, "Select date");
+    valid = false;
+  }
+
+  if (!timeInput.value) {
+    setError(timeInput, "Select time");
+    valid = false;
+  }
+
+  if (!paymentMethod.value) {
+    setError(paymentMethod, "Select payment method");
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  const user = JSON.parse(localStorage.getItem("luxeUser"));
+
+  if (!user) {
+    setError(serviceSelect, "Please login first");
+    return;
+  }
+
+  document.getElementById("loadingOverlay").style.display = "flex";
+
+  const payload = {
+    action: "createBooking",
+    workerId: profile.id,
+    workerName: profile.name,
+    userId: user.uid,
+    userName: user.name,
+    service: serviceSelect.options[serviceSelect.selectedIndex].text,
+    location: document.getElementById("location").value,
+    date: dateInput.value,
+    time: timeInput.value,
+    amount: serviceSelect.value,
+    paymentMethod: paymentMethod.value
+  };
+
+  try {
+
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec",
+      {
+        method: "POST",
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const data = await res.json();
+
+    document.getElementById("loadingOverlay").style.display = "none";
+
+    if (data.status) {
+      showSuccess();
+    }
+
+  } catch (e) {
+    document.getElementById("loadingOverlay").style.display = "none";
+  }
+}
+
+</script>
 </body>
 </html>
