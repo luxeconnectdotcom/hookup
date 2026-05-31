@@ -1,1182 +1,1162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LuxeConnect — Home</title>
 
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuxeConnect — Home</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #111827;
+            overflow-x: hidden;
+        }
+
+
+
+
+
+        /* MAIN */
+
+        .main-content {
+            padding: 130px 6% 60px;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+        }
+
+        .section-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* FILTERS */
+
+        .filters {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 35px;
+
+        }
+
+        .search-box,
+        .location-filter {
+            background: white;
+            border-radius: 20px;
+            padding: 0 18px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            background: transparent;
+        }
+
+        .location-filter select {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        /* GRID */
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 26px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 18px;
+            border: 1px solid #eef2f7;
+            transition: 0.35s ease;
+        }
+
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-info img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info h4 {
+            margin-bottom: 4px;
+        }
+
+        .profile-info span {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .follow-btn {
+            border: none;
+            background: #f3f4f6;
+            padding: 10px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .caption {
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .hashtags {
+            color: #8b5cf6;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .main-photo {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        .small-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        .small-grid img {
+            width: 100%;
+            height: 136px;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        .engagement {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: #f9fafb;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .booking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .booking-count {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.92rem;
+        }
+
+        .book-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(139, 92, 246, 0.25);
+        }
+
+        /* PAGINATION */
+
+        .pagination {
+            margin-top: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-btn {
+            border: none;
+            background: white;
+            padding: 14px 22px;
+            border-radius: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            border: none;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            color: white;
+            font-weight: 700;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #000;
+            padding: 80px 6% 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-brand p,
+        .footer-links a {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-links h4 {
+            color: #9ca6b9;
+            margin-bottom: 12px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1f2937;
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #6b7280;
+        }
+
+        button i {
+            pointer-events: none;
+        }
+
+
+        /* RESPONSIVE */
+
+
+
+        @media(max-width:650px) {
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .small-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .small-grid img {
+                height: 120px;
+            }
+
+            .main-photo {
+                height: 380px;
+            }
+
+
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+
 
   <style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Inter,sans-serif;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    body{
-      background:#f5f7fb;
-      color:#111827;
-      overflow-x:hidden;
-    }
-
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
-
-    /* NAVBAR */
-
-    .navbar{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      z-index:1000;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:12px 6%;
-      backdrop-filter:blur(18px);
-      background:rgba(255,255,255,0.75);
-      border-bottom:1px solid rgba(255,255,255,0.4);
-    }
-
-    .logo{
-      font-size:1.7rem;
-      font-weight:800;
-      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:28px;
-      color:#374151;
-      font-weight:600;
-    }
-
-    .top-right{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
-    /* ACCOUNT PILL */
-
-    .account-wrapper{
-      position:relative;
-    }
-
-    .account-pill{
-      border:none;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:10px 16px;
-      border-radius:999px;
-      background:white;
-      box-shadow:0 10px 30px rgba(0,0,0,0.08);
-      cursor:pointer;
-      font-weight:700;
-      color:#111827;
-    }
-
-    .account-pill i{
-      width:38px;
-      height:38px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg,#ff4d6d,#8b5cf6);
-      color:white;
-      font-size:0.95rem;
-    }
-
-    .dropdown{
-      position:absolute;
-      top:70px;
-      right:0;
-      width:220px;
-      background:white;
-      border-radius:24px;
-      padding:10px;
-      box-shadow:0 25px 50px rgba(0,0,0,0.15);
-      display:none;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    .dropdown.active{
-      display:flex;
-    }
-
-    .dropdown a{
-      padding:14px 16px;
-      border-radius:16px;
-      font-weight:600;
-      color:#374151;
-      transition:0.25s ease;
-    }
-
-    .dropdown a:hover{
-      background:#f3f4f6;
-    }
-
-    /* NOTIFICATION */
-
-    .mobile-nav-btn{
-      width:52px;
-      height:52px;
-      border:none;
-      border-radius:18px;
-      background:white;
-      font-size:1.15rem;
-      cursor:pointer;
-      position:relative;
-      box-shadow:0 10px 30px rgba(0,0,0,0.08);
-    }
-
-    .alert-dot::after{
-      content:'';
-      position:absolute;
-      top:10px;
-      right:10px;
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:#ff4d6d;
-    }
-
-    /* MENU */
-
-    .menu-toggle{
-      display:none;
-      width:52px;
-      height:52px;
-      border:none;
-      border-radius:18px;
-      background:white;
-      font-size:1.3rem;
-      cursor:pointer;
-      box-shadow:0 10px 30px rgba(0,0,0,0.08);
-      z-index: 20000;
-    }
-
-    /* MOBILE DRAWER */
-
-    .mobile-drawer{
-      position:fixed;
-      top:0;
-      right:-100%;
-      width:60%;
-      height:100dvh;
-      background:white;
-      z-index:9999;
-      padding:100px 26px 40px;
-      transition:0.35s ease;
-      overflow-y:auto;
-    }
-
-.mobile-drawer{
-  z-index: 9999;
-}
-
-.menu-toggle{
-  position: relative;
-  z-index: 10001;
-}
-
-    .mobile-drawer.active{
-      right:0;
-    }
-
-    .drawer-account{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:16px;
-      border-radius:22px;
-      background:#f8fafc;
-      margin-bottom:28px;
-      font-weight:700;
-    }
-
-    .drawer-account i{
-      width:45px;
-      height:45px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg,#ff4d6d,#8b5cf6);
-      color:white;
-    }
-
-    .mobile-drawer a{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:16px 0;
-      border-bottom:1px solid #eef2f7;
-      font-weight:600;
-      color:#374151;
-    }
-
-    .logout-btn{
-      margin-top:25px;
-      width:100%;
-      border:none;
-      padding:15px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-      color:white;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    body.drawer-open::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.4);
-      z-index:999;
-      backdrop-filter:blur(3px);
-    }
-
-    /* MAIN */
-
-    .main-content{
-      padding:130px 6% 60px;
-    }
-
-    .section-header{
-      margin-bottom:30px;
-    }
-
-    .section-header h1{
-      font-size:2.8rem;
-      margin-bottom:10px;
-    }
-
-    .section-header p{
-      color:#6b7280;
-      line-height:1.7;
-    }
-
-    /* FILTERS */
-
-    .filters{
-      display:flex;
-      gap:18px;
-      margin-bottom:35px;
-      
-    }
-
-    .search-box,
-    .location-filter{
-      background:white;
-      border-radius:20px;
-      padding:0 18px;
-      height:60px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .search-box{
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 6%;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
     }
 
-    .search-box input{
-      border:none;
-      outline:none;
-      width:100%;
-      font-size:1rem;
-      background:transparent;
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .location-filter select{
-      border:none;
-      outline:none;
-      background:transparent;
-      font-size:1rem;
-      font-weight:600;
-      color:#374151;
-      cursor:pointer;
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-weight: 500;
+      color: #374151;
     }
 
-    /* GRID */
-
-    .profiles-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
-      gap:26px;
+    .nav-buttons {
+      display: flex;
+      gap: 14px;
     }
 
-    .card{
-      background:white;
-      border-radius:28px;
-      padding:18px;
-      border:1px solid #eef2f7;
-      transition:0.35s ease;
+    .menu-toggle {
+      display: none;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 14px;
+      background: #f3f4f6;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #111827;
     }
 
-
-    .card-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:14px;
+    .mobile-buttons {
+      display: none;
     }
 
-    .profile-info{
-      display:flex;
-      align-items:center;
-      gap:12px;
+    .mobile-only{
+      display: none;
     }
 
-    .profile-info img{
-      width:52px;
-      height:52px;
-      border-radius:50%;
-      object-fit:cover;
-    }
+    @media (max-width: 900px) {
 
-    .profile-info h4{
-      margin-bottom:4px;
-    }
-
-    .profile-info span{
-      color:#6b7280;
-      font-size:0.85rem;
-    }
-
-    .follow-btn{
-      border:none;
-      background:#f3f4f6;
-      padding:10px 16px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    .caption{
-      color:#374151;
-      line-height:1.7;
-      margin-bottom:14px;
-      font-size:0.95rem;
-    }
-
-    .hashtags{
-      color:#8b5cf6;
-      font-weight:700;
-      margin-bottom:16px;
-      font-size:0.9rem;
-    }
-
-    .photo-grid{
-      display:grid;
-      grid-template-columns:1.6fr 1fr;
-      gap:8px;
-      margin-bottom:18px;
-    }
-
-    .main-photo{
-      width:100%;
-      height:280px;
-      object-fit:cover;
-      border-radius:18px;
-    }
-
-    .small-grid{
-      display:grid;
-      gap:8px;
-    }
-
-    .small-grid img{
-      width:100%;
-      height:136px;
-      object-fit:cover;
-      border-radius:18px;
-    }
-
-    .engagement{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:16px;
-    }
-
-    .actions{
-      display:flex;
-      gap:12px;
-    }
-
-    .action-btn{
-      padding:10px 16px;
-      border-radius:999px;
-      background:#f9fafb;
-      font-size:0.9rem;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    .booking-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .booking-count{
-      color:#6b7280;
-      font-weight:600;
-      font-size:0.92rem;
-    }
-
-    .book-btn{
-      border:none;
-      padding:12px 22px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-      color:white;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 12px 24px rgba(139,92,246,0.25);
-    }
-
-    /* PAGINATION */
-
-    .pagination{
-      margin-top:45px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:14px;
-    }
-
-    .page-btn{
-      border:none;
-      background:white;
-      padding:14px 22px;
-      border-radius:18px;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .page-number{
-      width:50px;
-      height:50px;
-      border-radius:16px;
-      border:none;
-      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-      color:white;
-      font-weight:700;
-    }
-
-    /* FOOTER */
-
-    footer{
-      background:#000;
-      padding:80px 6% 30px;
-      margin-top:80px;
-    }
-
-    .footer-grid{
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr 1fr;
-      gap:40px;
-      margin-bottom:50px;
-    }
-
-    .footer-brand h3{
-      font-size:2rem;
-      margin-bottom:16px;
-      background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .footer-brand p,
-    .footer-links a{
-      color:#6b7280;
-      line-height:1.8;
-    }
-
-    .footer-links{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
-
-    .footer-links h4{
-      color:#9ca6b9;
-      margin-bottom:12px;
-    }
-
-    .footer-bottom{
-      border-top:1px solid #1f2937;
-      padding-top:24px;
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      gap:15px;
-      color:#6b7280;
-    }
-
-button i {
-  pointer-events: none;
-}
-
-
-    /* RESPONSIVE */
-
-    @media(max-width:900px){
-
-.mobile-drawer a {
-  font-size: 0.95rem;
-  padding: 14px 0;
-}
-
-.filters{
-  flex-direction: column;
-}
-
-      .nav-links{
-        display:none;
+      .desktop-buttons .account-wrapper{
+        display: none;
       }
 
-      .account-wrapper{
-        display:none;
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .menu-toggle{
-        display:flex;
-        align-items:center;
-        justify-content:center;
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(18px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 70px 30px 40px;
+        gap: 24px;
+        transition: 0.4s ease;
+        z-index: 999;
       }
 
-      .section-header h1{
-        font-size:2.1rem;
+      .nav-links.active {
+        right: 0;
       }
-
-      .footer-grid{
-        grid-template-columns:1fr 1fr;
-      }
-
 
       .nav-links a {
-  font-size: 0.9rem;
-}
-
-.menu-toggle,
-.mobile-nav-btn {
-  width: 44px;
-  height: 44px;
-  font-size: 1rem;
-}
-
-.logo {
-  font-size: 1.4rem;
-}
-
-    }
-
-    @media(max-width:650px){
-
-      .photo-grid{
-        grid-template-columns:1fr;
+        font-size: 1.05rem;
+        font-weight: 600;
+        width: 100%;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
-      .small-grid{
-        grid-template-columns:1fr 1fr;
+      .mobile-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 14px;
       }
 
-      .small-grid img{
-        height:120px;
-      }
-
-      .main-photo{
-        height:380px;
-      }
-
-
-
-      .footer-grid{
-        grid-template-columns:1fr;
-      }
-
-      .pagination{
-        flex-wrap:wrap;
+      .mobile-buttons .btn {
+        width: 100%;
       }
     }
 
+    @media (max-width: 900px) {
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -320px;
+        width: 300px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 70px 30px 40px;
+        transition: right 0.35s ease;
+        z-index: 9999;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 14px;
+        background: #f3f4f6;
+        font-size: 1.4rem;
+        cursor: pointer;
+        z-index: 10000;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .mobile-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 14px;
+      }
+
+      .mobile-buttons .btn {
+        width: 100%;
+      }
+
+      .mobile-only{
+        display: block;
+      }
+
+      body.drawer-open::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        z-index: 999;
+        backdrop-filter: blur(3px);
+      }
+    }
+
+
+
+
+
+        /* ACCOUNT PILL */
+
+        .account-wrapper {
+            position: relative;
+        }
+
+        .account-pill {
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .account-pill i {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff4d6d, #8b5cf6);
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 220px;
+            background: white;
+            border-radius: 24px;
+            padding: 10px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dropdown.active {
+            display: flex;
+        }
+
+        .dropdown a {
+            padding: 14px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            color: #374151;
+            transition: 0.25s ease;
+        }
+
+        .dropdown a:hover {
+            background: #f3f4f6;
+        }
+
+        /* NOTIFICATION */
+
+        .mobile-nav-btn {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 18px;
+            background: white;
+            font-size: 1.15rem;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .alert-dot::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff4d6d;
+        }
+
+        .drawer-account {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 22px;
+            background: #f8fafc;
+            margin-bottom: 28px;
+            font-weight: 700;
+        }
+
+        .drawer-account i {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff4d6d, #8b5cf6);
+            color: white;
+        }
+
+
+        .logout-btn {
+            margin-top: 25px;
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media(max-width:900px) {
+
+
+            .menu-toggle,
+            .mobile-nav-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+        }
   </style>
+
 
 
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+    <!-- NAVBAR -->
+
 
   <nav class="navbar">
-
     <div class="logo">LuxeConnect</div>
 
-    <div class="nav-links">
-      <a href="#">Discover</a>
-      <a href="#">Trending</a>
-      <a href="#">Premium</a>
-      <a href="#">Safety</a>
-    </div>
+    <div class="nav-links" id="navLinks">
 
-    <div class="top-right">
+        <div class="mobile-buttons">
+          <div class="drawer-account">
+              <i class="fa-solid fa-user"></i>
 
-      <div class="account-wrapper">
+              <div>
+                  <div id="drawerUserName">Loading...</div>
 
-<button class="account-pill" id="accountBtn">
-  <i class="fa-solid fa-user"></i>
-  <span id="userFullName">Loading...</span>
-
-  <i class="fa-solid fa-chevron-down"
-    style="background:none;color:#6b7280;width:auto;height:auto;"></i>
-</button>
-
-        <div class="dropdown" id="dropdownMenu">
-          <a href="#"><i class="fa-regular fa-user"></i> Profile</a>
-          <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
-          <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
+                  <small style="color:#6b7280;" id="drawerUserEmail">
+                      loading@email.com
+                  </small>
+              </div>
+          </div>
         </div>
 
-      </div>
+        <a href="#"><i class="fa-solid fa-compass mobile-only"></i> Discover</a>
+        <a href="#"><i class="fa-solid fa-fire mobile-only"></i> Trending</a>
+        <a href="#"><i class="fa-solid fa-crown mobile-only"></i> Premium</a>
+        <a href="#"><i class="fa-solid fa-shield-halved mobile-only"></i> Safety</a>
+        <a href="#" class="mobile-only"><i class="fa-solid fa-gear"></i> Settings</a>     
 
-      <a href="bookedsessions.html">
-      <button class="mobile-nav-btn">
-        <i class="fa-solid fa-bookmark"></i>
-      </button>  
-    </a>    
 
-      <button class="mobile-nav-btn alert-dot">
-        <i class="fa-regular fa-bell"></i>
-      </button>
 
-      <div class="menu-toggle" id="menuToggle">
-        <i class="fa-solid fa-bars"></i>
+      <div class="mobile-buttons">
+
+        <button class="logout-btn">
+            Logout
+        </button>
+
       </div>
 
     </div>
 
+    <div class="nav-buttons desktop-buttons">
+            <div class="account-wrapper">
+
+                <button class="account-pill" id="accountBtn">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="userFullName">Loading...</span>
+
+                    <i class="fa-solid fa-chevron-down"
+                        style="background:none;color:#6b7280;width:auto;height:auto;"></i>
+                </button>
+
+                <div class="dropdown" id="dropdownMenu">
+                    <a href="#"><i class="fa-regular fa-user"></i> Profile</a>
+                    <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                    <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
+                </div>
+
+            </div>
+            
+            <a href="bookedsessions.html">
+                <button class="mobile-nav-btn">
+                    <i class="fa-solid fa-bookmark"></i>
+                </button>
+            </a>
+
+            <button class="mobile-nav-btn alert-dot">
+                <i class="fa-regular fa-bell"></i>
+            </button>            
+    </div>
+
+    <button class="menu-toggle" id="menuToggle">
+      ☰
+    </button>
   </nav>
 
-  <!-- MOBILE DRAWER -->
 
-  <div class="mobile-drawer" id="mobileDrawer">
+    <!-- MAIN -->
 
-<div class="drawer-account">
-  <i class="fa-solid fa-user"></i>
+    <main class="main-content">
+        <!-- PAGE NAVIGATION -->
 
-  <div>
-    <div id="drawerUserName">Loading...</div>
 
-    <small style="color:#6b7280;"
-      id="drawerUserEmail">
-      loading@email.com
-    </small>
-  </div>
-</div>
 
-    <a href="#"><i class="fa-solid fa-compass"></i> Discover</a>
-    <a href="#"><i class="fa-solid fa-fire"></i> Trending</a>
-    <a href="#"><i class="fa-solid fa-crown"></i> Premium</a>
-    <a href="#"><i class="fa-solid fa-shield-halved"></i> Safety</a>
-    <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
 
-    <button class="logout-btn">
-      Logout
-    </button>
+        <div class="section-header">
+            <h1>Available Profiles</h1>
+            <p>
+                Browse trending verified profiles currently available and accepting bookings.
+            </p>
+        </div>
 
-  </div>
+        <!-- FILTERS -->
 
+        <div class="filters">
 
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search profiles..." />
+            </div>
 
-  <!-- MAIN -->
+            <div class="location-filter">
+                <i class="fa-solid fa-location-dot"></i>
 
-  <main class="main-content">
-  <!-- PAGE NAVIGATION -->
+                <select id="locationSelect">
+                    <option>All Locations</option>
+                    <option>Dubai</option>
+                    <option>London</option>
+                    <option>Paris</option>
+                    <option>Tokyo</option>
+                    <option>New York</option>
+                </select>
+            </div>
 
+        </div>
 
 
 
-    <div class="section-header">
-      <h1>Available Profiles</h1>
-      <p>
-        Browse trending verified profiles currently available and accepting bookings.
-      </p>
-    </div>
+        <!-- GRID -->
 
-    <!-- FILTERS -->
+        <div class="profiles-grid" id="profilesGrid"></div>
 
-    <div class="filters">
+        <!-- PAGINATION -->
 
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search profiles..."
-        />
-      </div>
+        <div class="pagination">
+            <button class="page-btn">← Previous</button>
+            <button class="page-number">1</button>
+            <button class="page-btn">Next →</button>
+        </div>
 
-      <div class="location-filter">
-        <i class="fa-solid fa-location-dot"></i>
+    </main>
 
-        <select id="locationSelect">
-          <option>All Locations</option>
-          <option>Dubai</option>
-          <option>London</option>
-          <option>Paris</option>
-          <option>Tokyo</option>
-          <option>New York</option>
-        </select>
-      </div>
+    <!-- FOOTER -->
 
-    </div>
+    <footer>
 
-  
+        <div class="footer-grid">
 
-    <!-- GRID -->
+            <div class="footer-brand">
+                <h3>LuxeConnect</h3>
 
-    <div class="profiles-grid" id="profilesGrid"></div>
+                <p>
+                    A premium social booking and creator discovery platform designed
+                    with modern aesthetics, seamless interaction and elevated user experiences.
+                </p>
+            </div>
 
-    <!-- PAGINATION -->
+            <div class="footer-links">
+                <h4>Platform</h4>
+                <a href="#">Discover</a>
+                <a href="#">Creators</a>
+                <a href="#">Bookings</a>
+                <a href="#">Premium Access</a>
+            </div>
 
-    <div class="pagination">
-      <button class="page-btn">← Previous</button>
-      <button class="page-number">1</button>
-      <button class="page-btn">Next →</button>
-    </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Partnerships</a>
+            </div>
 
-  </main>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Community</a>
+                <a href="#">Terms & Privacy</a>
+                <a href="#">Contact</a>
+            </div>
 
-  <!-- FOOTER -->
+        </div>
 
-  <footer>
+        <div class="footer-bottom">
+            <div>© 2026 LuxeConnect. All rights reserved.</div>
+            <div>Designed for modern social discovery experiences.</div>
+        </div>
 
-    <div class="footer-grid">
+    </footer>
 
-      <div class="footer-brand">
-        <h3>LuxeConnect</h3>
 
-        <p>
-          A premium social booking and creator discovery platform designed
-          with modern aesthetics, seamless interaction and elevated user experiences.
-        </p>
-      </div>
 
-      <div class="footer-links">
-        <h4>Platform</h4>
-        <a href="#">Discover</a>
-        <a href="#">Creators</a>
-        <a href="#">Bookings</a>
-        <a href="#">Premium Access</a>
-      </div>
 
-      <div class="footer-links">
-        <h4>Company</h4>
-        <a href="#">About Us</a>
-        <a href="#">Careers</a>
-        <a href="#">Press</a>
-        <a href="#">Partnerships</a>
-      </div>
 
-      <div class="footer-links">
-        <h4>Support</h4>
-        <a href="#">Help Center</a>
-        <a href="#">Community</a>
-        <a href="#">Terms & Privacy</a>
-        <a href="#">Contact</a>
-      </div>
+    <script>
 
-    </div>
+        const SCRIPT_URL =
+            "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
 
-    <div class="footer-bottom">
-      <div>© 2026 LuxeConnect. All rights reserved.</div>
-      <div>Designed for modern social discovery experiences.</div>
-    </div>
+        /* ================================
+           GET USER FROM STORAGE
+        ================================ */
 
-  </footer>
+        let storedUser = localStorage.getItem("luxeUser");
 
+        if (!storedUser) {
+            window.location.href = "login.html";
+        }
 
+        let currentUser;
 
+        try {
+            currentUser = JSON.parse(storedUser);
+        } catch (e) {
+            localStorage.removeItem("luxeUser");
+            window.location.href = "login.html";
+        }
 
-  <!-- DROPDOWN -->
+        if (!currentUser?.uid || !currentUser?.email) {
+            localStorage.removeItem("luxeUser");
+            window.location.href = "login.html";
+        }
 
-  <script>
+        /* ================================
+           SAFE FETCH WRAPPER
+        ================================ */
 
-    const accountBtn = document.getElementById('accountBtn');
-    const dropdownMenu = document.getElementById('dropdownMenu');
+        async function postData(payload) {
 
-    accountBtn.addEventListener('click', () => {
-      dropdownMenu.classList.toggle('active');
-    });
+            const res = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
 
-    document.addEventListener('click', (e) => {
+            const text = await res.text();
+            console.log("RAW RESPONSE:", text);
 
-      if (
-        !accountBtn.contains(e.target) &&
-        !dropdownMenu.contains(e.target)
-      ) {
-        dropdownMenu.classList.remove('active');
-      }
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                throw new Error("Invalid server response: " + text);
+            }
+        }
 
-    });
+        /* ================================
+           LOAD USER PROFILE
+        ================================ */
 
-  </script>
+        async function loadUserProfile() {
 
-  <!-- MOBILE DRAWER -->
+            try {
 
-  <script>
+                const data = await postData({
+                    action: "getUser",
+                    uid: currentUser.uid
+                });
 
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileDrawer = document.getElementById('mobileDrawer');
+                if (!data || data.status !== true) {
+                    localStorage.removeItem("luxeUser");
+                    alert("Session expired. Please login again.");
+                    window.location.href = "login.html";
+                    return;
+                }
 
-    menuToggle.addEventListener('click', () => {
+                const user = data.user;
 
-      mobileDrawer.classList.toggle('active');
+                localStorage.setItem("luxeUser", JSON.stringify(user));
 
-      document.body.classList.toggle('drawer-open');
+                const setText = (id, value) => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = value;
+                };
 
-      menuToggle.innerHTML =
-        mobileDrawer.classList.contains('active')
-        ? '<i class="fa-solid fa-xmark"></i>'
-        : '<i class="fa-solid fa-bars"></i>';
+                setText("userFullName", user.name || "User");
+                setText("drawerUserName", user.name || "User");
+                setText("drawerUserEmail", user.email || "");
 
-    });
+                setText("profileName", user.name || "-");
+                setText("profileEmail", user.email || "-");
+                setText("profilePhone", user.phone || "-");
+                setText("profileCountry", user.country || "-");
 
-    document.addEventListener('click', (e) => {
+                setText("profileCredits", Number(user.credits || 0));
+                setText("profileFollowers", Number(user.followers || 0));
+                setText("profileLikes", Number(user.likes || 0));
+                setText("profileBookings", Number(user.bookings || 0));
 
-      const clickedDrawer = mobileDrawer.contains(e.target);
-      const clickedToggle = menuToggle.contains(e.target);
+                setText("profileStatus", user.statusAcc || "Active");
+                setText("profileVerified", user.verified ? "Verified" : "Unverified");
 
-      if (
-        !clickedDrawer &&
-        !clickedToggle &&
-        mobileDrawer.classList.contains('active')
-      ) {
+                loadNotifications(user.uid);
 
-        mobileDrawer.classList.remove('active');
-        document.body.classList.remove('drawer-open');
+            } catch (err) {
+                console.log(err);
+                alert("Unable to load account.");
+            }
+        }
 
-        menuToggle.innerHTML =
-          '<i class="fa-solid fa-bars"></i>';
+        /* ================================
+           LOAD NOTIFICATIONS
+        ================================ */
 
-      }
+        async function loadNotifications(uid) {
 
-    });
+            try {
 
-  </script>
+                const data = await postData({
+                    action: "getNotifications",
+                    uid
+                });
 
+                if (!data || !data.status) return;
 
-<script>
+                const notifications = data.notifications || [];
 
-const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+                const unreadCount = notifications.filter(n => n.status === "Unread").length;
 
-/* ================================
-   GET USER FROM STORAGE
-================================ */
+                const countEl = document.getElementById("notificationCount");
+                if (countEl) countEl.textContent = unreadCount;
 
-let storedUser = localStorage.getItem("luxeUser");
+                const listEl = document.getElementById("notificationList");
 
-if (!storedUser) {
-  window.location.href = "login.html";
-}
+                if (listEl) {
 
-let currentUser;
+                    if (notifications.length === 0) {
+                        listEl.innerHTML = `<div class="empty-notification">No notifications yet</div>`;
+                        return;
+                    }
 
-try {
-  currentUser = JSON.parse(storedUser);
-} catch (e) {
-  localStorage.removeItem("luxeUser");
-  window.location.href = "login.html";
-}
-
-if (!currentUser?.uid || !currentUser?.email) {
-  localStorage.removeItem("luxeUser");
-  window.location.href = "login.html";
-}
-
-/* ================================
-   SAFE FETCH WRAPPER
-================================ */
-
-async function postData(payload) {
-
-  const res = await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-  });
-
-  const text = await res.text();
-  console.log("RAW RESPONSE:", text);
-
-  try {
-    return JSON.parse(text);
-  } catch (err) {
-    throw new Error("Invalid server response: " + text);
-  }
-}
-
-/* ================================
-   LOAD USER PROFILE
-================================ */
-
-async function loadUserProfile() {
-
-  try {
-
-    const data = await postData({
-      action: "getUser",
-      uid: currentUser.uid
-    });
-
-    if (!data || data.status !== true) {
-      localStorage.removeItem("luxeUser");
-      alert("Session expired. Please login again.");
-      window.location.href = "login.html";
-      return;
-    }
-
-    const user = data.user;
-
-    localStorage.setItem("luxeUser", JSON.stringify(user));
-
-    const setText = (id, value) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = value;
-    };
-
-    setText("userFullName", user.name || "User");
-    setText("drawerUserName", user.name || "User");
-    setText("drawerUserEmail", user.email || "");
-
-    setText("profileName", user.name || "-");
-    setText("profileEmail", user.email || "-");
-    setText("profilePhone", user.phone || "-");
-    setText("profileCountry", user.country || "-");
-
-    setText("profileCredits", Number(user.credits || 0));
-    setText("profileFollowers", Number(user.followers || 0));
-    setText("profileLikes", Number(user.likes || 0));
-    setText("profileBookings", Number(user.bookings || 0));
-
-    setText("profileStatus", user.statusAcc || "Active");
-    setText("profileVerified", user.verified ? "Verified" : "Unverified");
-
-    loadNotifications(user.uid);
-
-  } catch (err) {
-    console.log(err);
-    alert("Unable to load account.");
-  }
-}
-
-/* ================================
-   LOAD NOTIFICATIONS
-================================ */
-
-async function loadNotifications(uid) {
-
-  try {
-
-    const data = await postData({
-      action: "getNotifications",
-      uid
-    });
-
-    if (!data || !data.status) return;
-
-    const notifications = data.notifications || [];
-
-    const unreadCount = notifications.filter(n => n.status === "Unread").length;
-
-    const countEl = document.getElementById("notificationCount");
-    if (countEl) countEl.textContent = unreadCount;
-
-    const listEl = document.getElementById("notificationList");
-
-    if (listEl) {
-
-      if (notifications.length === 0) {
-        listEl.innerHTML = `<div class="empty-notification">No notifications yet</div>`;
-        return;
-      }
-
-      listEl.innerHTML = notifications.map(n => `
+                    listEl.innerHTML = notifications.map(n => `
         <div class="notification-item">
           <div class="notification-title">${n.title}</div>
           <div class="notification-message">${n.message}</div>
           <div class="notification-date">${new Date(n.date).toLocaleString()}</div>
         </div>
       `).join("");
-    }
+                }
 
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-
+            } catch (err) {
+                console.log(err);
+            }
+        }
 
 
-/* ================================
-   LOAD PROFILES
-================================ */
-
-async function loadProfiles() {
-
-  try {
-
-    const data = await postData({
-      action: "getProfiles"
-    });
-
-    console.log("PROFILES:", data);
-
-    if (!data || !data.status) {
-      console.log("No profiles returned");
-      return;
-    }
-
-    allProfiles = data.profiles || [];
-
-populateLocationFilter(allProfiles);
-
-renderProfiles(allProfiles);
-
-  } catch (err) {
-
-    console.log("Failed to load profiles", err);
-
-  }
-
-}
 
 
-function populateLocationFilter(profiles) {
+        /* ================================
+           LOAD PROFILES
+        ================================ */
 
-  const select =
-    document.getElementById("locationSelect");
+        async function loadProfiles() {
 
-  if (!select) return;
+            try {
 
-  const locations = new Set();
+                const data = await postData({
+                    action: "getProfiles"
+                });
 
-  profiles.forEach(profile => {
+                console.log("PROFILES:", data);
 
-    if (!profile.status) return;
+                if (!data || !data.status) {
+                    console.log("No profiles returned");
+                    return;
+                }
 
-    // "Dubai • Verified" -> Dubai
-    const location =
-      profile.status.split("•")[0].trim();
+                allProfiles = data.profiles || [];
 
-    if (location) {
-      locations.add(location);
-    }
+                populateLocationFilter(allProfiles);
 
-  });
+                renderProfiles(allProfiles);
 
-  select.innerHTML =
-    `<option value="all">All Locations</option>`;
+            } catch (err) {
 
-  [...locations]
-    .sort()
-    .forEach(location => {
+                console.log("Failed to load profiles", err);
 
-      select.innerHTML += `
+            }
+
+        }
+
+
+        function populateLocationFilter(profiles) {
+
+            const select =
+                document.getElementById("locationSelect");
+
+            if (!select) return;
+
+            const locations = new Set();
+
+            profiles.forEach(profile => {
+
+                if (!profile.status) return;
+
+                // "Dubai • Verified" -> Dubai
+                const location =
+                    profile.status.split("•")[0].trim();
+
+                if (location) {
+                    locations.add(location);
+                }
+
+            });
+
+            select.innerHTML =
+                `<option value="all">All Locations</option>`;
+
+            [...locations]
+                .sort()
+                .forEach(location => {
+
+                    select.innerHTML += `
         <option value="${location}">
           ${location}
         </option>
       `;
 
-    });
+                });
 
-}
-
-
-function filterProfiles() {
-
-  const searchText =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase()
-    .trim();
-
-  const location =
-    document.getElementById("locationSelect")
-    .value;
-
-  const filtered = allProfiles.filter(profile => {
-
-    const locationName =
-      (profile.status || "")
-      .split("•")[0]
-      .trim();
-
-    const matchesSearch =
-
-      (profile.name || "")
-      .toLowerCase()
-      .includes(searchText)
-
-      ||
-
-      (profile.caption || "")
-      .toLowerCase()
-      .includes(searchText)
-
-      ||
-
-      (profile.hashtags || "")
-      .toLowerCase()
-      .includes(searchText);
-
-    const matchesLocation =
-
-      location === "all"
-
-      ||
-
-      locationName === location;
-
-    return matchesSearch && matchesLocation;
-
-  });
-
-  renderProfiles(filtered);
-
-}
+        }
 
 
-function renderProfiles(profiles) {
+        function filterProfiles() {
 
-  const profilesGrid =
-  document.getElementById("profilesGrid");
+            const searchText =
+                document.getElementById("searchInput")
+                    .value
+                    .toLowerCase()
+                    .trim();
 
-  profilesGrid.innerHTML = "";
+            const location =
+                document.getElementById("locationSelect")
+                    .value;
 
-  if (!profiles || profiles.length === 0) {
+            const filtered = allProfiles.filter(profile => {
 
-    profilesGrid.innerHTML = `
+                const locationName =
+                    (profile.status || "")
+                        .split("•")[0]
+                        .trim();
+
+                const matchesSearch =
+
+                    (profile.name || "")
+                        .toLowerCase()
+                        .includes(searchText)
+
+                    ||
+
+                    (profile.caption || "")
+                        .toLowerCase()
+                        .includes(searchText)
+
+                    ||
+
+                    (profile.hashtags || "")
+                        .toLowerCase()
+                        .includes(searchText);
+
+                const matchesLocation =
+
+                    location === "all"
+
+                    ||
+
+                    locationName === location;
+
+                return matchesSearch && matchesLocation;
+
+            });
+
+            renderProfiles(filtered);
+
+        }
+
+
+        function renderProfiles(profiles) {
+
+            const profilesGrid =
+                document.getElementById("profilesGrid");
+
+            profilesGrid.innerHTML = "";
+
+            if (!profiles || profiles.length === 0) {
+
+                profilesGrid.innerHTML = `
       <div style="
         grid-column:1/-1;
         text-align:center;
@@ -1186,22 +1166,22 @@ function renderProfiles(profiles) {
       </div>
     `;
 
-    return;
-  }
+                return;
+            }
 
-  profiles.forEach(profile => {
+            profiles.forEach(profile => {
 
-    const photos = profile.photos || [];
+                const photos = profile.photos || [];
 
-    const photo1 = photos[0] || profile.avatar;
-    const photo2 = photos[1] || profile.avatar;
-    const photo3 = photos[2] || profile.avatar;
+                const photo1 = photos[0] || profile.avatar;
+                const photo2 = photos[1] || profile.avatar;
+                const photo3 = photos[2] || profile.avatar;
 
-    const card = document.createElement("div");
+                const card = document.createElement("div");
 
-    card.className = "card";
+                card.className = "card";
 
-    card.innerHTML = `
+                card.innerHTML = `
       <div class="card-top">
 
         <div class="profile-info">
@@ -1281,104 +1261,159 @@ function renderProfiles(profiles) {
 
 
 
-    profilesGrid.appendChild(card);
+                profilesGrid.appendChild(card);
 
 
-    
 
-  });
 
-}
+            });
 
-function openBooking(profile) {
+        }
 
-  const normalizedProfile = {
-    id: profile.id,
-    name: profile.name,
-    status: profile.status,
-    avatar: profile.avatar,
-    caption: profile.caption,
-    hashtags: profile.hashtags,
-    likes: profile.likes,
-    bookings: profile.bookings,
-    photos: profile.photos,
+        function openBooking(profile) {
 
-    location: profile.location || profile.status?.split("•")[0].trim(),
+            const normalizedProfile = {
+                id: profile.id,
+                name: profile.name,
+                status: profile.status,
+                avatar: profile.avatar,
+                caption: profile.caption,
+                hashtags: profile.hashtags,
+                likes: profile.likes,
+                bookings: profile.bookings,
+                photos: profile.photos,
 
-    lowPrice: profile.lowPrice,
-    basicPrice: profile.basicPrice,
-    mediumPrice: profile.mediumPrice,
-    standardPrice: profile.standardPrice,
-    premiumPrice: profile.premiumPrice
-  };
+                location: profile.location || profile.status?.split("•")[0].trim(),
 
-  localStorage.setItem(
-    "selectedProfile",
-    JSON.stringify(normalizedProfile)
-  );
+                lowPrice: profile.lowPrice,
+                basicPrice: profile.basicPrice,
+                mediumPrice: profile.mediumPrice,
+                standardPrice: profile.standardPrice,
+                premiumPrice: profile.premiumPrice
+            };
 
-  window.location.href = "book.html";
-}
+            localStorage.setItem(
+                "selectedProfile",
+                JSON.stringify(normalizedProfile)
+            );
 
-/* ================================
-   LOGOUT
-================================ */
+            window.location.href = "book.html";
+        }
 
-function logout() {
-  localStorage.removeItem("luxeUser");
-  window.location.href = "login.html";
-}
+        /* ================================
+           LOGOUT
+        ================================ */
 
-document.querySelectorAll(".logout-btn")
-.forEach(btn => btn.addEventListener("click", logout));
+        function logout() {
+            localStorage.removeItem("luxeUser");
+            window.location.href = "login.html";
+        }
 
-document.querySelectorAll("#dropdownMenu a")
-.forEach(link => {
-  if (link.textContent.toLowerCase().includes("sign out")) {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      logout();
+        document.querySelectorAll(".logout-btn")
+            .forEach(btn => btn.addEventListener("click", logout));
+
+        document.querySelectorAll("#dropdownMenu a")
+            .forEach(link => {
+                if (link.textContent.toLowerCase().includes("sign out")) {
+                    link.addEventListener("click", e => {
+                        e.preventDefault();
+                        logout();
+                    });
+                }
+            });
+
+        /* ================================
+           INIT
+        ================================ */
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const search =
+                document.getElementById("searchInput");
+
+            const location =
+                document.getElementById("locationSelect");
+
+            if (search) {
+                search.addEventListener("input", filterProfiles);
+            }
+
+            if (location) {
+                location.addEventListener("change", filterProfiles);
+            }
+
+        });
+
+
+        loadUserProfile();
+        loadProfiles();
+
+
+
+    </script>
+
+
+    <!-- MOBILE DRAWER -->
+
+    <!-- DROPDOWN -->
+
+    <script>
+
+        const accountBtn = document.getElementById('accountBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        accountBtn.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+
+            if (
+                !accountBtn.contains(e.target) &&
+                !dropdownMenu.contains(e.target)
+            ) {
+                dropdownMenu.classList.remove('active');
+            }
+
+        });
+
+    </script>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      document.body.classList.toggle('drawer-open');
+
+      menuToggle.innerHTML = navLinks.classList.contains('active')
+        ? '✕'
+        : '☰';
     });
-  }
-});
 
-/* ================================
-   INIT
-================================ */
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+        menuToggle.innerHTML = '☰';
+      });
+    });
 
+    // close drawer when clicking outside
+    document.addEventListener('click', (e) => {
+      const clickedInsideDrawer = navLinks.contains(e.target);
+      const clickedToggle = menuToggle.contains(e.target);
 
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const search =
-    document.getElementById("searchInput");
-
-  const location =
-    document.getElementById("locationSelect");
-
-  if (search) {
-    search.addEventListener("input", filterProfiles);
-  }
-
-  if (location) {
-    location.addEventListener("change", filterProfiles);
-  }
-
-});
-
-
-loadUserProfile();
-loadProfiles();
-
-
-
-</script>
-
-
-
-
-
-
+      if (!clickedInsideDrawer && !clickedToggle && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+        menuToggle.innerHTML = '☰';
+      }
+    });
+  </script>
 
 
 
