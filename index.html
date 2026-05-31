@@ -897,15 +897,11 @@
         and Satisfaction in one elegant platform built to satisfy your urges.
       </p>
 
-      <div class="hero-buttons"> 
-        <a href="login.html"> 
-        <button class="btn btn-primary">Start Exploring</button>
-        </a>
-        <a href="login.html"> 
+      <div class="hero-buttons">
+        <button class="btn btn-primary" >Start Exploring</button>
         <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.3);">
           Watch Demo
         </button>
-        </a>
       </div>
     </div>
 <!--
@@ -1141,6 +1137,18 @@
 
   // OPEN MODAL
   document.addEventListener('click', (e) => {
+
+
+    // PRIMARY BUTTON
+    if (e.target.classList.contains('btn-primary')) {
+      authModal.classList.add('active');
+    }
+
+    // OUTLINE BUTTON
+    if (e.target.classList.contains('btn-outline')) {
+      authModal.classList.add('active');
+    }
+
 
     // FOLLOW BUTTON
     if (e.target.classList.contains('follow-btn')) {
