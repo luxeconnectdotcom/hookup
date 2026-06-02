@@ -589,18 +589,17 @@ html,body{
 
 
 
+
 <script>
 
-const profile =
-JSON.parse(localStorage.getItem("selectedProfile"));
+const profile = JSON.parse(localStorage.getItem("selectedProfile"));
 
 if (!profile) {
-  alert("Profile not found");
   window.location.href = "dashboard.html";
 }
 
 /* ======================
-   BASIC PROFILE FIELDS
+   PROFILE
 ====================== */
 
 document.getElementById("name").textContent = profile.name || "";
@@ -609,20 +608,12 @@ document.getElementById("likes").textContent = profile.likes || 0;
 document.getElementById("followers").textContent = profile.followers || 0;
 document.getElementById("hashtags").textContent = profile.hashtags || "";
 
-/* ======================
-   LOCATION
-====================== */
-
 const locationValue =
   profile.location ||
   (profile.status ? profile.status.split("•")[0].trim() : "");
 
 document.getElementById("profileLocation").textContent =
   locationValue || "Not specified";
-
-/* ======================
-   PRICE DISPLAY
-====================== */
 
 const lowestPrice =
   profile.lowPrice ||
@@ -646,28 +637,20 @@ document.getElementById("coverImg").src =
     : profile.avatar || "";
 
 /* ======================
-   PHOTO GRID
+   GALLERY
 ====================== */
 
 const gallery = document.getElementById("gallery");
 gallery.innerHTML = "";
 
-if (profile.photos && profile.photos.length > 0) {
-
-  profile.photos.forEach(photo => {
-    const img = document.createElement("img");
-    img.src = photo;
-    gallery.appendChild(img);
-  });
-
-} else if (profile.avatar) {
+(profile.photos || []).forEach(p => {
   const img = document.createElement("img");
-  img.src = profile.avatar;
+  img.src = p;
   gallery.appendChild(img);
-}
+});
 
 /* ======================
-   SERVICE → PRICE LOGIC
+   SERVICE → PRICE
 ====================== */
 
 const serviceSelect = document.getElementById("service");
@@ -681,68 +664,137 @@ const packages = [
   { label: "Premium", value: profile.premiumPrice }
 ];
 
-serviceSelect.innerHTML =
-  `<option value="">Select Service / Package</option>`;
+serviceSelect.innerHTML = `<option value="">Select Service / Package</option>`;
 
-packages.forEach(pkg => {
-  if (pkg.value !== undefined && pkg.value !== null && pkg.value !== "") {
-
-    const option = document.createElement("option");
-    option.value = pkg.value;
-    option.textContent = `${pkg.label} - $${pkg.value}`;
-    serviceSelect.appendChild(option);
-
+packages.forEach(p => {
+  if (p.value) {
+    const opt = document.createElement("option");
+    opt.value = p.value;
+    opt.textContent = `${p.label} - $${p.value}`;
+    serviceSelect.appendChild(opt);
   }
 });
 
-serviceSelect.addEventListener("change", function () {
-  feeDisplay.textContent = this.value ? "$" + this.value : "$0";
+serviceSelect.addEventListener("change", () => {
+  feeDisplay.textContent = serviceSelect.value ? "$" + serviceSelect.value : "$0";
+  clearError(serviceSelect);
 });
 
 /* ======================
-   DATE / TIME (FIXED UX)
+   DATE / TIME
 ====================== */
 
 const dateInput = document.getElementById("date");
 const timeInput = document.getElementById("time");
-
 const dateText = document.getElementById("dateText");
 const timeText = document.getElementById("timeText");
 
-/* FIX: direct element binding (no nth-child hacks) */
 document.querySelectorAll(".info-pill")[0]
-  .addEventListener("click", () => {
-    dateInput.showPicker?.() || dateInput.click();
-  });
+  .addEventListener("click", () => dateInput.showPicker?.() || dateInput.click());
 
 document.querySelectorAll(".info-pill")[1]
-  .addEventListener("click", () => {
-    timeInput.showPicker?.() || timeInput.click();
-  });
+  .addEventListener("click", () => timeInput.showPicker?.() || timeInput.click());
 
 dateInput.addEventListener("change", () => {
-  const formatted = new Date(dateInput.value).toDateString();
-  dateText.textContent = "Date: " + formatted;
+  dateText.textContent = "Date: " + new Date(dateInput.value).toDateString();
+  clearError(dateInput);
 });
 
 timeInput.addEventListener("change", () => {
   timeText.textContent = "Time: " + timeInput.value;
+  clearError(timeInput);
 });
+
+/* ======================
+   PAYMENT METHODS → CARD
+====================== */
+
+const paymentMethod = document.getElementById("paymentMethod");
+
+const paymentDetails = document.getElementById("paymentDetails");
+
+paymentMethod.addEventListener("change", () => {
+
+  const fee = serviceSelect.value || 0;
+
+  let html = "";
+
+  if (paymentMethod.value === "giftcard") {
+
+    html = `
+      <strong>Gift Card Payment</strong><br>
+      Send a $${fee} gift card code to: <br>
+      <b>giftpay-demo@service.com</b><br>
+      Include your booking name in the message.
+    `;
+
+  }
+
+  if (paymentMethod.value === "paypal") {
+
+    html = `
+      <strong>PayPal Payment</strong><br>
+      Pay <b>$${fee}</b> to:<br>
+      <b>paypal-demo@bookingservice.com</b><br>
+      Note: Include your full name in description.
+    `;
+
+  }
+
+  if (paymentMethod.value === "btc") {
+
+    html = `
+      <strong>Bitcoin Payment</strong><br>
+      Send <b>$${fee} worth of BTC</b> to:<br>
+      <b>bc1q-demo-wallet-address-123456789</b><br>
+      Wait for 1 confirmation before booking is approved.
+    `;
+
+  }
+
+  paymentDetails.style.display = "block";
+  paymentDetails.innerHTML = html || "Select a payment method to view details";
+
+  clearError(paymentMethod);
+
+});
+
+/* ======================
+   VALIDATION HELPERS
+====================== */
+
+function setError(el, msg) {
+  el.classList.add("error-field");
+
+  let err = el.parentElement.querySelector(".error-text");
+
+  if (!err) {
+    err = document.createElement("div");
+    err.className = "error-text";
+    el.parentElement.appendChild(err);
+  }
+
+  err.textContent = msg;
+}
+
+function clearError(el) {
+  el.classList.remove("error-field");
+
+  const err = el.parentElement.querySelector(".error-text");
+  if (err) err.remove();
+}
 
 /* ======================
    SUCCESS MODAL
 ====================== */
 
-function showSuccessModal() {
-
+function showSuccess() {
   const modal = document.getElementById("successModal");
   modal.style.display = "flex";
 
   setTimeout(() => {
-    modal.style.display = "none";
     window.location.href = "bookedsessions.html";
-  }, 1800);
-
+  }, 2000);
 }
 
 /* ======================
@@ -751,16 +803,34 @@ function showSuccessModal() {
 
 async function confirmBooking() {
 
+  let valid = true;
+
+  if (!serviceSelect.value) {
+    setError(serviceSelect, "Select a service");
+    valid = false;
+  }
+
+  if (!dateInput.value) {
+    setError(dateInput, "Select date");
+    valid = false;
+  }
+
+  if (!timeInput.value) {
+    setError(timeInput, "Select time");
+    valid = false;
+  }
+
+  if (!paymentMethod.value) {
+    setError(paymentMethod, "Select payment method");
+    valid = false;
+  }
+
+  if (!valid) return;
+
   const user = JSON.parse(localStorage.getItem("luxeUser"));
 
   if (!user) {
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  if (!serviceSelect.value || !dateInput.value || !timeInput.value) {
-    alert("Please complete all booking fields");
+    setError(serviceSelect, "Please login first");
     return;
   }
 
@@ -776,7 +846,8 @@ async function confirmBooking() {
     location: document.getElementById("location").value,
     date: dateInput.value,
     time: timeInput.value,
-    amount: serviceSelect.value
+    amount: serviceSelect.value,
+    paymentMethod: paymentMethod.value
   };
 
   try {
@@ -794,15 +865,11 @@ async function confirmBooking() {
     document.getElementById("loadingOverlay").style.display = "none";
 
     if (data.status) {
-      showSuccessModal();
-    } else {
-      alert(data.message || "Booking failed");
+      showSuccess();
     }
 
-  } catch (err) {
+  } catch (e) {
     document.getElementById("loadingOverlay").style.display = "none";
-    console.error(err);
-    alert("Network error");
   }
 }
 
