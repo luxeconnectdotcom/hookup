@@ -590,132 +590,264 @@ html,body{
 
 
 
+
 <script>
 
-const profile = JSON.parse(localStorage.getItem("selectedProfile"));
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
 
-if (!profile) {
-  window.location.href = "dashboard.html";
+let profile = null;
+
+/* ======================
+   LOAD PROFILE
+====================== */
+
+async function initProfile() {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileId = urlParams.get("id");
+
+  try {
+
+    // Shared link
+    if (profileId) {
+
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "getProfiles"
+        })
+      });
+
+      const data = await res.json();
+
+      profile = (data.profiles || []).find(
+        p => String(p.id) === String(profileId)
+      );
+
+      if (!profile) {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      localStorage.setItem(
+        "selectedProfile",
+        JSON.stringify(profile)
+      );
+
+    } else {
+
+      profile = JSON.parse(
+        localStorage.getItem("selectedProfile")
+      );
+
+      if (!profile) {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+    }
+
+    renderProfile(profile);
+
+  } catch (err) {
+
+    console.log(err);
+    window.location.href = "dashboard.html";
+
+  }
+
 }
 
 /* ======================
-   PROFILE
+   RENDER PROFILE
 ====================== */
 
-document.getElementById("name").textContent = profile.name || "";
-document.getElementById("bio").textContent = profile.caption || "";
-document.getElementById("likes").textContent = profile.likes || 0;
-document.getElementById("followers").textContent = profile.followers || 0;
-document.getElementById("hashtags").textContent = profile.hashtags || "";
+function renderProfile(profile) {
 
-const locationValue =
-  profile.location ||
-  (profile.status ? profile.status.split("•")[0].trim() : "");
+  document.getElementById("name").textContent =
+    profile.name || "";
 
-document.getElementById("profileLocation").textContent =
-  locationValue || "Not specified";
+  document.getElementById("bio").textContent =
+    profile.caption || "";
 
-const lowestPrice =
-  profile.lowPrice ||
-  profile.basicPrice ||
-  profile.mediumPrice ||
-  profile.standardPrice ||
-  profile.premiumPrice;
+  document.getElementById("likes").textContent =
+    profile.likes || 0;
 
-document.getElementById("profilePrice").textContent =
-  lowestPrice ? "$" + lowestPrice : "Not specified";
+  document.getElementById("followers").textContent =
+    profile.followers || 0;
+
+  document.getElementById("hashtags").textContent =
+    profile.hashtags || "";
+
+  const locationValue =
+    profile.location ||
+    (profile.status
+      ? profile.status.split("•")[0].trim()
+      : "");
+
+  document.getElementById("profileLocation").textContent =
+    locationValue || "Not specified";
+
+  const lowestPrice =
+    profile.lowPrice ||
+    profile.basicPrice ||
+    profile.mediumPrice ||
+    profile.standardPrice ||
+    profile.premiumPrice;
+
+  document.getElementById("profilePrice").textContent =
+    lowestPrice
+      ? "$" + lowestPrice
+      : "Not specified";
+
+  /* IMAGES */
+
+  document.getElementById("avatar").src =
+    profile.avatar || "";
+
+  document.getElementById("coverImg").src =
+    (profile.photos && profile.photos.length)
+      ? profile.photos[0]
+      : profile.avatar || "";
+
+  /* GALLERY */
+
+  const gallery =
+    document.getElementById("gallery");
+
+  gallery.innerHTML = "";
+
+  (profile.photos || []).forEach(p => {
+
+    const img =
+      document.createElement("img");
+
+    img.src = p;
+
+    gallery.appendChild(img);
+
+  });
+
+  /* SERVICES */
+
+  serviceSelect.innerHTML =
+    `<option value="">Select Service / Package</option>`;
+
+  const packages = [
+
+    { label: "Low", value: profile.lowPrice },
+    { label: "Basic", value: profile.basicPrice },
+    { label: "Medium", value: profile.mediumPrice },
+    { label: "Standard", value: profile.standardPrice },
+    { label: "Premium", value: profile.premiumPrice }
+
+  ];
+
+  packages.forEach(p => {
+
+    if (p.value) {
+
+      const opt =
+        document.createElement("option");
+
+      opt.value = p.value;
+
+      opt.textContent =
+        `${p.label} - $${p.value}`;
+
+      serviceSelect.appendChild(opt);
+
+    }
+
+  });
+
+}
 
 /* ======================
-   IMAGES
+   FORM ELEMENTS
 ====================== */
 
-document.getElementById("avatar").src = profile.avatar || "";
+const serviceSelect =
+  document.getElementById("service");
 
-document.getElementById("coverImg").src =
-  (profile.photos && profile.photos.length)
-    ? profile.photos[0]
-    : profile.avatar || "";
+const feeDisplay =
+  document.getElementById("feeDisplay");
+
+const dateInput =
+  document.getElementById("date");
+
+const timeInput =
+  document.getElementById("time");
+
+const dateText =
+  document.getElementById("dateText");
+
+const timeText =
+  document.getElementById("timeText");
+
+const paymentMethod =
+  document.getElementById("paymentMethod");
+
+const paymentDetails =
+  document.getElementById("paymentDetails");
 
 /* ======================
-   GALLERY
+   SERVICE PRICE
 ====================== */
-
-const gallery = document.getElementById("gallery");
-gallery.innerHTML = "";
-
-(profile.photos || []).forEach(p => {
-  const img = document.createElement("img");
-  img.src = p;
-  gallery.appendChild(img);
-});
-
-/* ======================
-   SERVICE → PRICE
-====================== */
-
-const serviceSelect = document.getElementById("service");
-const feeDisplay = document.getElementById("feeDisplay");
-
-const packages = [
-  { label: "Low", value: profile.lowPrice },
-  { label: "Basic", value: profile.basicPrice },
-  { label: "Medium", value: profile.mediumPrice },
-  { label: "Standard", value: profile.standardPrice },
-  { label: "Premium", value: profile.premiumPrice }
-];
-
-serviceSelect.innerHTML = `<option value="">Select Service / Package</option>`;
-
-packages.forEach(p => {
-  if (p.value) {
-    const opt = document.createElement("option");
-    opt.value = p.value;
-    opt.textContent = `${p.label} - $${p.value}`;
-    serviceSelect.appendChild(opt);
-  }
-});
 
 serviceSelect.addEventListener("change", () => {
-  feeDisplay.textContent = serviceSelect.value ? "$" + serviceSelect.value : "$0";
+
+  feeDisplay.textContent =
+    serviceSelect.value
+      ? "$" + serviceSelect.value
+      : "$0";
+
   clearError(serviceSelect);
+
 });
 
 /* ======================
    DATE / TIME
 ====================== */
 
-const dateInput = document.getElementById("date");
-const timeInput = document.getElementById("time");
-const dateText = document.getElementById("dateText");
-const timeText = document.getElementById("timeText");
-
 document.querySelectorAll(".info-pill")[0]
-  .addEventListener("click", () => dateInput.showPicker?.() || dateInput.click());
+  .addEventListener("click", () =>
+    dateInput.showPicker?.() || dateInput.click()
+  );
 
 document.querySelectorAll(".info-pill")[1]
-  .addEventListener("click", () => timeInput.showPicker?.() || timeInput.click());
+  .addEventListener("click", () =>
+    timeInput.showPicker?.() || timeInput.click()
+  );
 
 dateInput.addEventListener("change", () => {
-  dateText.textContent = "Date: " + new Date(dateInput.value).toDateString();
+
+  dateText.textContent =
+    "Date: " +
+    new Date(dateInput.value).toDateString();
+
   clearError(dateInput);
+
 });
 
 timeInput.addEventListener("change", () => {
-  timeText.textContent = "Time: " + timeInput.value;
+
+  timeText.textContent =
+    "Time: " + timeInput.value;
+
   clearError(timeInput);
+
 });
 
 /* ======================
-   PAYMENT METHODS → CARD
+   PAYMENT METHODS
 ====================== */
-
-const paymentMethod = document.getElementById("paymentMethod");
-
-const paymentDetails = document.getElementById("paymentDetails");
 
 paymentMethod.addEventListener("change", () => {
 
-  const fee = serviceSelect.value || 0;
+  const fee =
+    serviceSelect.value || 0;
 
   let html = "";
 
@@ -723,7 +855,7 @@ paymentMethod.addEventListener("change", () => {
 
     html = `
       <strong>Gift Card Payment</strong><br>
-      Send a $${fee} gift card code to: <br>
+      Send a $${fee} gift card code to:<br>
       <b>giftpay-demo@service.com</b><br>
       Include your booking name in the message.
     `;
@@ -753,7 +885,10 @@ paymentMethod.addEventListener("change", () => {
   }
 
   paymentDetails.style.display = "block";
-  paymentDetails.innerHTML = html || "Select a payment method to view details";
+
+  paymentDetails.innerHTML =
+    html ||
+    "Select a payment method to view details";
 
   clearError(paymentMethod);
 
@@ -764,24 +899,35 @@ paymentMethod.addEventListener("change", () => {
 ====================== */
 
 function setError(el, msg) {
+
   el.classList.add("error-field");
 
-  let err = el.parentElement.querySelector(".error-text");
+  let err =
+    el.parentElement.querySelector(".error-text");
 
   if (!err) {
+
     err = document.createElement("div");
+
     err.className = "error-text";
+
     el.parentElement.appendChild(err);
+
   }
 
   err.textContent = msg;
+
 }
 
 function clearError(el) {
+
   el.classList.remove("error-field");
 
-  const err = el.parentElement.querySelector(".error-text");
+  const err =
+    el.parentElement.querySelector(".error-text");
+
   if (err) err.remove();
+
 }
 
 /* ======================
@@ -789,12 +935,19 @@ function clearError(el) {
 ====================== */
 
 function showSuccess() {
-  const modal = document.getElementById("successModal");
+
+  const modal =
+    document.getElementById("successModal");
+
   modal.style.display = "flex";
 
   setTimeout(() => {
-    window.location.href = "bookedsessions.html";
+
+    window.location.href =
+      "bookedsessions.html";
+
   }, 2000);
+
 }
 
 /* ======================
@@ -827,33 +980,56 @@ async function confirmBooking() {
 
   if (!valid) return;
 
-  const user = JSON.parse(localStorage.getItem("luxeUser"));
+  const user =
+    JSON.parse(localStorage.getItem("luxeUser"));
 
   if (!user) {
-    setError(serviceSelect, "Please login first");
+
+    setError(
+      serviceSelect,
+      "Please login first"
+    );
+
     return;
+
   }
 
-  document.getElementById("loadingOverlay").style.display = "flex";
+  document.getElementById(
+    "loadingOverlay"
+  ).style.display = "flex";
 
   const payload = {
+
     action: "createBooking",
+
     workerId: profile.id,
     workerName: profile.name,
+
     userId: user.uid,
     userName: user.name,
-    service: serviceSelect.options[serviceSelect.selectedIndex].text,
-    location: document.getElementById("location").value,
+
+    service:
+      serviceSelect.options[
+        serviceSelect.selectedIndex
+      ].text,
+
+    location:
+      document.getElementById("location").value,
+
     date: dateInput.value,
     time: timeInput.value,
+
     amount: serviceSelect.value,
-    paymentMethod: paymentMethod.value
+
+    paymentMethod:
+      paymentMethod.value
+
   };
 
   try {
 
     const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec",
+      SCRIPT_URL,
       {
         method: "POST",
         body: JSON.stringify(payload)
@@ -862,16 +1038,29 @@ async function confirmBooking() {
 
     const data = await res.json();
 
-    document.getElementById("loadingOverlay").style.display = "none";
+    document.getElementById(
+      "loadingOverlay"
+    ).style.display = "none";
 
     if (data.status) {
       showSuccess();
     }
 
   } catch (e) {
-    document.getElementById("loadingOverlay").style.display = "none";
+
+    document.getElementById(
+      "loadingOverlay"
+    ).style.display = "none";
+
   }
+
 }
+
+/* ======================
+   START
+====================== */
+
+initProfile();
 
 </script>
 

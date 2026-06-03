@@ -677,7 +677,69 @@
         }
   </style>
 
+<style>
+    .share-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
 
+.share-modal.show{
+  display:flex;
+}
+
+.share-modal-content{
+  width:min(90%,380px);
+  background:#fff;
+  border-radius:24px;
+  padding:30px;
+  text-align:center;
+  animation:pop .25s ease;
+}
+
+.share-modal-content i{
+  font-size:52px;
+  color:#10b981;
+  margin-bottom:15px;
+}
+
+.share-modal-content h3{
+  margin-bottom:8px;
+  color:#111827;
+}
+
+.share-modal-content p{
+  color:#6b7280;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.share-modal-content button{
+  border:none;
+  padding:12px 28px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@keyframes pop{
+  from{
+    transform:scale(.9);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+</style>
 
 </head>
 
@@ -863,7 +925,25 @@
     </footer>
 
 
+<div class="share-modal" id="shareModal">
 
+  <div class="share-modal-content">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <h3>Link Copied</h3>
+
+    <p>
+      Profile link copied to clipboard successfully.
+    </p>
+
+    <button onclick="closeShareModal()">
+      OK
+    </button>
+
+  </div>
+
+</div>
 
 
     <script>
@@ -1231,13 +1311,17 @@
 
         <div class="actions">
 
-          <div class="action-btn">
-            ❤ ${profile.likes || 0}
-          </div>
+<div class="action-btn">
+    <i class="fa-solid fa-heart"></i>
+    ${profile.likes || 0}
+</div>
 
-          <div class="action-btn">
-            ↗ Share
-          </div>
+<div
+    class="action-btn"
+    onclick='shareProfile(${JSON.stringify(profile)})'>
+    <i class="fa-solid fa-share-nodes"></i>
+    Share
+</div>
 
         </div>
 
@@ -1415,7 +1499,65 @@
     });
   </script>
 
+<script>
 
+function showShareModal() {
+
+  document
+    .getElementById("shareModal")
+    .classList.add("show");
+
+}
+
+function closeShareModal() {
+
+  document
+    .getElementById("shareModal")
+    .classList.remove("show");
+
+}
+
+function shareProfile(profile) {
+
+  const profileId = profile.id;
+
+  const shareUrl =
+    `${window.location.origin}/book.html?id=${encodeURIComponent(profileId)}`;
+
+  navigator.clipboard.writeText(shareUrl)
+
+    .then(() => {
+
+      showShareModal();
+
+    })
+
+    .catch(() => {
+
+      const modal =
+        document.getElementById("shareModal");
+
+      modal.classList.add("show");
+
+      modal.querySelector("p").innerHTML = `
+        Unable to automatically copy.<br><br>
+        <input
+          value="${shareUrl}"
+          readonly
+          onclick="this.select()"
+          style="
+            width:100%;
+            padding:10px;
+            border:1px solid #ddd;
+            border-radius:10px;
+          ">
+      `;
+
+    });
+
+}
+
+</script>
 
 </body>
 
