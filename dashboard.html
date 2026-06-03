@@ -215,6 +215,9 @@
             color: #6b7280;
             font-weight: 600;
             font-size: 0.92rem;
+            display: flex;
+            gap: 7px;
+            align-items: center;
         }
 
         .book-btn {
@@ -1330,7 +1333,7 @@
       <div class="booking-row">
 
         <div class="booking-count">
-          ${profile.bookings || 0}
+          ${profile.bookings || 0} <p>Views</p>
         </div>
 
 <button

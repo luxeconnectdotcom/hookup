@@ -30,6 +30,7 @@
       height: 260px;
       overflow: hidden;
       background: #8b5cf6;
+      margin-top: 70px;
     }
 
     .cover img {
@@ -471,9 +472,54 @@
     }
   </style>
 
+
+  <style>
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 78px;
+      padding: 0 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+
+      background: rgba(255, 255, 255, .88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(229, 231, 235, .8);
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+  </style>
+
 </head>
 
 <body>
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <!-- LOGO -->
+    <a href="index.html" class="logo">
+      LuxeConnect
+    </a>
+
+  </nav>
+
 
   <!-- COVER -->
 
@@ -751,8 +797,8 @@ function renderProfile(profile) {
   document.getElementById("likes").textContent =
     profile.likes || 0;
 
-  document.getElementById("followers").textContent =
-    profile.followers || 0;
+ document.getElementById("followers").textContent =
+  profile.bookings || 0;
 
   document.getElementById("hashtags").textContent =
     profile.hashtags || "";
@@ -1075,34 +1121,43 @@ async function confirmBooking() {
     "loadingOverlay"
   ).style.display = "flex";
 
-  const payload = {
+const payload = {
 
-    action: "createBooking",
+  action: "createBooking",
 
-    workerId: profile.id,
-    workerName: profile.name,
+  workerId: profile.id,
+  workerName: profile.name,
 
-    userId: user.uid,
-    userName: user.name,
+  userId: user.uid,
+  userName: user.name,
 
-    service:
-      serviceSelect.options[
-        serviceSelect.selectedIndex
-      ].text,
+  service:
+    serviceSelect.options[
+      serviceSelect.selectedIndex
+    ].text,
 
-    location:
-      document.getElementById("location").value,
+  location:
+    document.getElementById("location").value,
 
-    date: dateInput.value,
-    time: timeInput.value,
+  date: dateInput.value
+    ? new Date(dateInput.value).toDateString()
+    : "",
 
-    amount: serviceSelect.value,
+  time: timeInput.value
+    ? new Date(`1970-01-01T${timeInput.value}`)
+        .toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        })
+    : "",
 
-    paymentMethod:
-      paymentMethod.value
+  amount: serviceSelect.value,
 
-  };
+  paymentMethod:
+    paymentMethod.value
 
+};
   try {
 
     const res = await fetch(
