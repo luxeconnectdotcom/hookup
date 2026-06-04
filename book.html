@@ -67,7 +67,7 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 5px solid white;
+      border: 3px solid white;
       position: absolute;
       top: -75px;
       left: 25px;
@@ -148,6 +148,22 @@
       cursor: pointer;
     }
 
+
+    .book-now-btn{
+      display: none;
+      font-size: 15px;
+      justify-content: center;
+      align-items: center;
+      background-color: #8b5cf6;
+      color: white;
+      padding: 10px 10px;
+      width: 100%;
+      border-radius: 100px;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     /* MOBILE */
 
     @media(max-width:900px) {
@@ -161,12 +177,16 @@
         position: static;
       }
 
+      .book-now-btn{
+        display: flex;
+      }
+
     }
 
     @media(max-width:600px) {
 
       .cover {
-        height: 230px;
+        height: 180px;
       }
 
       .profile-box {
@@ -178,6 +198,7 @@
         height: 120px;
         top: -60px;
         left: 15px;
+        border-width: 2px;
       }
 
       .name {
@@ -222,10 +243,10 @@
     }
 
     .profile-meta {
+
       margin-top: 12px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      gap: 30px;
     }
 
     .meta-row {
@@ -571,7 +592,7 @@
         <div class="meta-row">
 
           <i class="fa-solid fa-location-dot"></i>
-
+          <span>Location: </span>
           <span id="profileLocation">
             Not specified
           </span>
@@ -579,9 +600,8 @@
         </div>
 
         <div class="meta-row">
-
           <i class="fa-solid fa-money-bill-wave"></i>
-
+          <span>Fee: </span>
           <span id="profilePrice">
             Not specified
           </span>
@@ -590,13 +610,15 @@
 
       </div>
 
+      <div class="book-now-btn" onclick="document.getElementById('bookingFormWrapper').scrollIntoView({behavior:'smooth'})">Book Now</div>
+
       <div class="gallery" id="gallery"></div>
 
     </div>
 
     <!-- BOOKING -->
 
-    <div class="booking">
+    <div class="booking" id="bookingFormWrapper">
 
       <h3>Book Session</h3>
 
