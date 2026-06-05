@@ -745,6 +745,70 @@
         }
     </style>
 
+
+<style>
+    /* ==========================
+   APP LOADER
+========================== */
+
+.app-loader{
+    position:fixed;
+    inset:0;
+    background:#ffffff;
+    z-index:999999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+}
+
+.loader-wrapper{
+    position:relative;
+    width:90px;
+    height:90px;
+}
+
+.loader-ring{
+    position:absolute;
+    inset:0;
+    border:4px solid #ececec;
+    border-top:4px solid #8b5cf6;
+    border-radius:50%;
+    animation:loaderSpin .8s linear infinite;
+}
+
+.loader-logo{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+
+    position:absolute;
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%, -50%);
+}
+
+.app-loader p{
+    color:#6b7280;
+    font-size:15px;
+    font-weight:600;
+}
+
+@keyframes loaderSpin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+</style>
+
 </head>
 
 <body>
@@ -950,10 +1014,59 @@
     </div>
 
 
-    <script>
+<!-- APP LOADER -->
 
-        const SCRIPT_URL =
-            "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+<div id="appLoader" class="app-loader">
+
+    <div class="loader-wrapper">
+
+        <div class="loader-ring"></div>
+
+        <img
+            src="icon/logo.png"
+            alt="Logo"
+            class="loader-logo">
+
+    </div>
+
+    <p>Loading account...</p>
+
+</div>
+
+
+<script>
+
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+/* ================================
+   APP LOADER
+================================ */
+
+function showLoader(){
+
+    const loader =
+    document.getElementById("appLoader");
+
+    if(loader){
+        loader.style.display = "flex";
+    }
+
+}
+
+function hideLoader(){
+
+    const loader =
+    document.getElementById("appLoader");
+
+    if(loader){
+        loader.style.display = "none";
+    }
+
+}
+
+showLoader();
+
 
         /* ================================
            GET USER FROM STORAGE
@@ -1004,56 +1117,130 @@
            LOAD USER PROFILE
         ================================ */
 
-        async function loadUserProfile() {
+async function loadUserProfile() {
 
-            try {
+    try {
 
-                const data = await postData({
-                    action: "getUser",
-                    uid: currentUser.uid
-                });
+        const data = await postData({
+            action: "getUser",
+            uid: currentUser.uid
+        });
 
-                if (!data || data.status !== true) {
-                    localStorage.removeItem("luxeUser");
-                    alert("Session expired. Please login again.");
-                    window.location.href = "login.html";
-                    return;
-                }
+        if (!data || data.status !== true) {
 
-                const user = data.user;
+            hideLoader();
 
-                localStorage.setItem("luxeUser", JSON.stringify(user));
+            localStorage.removeItem("luxeUser");
 
-                const setText = (id, value) => {
-                    const el = document.getElementById(id);
-                    if (el) el.textContent = value;
-                };
+            alert("Session expired. Please login again.");
 
-                setText("userFullName", user.name || "User");
-                setText("drawerUserName", user.name || "User");
-                setText("drawerUserEmail", user.email || "");
+            window.location.href = "login.html";
 
-                setText("profileName", user.name || "-");
-                setText("profileEmail", user.email || "-");
-                setText("profilePhone", user.phone || "-");
-                setText("profileCountry", user.country || "-");
-
-                setText("profileCredits", Number(user.credits || 0));
-                setText("profileFollowers", Number(user.followers || 0));
-                setText("profileLikes", Number(user.likes || 0));
-                setText("profileBookings", Number(user.bookings || 0));
-
-                setText("profileStatus", user.statusAcc || "Active");
-                setText("profileVerified", user.verified ? "Verified" : "Unverified");
-
-                loadNotifications(user.uid);
-
-            } catch (err) {
-                console.log(err);
-                alert("Unable to load account.");
-            }
+            return;
         }
 
+        const user = data.user;
+
+        localStorage.setItem(
+            "luxeUser",
+            JSON.stringify(user)
+        );
+
+        const setText = (id, value) => {
+
+            const el =
+            document.getElementById(id);
+
+            if (el) {
+                el.textContent = value;
+            }
+
+        };
+
+        setText(
+            "userFullName",
+            user.name || "User"
+        );
+
+        setText(
+            "drawerUserName",
+            user.name || "User"
+        );
+
+        setText(
+            "drawerUserEmail",
+            user.email || ""
+        );
+
+        setText(
+            "profileName",
+            user.name || "-"
+        );
+
+        setText(
+            "profileEmail",
+            user.email || "-"
+        );
+
+        setText(
+            "profilePhone",
+            user.phone || "-"
+        );
+
+        setText(
+            "profileCountry",
+            user.country || "-"
+        );
+
+        setText(
+            "profileCredits",
+            Number(user.credits || 0)
+        );
+
+        setText(
+            "profileFollowers",
+            Number(user.followers || 0)
+        );
+
+        setText(
+            "profileLikes",
+            Number(user.likes || 0)
+        );
+
+        setText(
+            "profileBookings",
+            Number(user.bookings || 0)
+        );
+
+        setText(
+            "profileStatus",
+            user.statusAcc || "Active"
+        );
+
+        setText(
+            "profileVerified",
+            user.verified
+                ? "Verified"
+                : "Unverified"
+        );
+
+        await loadNotifications(user.uid);
+
+        hideLoader();
+
+    } catch (err) {
+
+        console.log(err);
+
+        hideLoader();
+
+        alert(
+            "Unable to load account."
+        );
+
+    }
+
+}
         /* ================================
            LOAD NOTIFICATIONS
         ================================ */
@@ -1562,6 +1749,7 @@
         }
 
     </script>
+
 
 </body>
 
