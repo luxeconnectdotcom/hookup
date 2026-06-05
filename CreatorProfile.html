@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <title>Booking Page</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, sans-serif;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      background: #f5f7fb;
+    }
+
+    /* COVER */
+
+    .cover {
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      background: #8b5cf6;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* MAIN CONTENT */
+
+    .content-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+    }
+
+    /* LEFT SIDE */
+
+    .profile-box {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      padding: 90px 25px 25px;
+      position: relative;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+      position: absolute;
+      top: -75px;
+      left: 25px;
+      background: #ddd;
+    }
+
+    .name {
+      font-size: 30px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .bio {
+      margin-top: 10px;
+      color: #6b7280;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* GALLERY */
+
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .photo-gallery img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    /* RIGHT SIDE */
+
+    .booking {
+      width: 380px;
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .booking h3 {
+      margin-bottom: 15px;
+      color: #111827;
+    }
+
+    .booking input,
+    .booking select {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .booking input:focus,
+    .booking select:focus {
+      border-color: #8b5cf6;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+
+    .book-now-btn{
+      display: none;
+      font-size: 15px;
+      justify-content: center;
+      align-items: center;
+      background-color: #8b5cf6;
+      color: white;
+      padding: 10px 10px;
+      width: 100%;
+      border-radius: 100px;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:900px) {
+
+      .content-wrapper {
+        flex-direction: column;
+      }
+
+      .booking {
+        width: 100%;
+        position: static;
+      }
+
+      .book-now-btn{
+        display: flex;
+      }
+
+    }
+
+    @media(max-width:600px) {
+
+      .cover {
+        height: 150px;
+      }
+
+      .profile-box {
+        padding: 85px 15px 20px;
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+        top: -60px;
+        left: 15px;
+        border-width: 2px;
+      }
+
+      .name {
+        font-size: 24px;
+      }
+
+      .photo-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .photo-gallery img {
+        height: 180px;
+      }
+
+    }
+  </style>
+
+  <style>
+    .stats {
+      display: flex;
+      gap: 25px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .stat-item strong {
+      color: #111827;
+      font-size: 16px;
+    }
+
+    .hashtags {
+      margin-top: 12px;
+      color: #8b5cf6;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .profile-meta {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .meta-row {
+      color: #374151;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .meta-row span {
+      color: #111827;
+      font-weight: 700;
+    }
+  </style>
+
+  <style>
+    .name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .verified-badge {
+      color: #1d9bf0;
+      font-size: 18px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .stat-item i {
+      color: #8b5cf6;
+    }
+
+    .meta-row {
+
+      gap: 10px;
+      color: #374151;
+      font-size: 15px;
+    }
+
+    .meta-row i {
+      width: 18px;
+      color: #8b5cf6;
+    }
+
+    .meta-row span {
+      color: #111827;
+      font-weight: 700;
+    }
+  </style>
+
+
+  <style>
+    .input-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-top: 12px;
+      background: white;
+    }
+
+    .input-pill input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .input-pill i {
+      color: #8b5cf6;
+    }
+
+    .info-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-top: 12px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .info-pill i {
+      color: #8b5cf6;
+    }
+
+    .fee-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      margin-top: 12px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f5f3ff, #ffffff);
+      border: 1px solid #ede9fe;
+    }
+
+    .fee-box i {
+      font-size: 20px;
+      color: #8b5cf6;
+    }
+
+    .fee-box small {
+      color: #6b7280;
+    }
+
+    .fee-box h4 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .pay-title {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .payment-details {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #374151;
+      background: #f9fafb;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .modal-content i {
+      font-size: 40px;
+      color: green;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+    }
+  </style>
+
+  <style>
+    /* validation */
+    .error-field {
+      border: 1px solid #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .error-text {
+      font-size: 12px;
+      color: #ef4444;
+      margin-top: 6px;
+    }
+
+    /* payment card */
+    .payment-card {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      color: #374151;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .payment-card strong {
+      color: #111827;
+    }
+  </style>
+
+
+  <style>
+    /* PAGE LOADER */
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .page-loader-spinner {
+      width: 55px;
+      height: 55px;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    .page-loader p {
+      color: #6b7280;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+
+<style>
+  /* ==========================
+   MEDIA TABS
+========================== */
+
+.media-tab-navbar{
+  display:grid;
+  gap:10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top:30px;
+  margin-bottom:20px;
+  padding:8px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  flex-wrap:wrap;
+}
+
+.media-tab-btn{
+  border:none;
+  background:transparent;
+  padding:14px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:600;
+  color:#6b7280;
+  transition:.25s;
+}
+
+.media-tab-btn i{
+  font-size:15px;
+}
+
+.media-tab-btn:hover{
+  background:#ffffff;
+  color:#111827;
+}
+
+.media-tab-btn.active{
+  background:#ffffff;
+  color:#8b5cf6;
+  box-shadow:
+  0 1px 2px rgba(0,0,0,.04),
+  0 8px 20px rgba(139,92,246,.12);
+}
+
+/* ==========================
+   PANELS
+========================== */
+
+.media-tab-panel{
+  display:none;
+}
+
+.media-tab-panel.active{
+  display:block;
+}
+
+/* ==========================
+   EMPTY STATES
+========================== */
+
+.empty-gallery-state{
+  margin-top:20px;
+  border:1px solid #e5e7eb;
+  border-radius:20px;
+  background:#fbfcfe;
+  padding:60px 25px;
+  text-align:center;
+}
+
+.empty-gallery-icon{
+  width:90px;
+  height:90px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f3f4f6;
+  margin-bottom:18px;
+}
+
+.empty-gallery-icon i{
+  font-size:34px;
+  color:#8b5cf6;
+}
+
+.empty-gallery-state h3{
+  font-size:22px;
+  color:#111827;
+  margin-bottom:10px;
+}
+
+.empty-gallery-state p{
+  max-width:420px;
+  margin:auto;
+  color:#6b7280;
+  line-height:1.7;
+}
+
+.empty-gallery-state.premium{
+  background:linear-gradient(
+    135deg,
+    #faf7ff,
+    #ffffff
+  );
+  border:1px solid #ede9fe;
+}
+
+@media(max-width:700px){
+
+  .media-tab-btn{
+    min-width:100%;
+    justify-content:flex-start;
+  }
+
+}
+</style>
+
+<style>
+  /* ==========================
+   FLOATING NAVBAR
+========================== */
+
+.floating-navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:78px;
+  display:flex;
+  align-items:center;
+  padding:0 25px;
+  z-index:9999;
+  transition:.3s ease;
+  background:transparent;
+}
+
+.floating-navbar.scrolled{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid #e5e7eb;
+  box-shadow:0 2px 20px rgba(0,0,0,.05);
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+.back-home-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:white;
+  font-size:15px;
+  font-weight:700;
+  transition:.25s;
+}
+
+.back-home-btn i{
+  font-size:16px;
+}
+
+.floating-navbar.scrolled .back-home-btn{
+  color:#111827;
+}
+
+/* Hover */
+
+.back-home-btn:hover{
+  opacity:.85;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+  .floating-navbar{
+    height:70px;
+    padding:0 15px;
+  }
+
+  .back-home-btn span{
+    font-size:14px;
+  }
+
+}
+</style>
+
+
+</head>
+
+<body>
+
+
+<nav class="floating-navbar" id="floatingNavbar">
+
+  <a href="dashboard.html" class="back-home-btn">
+
+    <i class="fa-solid fa-arrow-left"></i>
+
+    <span>Back to Home Page</span>
+
+  </a>
+
+</nav>
+
+
+  <!-- COVER -->
+
+  <div class="cover">
+    <img id="coverImg" src="">
+  </div>
+
+  <!-- PROFILE + BOOKING ROW -->
+
+  <div class="content-wrapper">
+
+    <!-- PROFILE -->
+
+    <div class="profile-box">
+
+      <img id="avatar" class="avatar">
+
+      <div class="name-row">
+
+        <div class="name" id="name"></div>
+
+        <i class="fa-solid fa-circle-check verified-badge" id="verifiedBadge">
+        </i>
+
+      </div>
+
+      <div class="stats">
+
+        <div class="stat-item">
+          <i class="fa-solid fa-heart"></i>
+          <strong id="likes">0</strong>
+          Likes
+        </div>
+
+        <div class="stat-item">
+          <i class="fa-solid fa-users"></i>
+          <strong id="followers">0</strong>
+          Followers
+        </div>
+
+      </div>
+
+      <div class="bio" id="bio"></div>
+
+      <div class="hashtags" id="hashtags"></div>
+
+      <div class="profile-meta">
+
+        <div class="meta-row">
+
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Location: </span>
+          <span id="profileLocation">
+            Not specified
+          </span>
+
+        </div>
+
+        <div class="meta-row">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <span>Fee: </span>
+          <span id="profilePrice">
+            Not specified
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="book-now-btn" onclick="scrollToBooking()">
+        Book Now
+      </div>
+
+
+<div class="media-tab-navbar">
+
+  <button class="media-tab-btn active" data-tab="photos">
+    <i class="fa-solid fa-images"></i>
+    <span>Photos</span>
+  </button>
+
+  <button class="media-tab-btn" data-tab="videos">
+    <i class="fa-solid fa-video"></i>
+    <span>Videos</span>
+  </button>
+
+  <button class="media-tab-btn" data-tab="exclusive">
+    <i class="fa-solid fa-crown"></i>
+    <span>Exclusives</span>
+  </button>
+
+</div>
+
+<div class="media-tab-content">
+
+  <!-- PHOTOS -->
+  <div class="media-tab-panel active" id="photosTab">
+    <div class="photo-gallery" id="gallery"></div>
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="media-tab-panel" id="videosTab">
+
+    <div class="empty-gallery-state">
+
+      <div class="empty-gallery-icon">
+        <i class="fa-solid fa-video"></i>
+      </div>
+
+      <h3>No Videos Available</h3>
+
+      <p>
+        This creator has not uploaded any videos yet.
+        New video content will appear here when available.
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- EXCLUSIVE -->
+  <div class="media-tab-panel" id="exclusiveTab">
+
+    <div class="empty-gallery-state premium">
+
+      <div class="empty-gallery-icon">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+
+      <h3>No Exclusive Content Yet</h3>
+
+      <p>
+        Premium photos and private content will appear here
+        once released by the creator.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>    
+
+</div>
+
+    <!-- BOOKING -->
+
+    <div class="booking" id="bookingFormWrapper">
+
+      <h3>Book Session</h3>
+
+      <!-- SERVICE / PACKAGE -->
+      <select id="service">
+        <option value="">Select Service / Package</option>
+      </select>
+
+      <!-- LOCATION (icon inside right) -->
+      <div class="input-pill">
+        <input id="location" type="text" placeholder="Meetup location/address">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+
+      <!-- DATE -->
+      <div class="info-pill">
+        <i class="fa-regular fa-calendar"></i>
+        <p id="dateText">Date: Not selected</p>
+        <input id="date" type="date" hidden>
+      </div>
+
+      <!-- TIME -->
+      <div class="info-pill">
+        <i class="fa-regular fa-clock"></i>
+        <p id="timeText">Time: Not selected</p>
+        <input id="time" type="time" hidden>
+      </div>
+
+      <!-- FEE DISPLAY (NOT INPUT) -->
+      <div class="fee-box">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <div>
+          <small>Fee</small>
+          <h4 id="feeDisplay">$0</h4>
+        </div>
+      </div>
+
+      <!-- PAYMENT METHODS -->
+      <h4 class="pay-title">Payment Method</h4>
+
+      <select id="paymentMethod">
+        <option value="">Select Payment Method</option>
+        <option value="giftcard">Gift Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="btc">Bitcoin (BTC)</option>
+      </select>
+
+      <!-- PAYMENT DETAILS -->
+      <div class="payment-details" id="paymentDetails">
+        Select a payment method to view details
+      </div>
+
+      <button class="btn" onclick="confirmBooking()">
+        Confirm Booking
+      </button>
+
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Booking Successful</h2>
+        <p>Your session has been booked successfully.</p>
+      </div>
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div class="overlay" id="loadingOverlay">
+      <div class="loader"></div>
+      <p>Processing booking...</p>
+    </div>
+
+  </div>
+
+
+<!-- PAGE LOADER -->
+
+<div id="pageLoader" class="page-loader">
+  <div class="page-loader-spinner"></div>
+  <p>Loading profile...</p>
+</div>
+
+
+<script>
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
+
+let profile = null;
+
+/* ======================
+   PAGE LOADER
+====================== */
+
+function showPageLoader() {
+
+  const loader =
+    document.getElementById("pageLoader");
+
+  if (loader) {
+    loader.style.display = "flex";
+  }
+
+}
+
+function hidePageLoader() {
+
+  const loader =
+    document.getElementById("pageLoader");
+
+  if (loader) {
+    loader.style.display = "none";
+  }
+
+}
+
+/* ======================
+   LOAD PROFILE
+====================== */
+
+async function initProfile() {
+
+  showPageLoader();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileId = urlParams.get("id");
+
+  try {
+
+    // Shared link
+    if (profileId) {
+
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "getProfiles"
+        })
+      });
+
+      const data = await res.json();
+
+      profile = (data.profiles || []).find(
+        p => String(p.id) === String(profileId)
+      );
+
+      if (!profile) {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      localStorage.setItem(
+        "selectedProfile",
+        JSON.stringify(profile)
+      );
+
+    } else {
+
+      profile = JSON.parse(
+        localStorage.getItem("selectedProfile")
+      );
+
+      if (!profile) {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+    }
+
+    renderProfile(profile);
+
+    hidePageLoader();
+
+  } catch (err) {
+
+    console.log(err);
+
+    hidePageLoader();
+
+    window.location.href = "dashboard.html";
+
+  }
+
+}
+
+/* ======================
+   RENDER PROFILE
+====================== */
+
+function renderProfile(profile) {
+
+  document.getElementById("name").textContent =
+    profile.name || "";
+
+  document.getElementById("bio").textContent =
+    profile.caption || "";
+
+  document.getElementById("likes").textContent =
+    profile.likes || 0;
+
+ document.getElementById("followers").textContent =
+  profile.bookings || 0;
+
+  document.getElementById("hashtags").textContent =
+    profile.hashtags || "";
+
+  const locationValue =
+    profile.location ||
+    (profile.status
+      ? profile.status.split("•")[0].trim()
+      : "");
+
+  document.getElementById("profileLocation").textContent =
+    locationValue || "Not specified";
+
+  const lowestPrice =
+    profile.lowPrice ||
+    profile.basicPrice ||
+    profile.mediumPrice ||
+    profile.standardPrice ||
+    profile.premiumPrice;
+
+  document.getElementById("profilePrice").textContent =
+    lowestPrice
+      ? "$" + lowestPrice
+      : "Not specified";
+
+  /* IMAGES */
+
+  document.getElementById("avatar").src =
+    profile.avatar || "";
+
+  document.getElementById("coverImg").src =
+    (profile.photos && profile.photos.length)
+      ? profile.photos[0]
+      : profile.avatar || "";
+
+  /* GALLERY */
+
+  const gallery =
+    document.getElementById("gallery");
+
+  gallery.innerHTML = "";
+
+  (profile.photos || []).forEach(p => {
+
+    const img =
+      document.createElement("img");
+
+    img.src = p;
+
+    gallery.appendChild(img);
+
+  });
+
+  /* SERVICES */
+
+  serviceSelect.innerHTML =
+    `<option value="">Select Service / Package</option>`;
+
+  const packages = [
+
+    { label: "Low", value: profile.lowPrice },
+    { label: "Basic", value: profile.basicPrice },
+    { label: "Medium", value: profile.mediumPrice },
+    { label: "Standard", value: profile.standardPrice },
+    { label: "Premium", value: profile.premiumPrice }
+
+  ];
+
+  packages.forEach(p => {
+
+    if (p.value) {
+
+      const opt =
+        document.createElement("option");
+
+      opt.value = p.value;
+
+      opt.textContent =
+        `${p.label} - $${p.value}`;
+
+      serviceSelect.appendChild(opt);
+
+    }
+
+  });
+
+}
+
+/* ======================
+   FORM ELEMENTS
+====================== */
+
+const serviceSelect =
+  document.getElementById("service");
+
+const feeDisplay =
+  document.getElementById("feeDisplay");
+
+const dateInput =
+  document.getElementById("date");
+
+const timeInput =
+  document.getElementById("time");
+
+const dateText =
+  document.getElementById("dateText");
+
+const timeText =
+  document.getElementById("timeText");
+
+const paymentMethod =
+  document.getElementById("paymentMethod");
+
+const paymentDetails =
+  document.getElementById("paymentDetails");
+
+/* ======================
+   SERVICE PRICE
+====================== */
+
+serviceSelect.addEventListener("change", () => {
+
+  feeDisplay.textContent =
+    serviceSelect.value
+      ? "$" + serviceSelect.value
+      : "$0";
+
+  clearError(serviceSelect);
+
+});
+
+/* ======================
+   DATE / TIME
+====================== */
+
+document.querySelectorAll(".info-pill")[0]
+  .addEventListener("click", () =>
+    dateInput.showPicker?.() || dateInput.click()
+  );
+
+document.querySelectorAll(".info-pill")[1]
+  .addEventListener("click", () =>
+    timeInput.showPicker?.() || timeInput.click()
+  );
+
+dateInput.addEventListener("change", () => {
+
+  dateText.textContent =
+    "Date: " +
+    new Date(dateInput.value).toDateString();
+
+  clearError(dateInput);
+
+});
+
+timeInput.addEventListener("change", () => {
+
+  timeText.textContent =
+    "Time: " + timeInput.value;
+
+  clearError(timeInput);
+
+});
+
+/* ======================
+   PAYMENT METHODS
+====================== */
+
+paymentMethod.addEventListener("change", () => {
+
+  const fee =
+    serviceSelect.value || 0;
+
+  let html = "";
+
+  if (paymentMethod.value === "giftcard") {
+
+    html = `
+      <strong>Gift Card Payment</strong><br>
+      Send a $${fee} gift card code to:<br>
+      <b>giftpay-demo@service.com</b><br>
+      Include your booking name in the message.
+    `;
+
+  }
+
+  if (paymentMethod.value === "paypal") {
+
+    html = `
+      <strong>PayPal Payment</strong><br>
+      Pay <b>$${fee}</b> to:<br>
+      <b>paypal-demo@bookingservice.com</b><br>
+      Note: Include your full name in description.
+    `;
+
+  }
+
+  if (paymentMethod.value === "btc") {
+
+    html = `
+      <strong>Bitcoin Payment</strong><br>
+      Send <b>$${fee} worth of BTC</b> to:<br>
+      <b>bc1q-demo-wallet-address-123456789</b><br>
+      Wait for 1 confirmation before booking is approved.
+    `;
+
+  }
+
+  paymentDetails.style.display = "block";
+
+  paymentDetails.innerHTML =
+    html ||
+    "Select a payment method to view details";
+
+  clearError(paymentMethod);
+
+});
+
+/* ======================
+   VALIDATION HELPERS
+====================== */
+
+function setError(el, msg) {
+
+  el.classList.add("error-field");
+
+  let err =
+    el.parentElement.querySelector(".error-text");
+
+  if (!err) {
+
+    err = document.createElement("div");
+
+    err.className = "error-text";
+
+    el.parentElement.appendChild(err);
+
+  }
+
+  err.textContent = msg;
+
+}
+
+function clearError(el) {
+
+  el.classList.remove("error-field");
+
+  const err =
+    el.parentElement.querySelector(".error-text");
+
+  if (err) err.remove();
+
+}
+
+/* ======================
+   SUCCESS MODAL
+====================== */
+
+function showSuccess() {
+
+  const modal =
+    document.getElementById("successModal");
+
+  modal.style.display = "flex";
+
+  setTimeout(() => {
+
+    window.location.href =
+      "BookedCreators.html";
+
+  }, 2000);
+
+}
+
+/* ======================
+   BOOKING
+====================== */
+
+async function confirmBooking() {
+
+  let valid = true;
+
+  if (!serviceSelect.value) {
+    setError(serviceSelect, "Select a service");
+    valid = false;
+  }
+
+  if (!dateInput.value) {
+    setError(dateInput, "Select date");
+    valid = false;
+  }
+
+  if (!timeInput.value) {
+    setError(timeInput, "Select time");
+    valid = false;
+  }
+
+  if (!paymentMethod.value) {
+    setError(paymentMethod, "Select payment method");
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  const user =
+    JSON.parse(localStorage.getItem("luxeUser"));
+
+  if (!user) {
+
+    setError(
+      serviceSelect,
+      "Please login first"
+    );
+
+    return;
+
+  }
+
+  document.getElementById(
+    "loadingOverlay"
+  ).style.display = "flex";
+
+const payload = {
+
+  action: "createBooking",
+
+  workerId: profile.id,
+  workerName: profile.name,
+
+  userId: user.uid,
+  userName: user.name,
+
+  service:
+    serviceSelect.options[
+      serviceSelect.selectedIndex
+    ].text,
+
+  location:
+    document.getElementById("location").value,
+
+  date: dateInput.value
+    ? new Date(dateInput.value).toDateString()
+    : "",
+
+  time: timeInput.value
+    ? new Date(`1970-01-01T${timeInput.value}`)
+        .toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        })
+    : "",
+
+  amount: serviceSelect.value,
+
+  paymentMethod:
+    paymentMethod.value
+
+};
+  try {
+
+    const res = await fetch(
+      SCRIPT_URL,
+      {
+        method: "POST",
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const data = await res.json();
+
+    document.getElementById(
+      "loadingOverlay"
+    ).style.display = "none";
+
+    if (data.status) {
+      showSuccess();
+    }
+
+  } catch (e) {
+
+    document.getElementById(
+      "loadingOverlay"
+    ).style.display = "none";
+
+  }
+
+}
+
+/* ======================
+   START
+====================== */
+
+showPageLoader();
+initProfile();
+
+</script>
+
+
+<script>
+  /* ======================
+   MEDIA TABS
+====================== */
+
+const mediaTabs =
+document.querySelectorAll(".media-tab-btn");
+
+const mediaPanels =
+document.querySelectorAll(".media-tab-panel");
+
+mediaTabs.forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    mediaTabs.forEach(t=>
+      t.classList.remove("active")
+    );
+
+    mediaPanels.forEach(p=>
+      p.classList.remove("active")
+    );
+
+    btn.classList.add("active");
+
+    const tab =
+    btn.dataset.tab;
+
+    if(tab==="photos"){
+      document
+      .getElementById("photosTab")
+      .classList.add("active");
+    }
+
+    if(tab==="videos"){
+      document
+      .getElementById("videosTab")
+      .classList.add("active");
+    }
+
+    if(tab==="exclusive"){
+      document
+      .getElementById("exclusiveTab")
+      .classList.add("active");
+    }
+
+  });
+
+});
+</script>
+
+
+<script>
+  /* ======================
+   FLOATING NAVBAR
+====================== */
+
+const floatingNavbar =
+document.getElementById(
+  "floatingNavbar"
+);
+
+function updateNavbar(){
+
+  if(window.scrollY > 40){
+
+    floatingNavbar.classList.add(
+      "scrolled"
+    );
+
+  }else{
+
+    floatingNavbar.classList.remove(
+      "scrolled"
+    );
+
+  }
+
+}
+
+window.addEventListener(
+  "scroll",
+  updateNavbar
+);
+
+updateNavbar();
+</script>
+
+
+<script>
+  function scrollToBooking(){
+
+  const booking =
+    document.getElementById(
+      "bookingFormWrapper"
+    );
+
+  const navbar =
+    document.getElementById(
+      "floatingNavbar"
+    );
+
+  const navbarHeight =
+    navbar ? navbar.offsetHeight : 0;
+
+  const targetPosition =
+    booking.getBoundingClientRect().top +
+    window.pageYOffset -
+    navbarHeight -
+    15; // extra spacing
+
+  window.scrollTo({
+    top: targetPosition,
+    behavior: "smooth"
+  });
+
+}
+</script>
+
+</body>
+
+</html>

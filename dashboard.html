@@ -200,7 +200,7 @@
             padding: 10px 16px;
             border-radius: 999px;
             background: #f9fafb;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
         }
@@ -351,191 +351,191 @@
     </style>
 
 
-  <style>
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 6%;
-      backdrop-filter: blur(18px);
-      background: rgba(255, 255, 255, 0.72);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-    }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 6%;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+        }
 
-    .logo {
-      font-size: 1.7rem;
-      font-weight: 800;
-      background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      font-weight: 500;
-      color: #374151;
-    }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-weight: 500;
+            color: #374151;
+        }
 
-    .nav-buttons {
-      display: flex;
-      gap: 14px;
-    }
+        .nav-buttons {
+            display: flex;
+            gap: 14px;
+        }
 
-    .menu-toggle {
-      display: none;
-      width: 50px;
-      height: 50px;
-      border: none;
-      border-radius: 14px;
-      background: #f3f4f6;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #111827;
-    }
+        .menu-toggle {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 14px;
+            background: #f3f4f6;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #111827;
+        }
 
-    .mobile-buttons {
-      display: none;
-    }
+        .mobile-buttons {
+            display: none;
+        }
 
-    .mobile-only{
-      display: none;
-    }
+        .mobile-only {
+            display: none;
+        }
 
-    @media (max-width: 900px) {
+        @media (max-width: 900px) {
 
-      .desktop-buttons .account-wrapper{
-        display: none;
-      }
+            .desktop-buttons .account-wrapper {
+                display: none;
+            }
 
-      .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 300px;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(18px);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 70px 30px 40px;
-        gap: 24px;
-        transition: 0.4s ease;
-        z-index: 999;
-      }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.96);
+                backdrop-filter: blur(18px);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 70px 30px 40px;
+                gap: 24px;
+                transition: 0.4s ease;
+                z-index: 999;
+            }
 
-      .nav-links.active {
-        right: 0;
-      }
+            .nav-links.active {
+                right: 0;
+            }
 
-      .nav-links a {
-        font-size: 1.05rem;
-        font-weight: 600;
-        width: 100%;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #f1f5f9;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+            .nav-links a {
+                font-size: 1.05rem;
+                font-weight: 600;
+                width: 100%;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #f1f5f9;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
 
-      .mobile-buttons {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 14px;
-      }
+            .mobile-buttons {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 14px;
+            }
 
-      .mobile-buttons .btn {
-        width: 100%;
-      }
-    }
+            .mobile-buttons .btn {
+                width: 100%;
+            }
+        }
 
-    @media (max-width: 900px) {
+        @media (max-width: 900px) {
 
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: -320px;
-        width: 300px;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(20px);
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-        padding: 70px 30px 40px;
-        transition: right 0.35s ease;
-        z-index: 9999;
-      }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -320px;
+                width: 300px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+                padding: 70px 30px 40px;
+                transition: right 0.35s ease;
+                z-index: 9999;
+            }
 
-      .nav-links.active {
-        right: 0;
-      }
+            .nav-links.active {
+                right: 0;
+            }
 
-      .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border: none;
-        border-radius: 14px;
-        background: #f3f4f6;
-        font-size: 1.4rem;
-        cursor: pointer;
-        z-index: 10000;
-      }
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                height: 50px;
+                border: none;
+                border-radius: 14px;
+                background: #f3f4f6;
+                font-size: 1.4rem;
+                cursor: pointer;
+                z-index: 10000;
+            }
 
-      .nav-links a {
-        width: 100%;
-        padding-bottom: 14px;
-        border-bottom: 1px solid #f1f5f9;
-        font-size: 1.05rem;
-        font-weight: 600;
-      }
+            .nav-links a {
+                width: 100%;
+                padding-bottom: 14px;
+                border-bottom: 1px solid #f1f5f9;
+                font-size: 1.05rem;
+                font-weight: 600;
+            }
 
-      .mobile-buttons {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 14px;
-      }
+            .mobile-buttons {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 14px;
+            }
 
-      .mobile-buttons .btn {
-        width: 100%;
-      }
+            .mobile-buttons .btn {
+                width: 100%;
+            }
 
-      .mobile-only{
-        display: block;
-      }
+            .mobile-only {
+                display: block;
+            }
 
-      body.drawer-open::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.35);
-        z-index: 999;
-        backdrop-filter: blur(3px);
-      }
-    }
+            body.drawer-open::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.35);
+                z-index: 999;
+                backdrop-filter: blur(3px);
+            }
+        }
 
 
 
@@ -678,71 +678,72 @@
             }
 
         }
-  </style>
+    </style>
 
-<style>
-    .share-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(4px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-}
+    <style>
+        .share-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
 
-.share-modal.show{
-  display:flex;
-}
+        .share-modal.show {
+            display: flex;
+        }
 
-.share-modal-content{
-  width:min(90%,380px);
-  background:#fff;
-  border-radius:24px;
-  padding:30px;
-  text-align:center;
-  animation:pop .25s ease;
-}
+        .share-modal-content {
+            width: min(90%, 380px);
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            animation: pop .25s ease;
+        }
 
-.share-modal-content i{
-  font-size:52px;
-  color:#10b981;
-  margin-bottom:15px;
-}
+        .share-modal-content i {
+            font-size: 52px;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
 
-.share-modal-content h3{
-  margin-bottom:8px;
-  color:#111827;
-}
+        .share-modal-content h3 {
+            margin-bottom: 8px;
+            color: #111827;
+        }
 
-.share-modal-content p{
-  color:#6b7280;
-  line-height:1.6;
-  margin-bottom:20px;
-}
+        .share-modal-content p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
-.share-modal-content button{
-  border:none;
-  padding:12px 28px;
-  border-radius:999px;
-  background:linear-gradient(90deg,#ff4d6d,#8b5cf6);
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
-}
+        .share-modal-content button {
+            border: none;
+            padding: 12px 28px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff4d6d, #8b5cf6);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
 
-@keyframes pop{
-  from{
-    transform:scale(.9);
-    opacity:0;
-  }
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
-}
-</style>
+        @keyframes pop {
+            from {
+                transform: scale(.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 
 </head>
 
@@ -751,44 +752,44 @@
     <!-- NAVBAR -->
 
 
-  <nav class="navbar">
-    <div class="logo">LuxeConnect</div>
+    <nav class="navbar">
+        <div class="logo">LuxeConnect</div>
 
-    <div class="nav-links" id="navLinks">
+        <div class="nav-links" id="navLinks">
 
-        <div class="mobile-buttons">
-          <div class="drawer-account">
-              <i class="fa-solid fa-user"></i>
+            <div class="mobile-buttons">
+                <div class="drawer-account">
+                    <i class="fa-solid fa-user"></i>
 
-              <div>
-                  <div id="drawerUserName">Loading...</div>
+                    <div>
+                        <div id="drawerUserName">Loading...</div>
 
-                  <small style="color:#6b7280;" id="drawerUserEmail">
-                      loading@email.com
-                  </small>
-              </div>
-          </div>
+                        <small style="color:#6b7280;" id="drawerUserEmail">
+                            loading@email.com
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#"><i class="fa-solid fa-compass mobile-only"></i> Discover</a>
+            <a href="#"><i class="fa-solid fa-fire mobile-only"></i> Trending</a>
+            <a href="#"><i class="fa-solid fa-crown mobile-only"></i> Premium</a>
+            <a href="#"><i class="fa-solid fa-shield-halved mobile-only"></i> Safety</a>
+            <a href="#" class="mobile-only"><i class="fa-solid fa-gear"></i> Settings</a>
+
+
+
+            <div class="mobile-buttons">
+
+                <button class="logout-btn">
+                    Logout
+                </button>
+
+            </div>
+
         </div>
 
-        <a href="#"><i class="fa-solid fa-compass mobile-only"></i> Discover</a>
-        <a href="#"><i class="fa-solid fa-fire mobile-only"></i> Trending</a>
-        <a href="#"><i class="fa-solid fa-crown mobile-only"></i> Premium</a>
-        <a href="#"><i class="fa-solid fa-shield-halved mobile-only"></i> Safety</a>
-        <a href="#" class="mobile-only"><i class="fa-solid fa-gear"></i> Settings</a>     
-
-
-
-      <div class="mobile-buttons">
-
-        <button class="logout-btn">
-            Logout
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="nav-buttons desktop-buttons">
+        <div class="nav-buttons desktop-buttons">
             <div class="account-wrapper">
 
                 <button class="account-pill" id="accountBtn">
@@ -806,8 +807,8 @@
                 </div>
 
             </div>
-            
-            <a href="bookedsessions.html">
+
+            <a href="BookedCreators.html">
                 <button class="mobile-nav-btn">
                     <i class="fa-solid fa-bookmark"></i>
                 </button>
@@ -815,13 +816,13 @@
 
             <button class="mobile-nav-btn alert-dot">
                 <i class="fa-regular fa-bell"></i>
-            </button>            
-    </div>
+            </button>
+        </div>
 
-    <button class="menu-toggle" id="menuToggle">
-      ☰
-    </button>
-  </nav>
+        <button class="menu-toggle" id="menuToggle">
+            ☰
+        </button>
+    </nav>
 
 
     <!-- MAIN -->
@@ -928,25 +929,25 @@
     </footer>
 
 
-<div class="share-modal" id="shareModal">
+    <div class="share-modal" id="shareModal">
 
-  <div class="share-modal-content">
+        <div class="share-modal-content">
 
-    <i class="fa-solid fa-circle-check"></i>
+            <i class="fa-solid fa-circle-check"></i>
 
-    <h3>Link Copied</h3>
+            <h3>Link Copied</h3>
 
-    <p>
-      Profile link copied to clipboard successfully.
-    </p>
+            <p>
+                Profile link copied to clipboard successfully.
+            </p>
 
-    <button onclick="closeShareModal()">
-      OK
-    </button>
+            <button onclick="closeShareModal()">
+                OK
+            </button>
 
-  </div>
+        </div>
 
-</div>
+    </div>
 
 
     <script>
@@ -1314,21 +1315,19 @@
 
         <div class="actions">
 
-<div class="action-btn">
-    <i class="fa-solid fa-heart"></i>
-    ${profile.likes || 0}
-</div>
+        <div class="action-btn">
+            <i class="fa-solid fa-heart"></i>
+            ${profile.likes || 0}
+        </div>
 
-<div
-    class="action-btn"
-    onclick='shareProfile(${JSON.stringify(profile)})'>
-    <i class="fa-solid fa-share-nodes"></i>
-    Share
-</div>
+        <div class="action-btn" onclick='shareProfile(${JSON.stringify(profile)})'>
+            <i class="fa-solid fa-share-nodes"></i>
+            Share
+        </div>
 
         <div class="action-btn">
-    <i class="fa-regular fa-eye"></i>         
-          ${profile.bookings || 0}
+            <i class="fa-regular fa-eye"></i>         
+             ${profile.bookings || 0}
         </div>
 
         </div>
@@ -1386,7 +1385,7 @@
                 JSON.stringify(normalizedProfile)
             );
 
-            window.location.href = "book.html";
+            window.location.href = "CreatorProfile.html";
         }
 
         /* ================================
@@ -1470,81 +1469,81 @@
 
     </script>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      document.body.classList.toggle('drawer-open');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            document.body.classList.toggle('drawer-open');
 
-      menuToggle.innerHTML = navLinks.classList.contains('active')
-        ? '✕'
-        : '☰';
-    });
+            menuToggle.innerHTML = navLinks.classList.contains('active')
+                ? '✕'
+                : '☰';
+        });
 
-    document.querySelectorAll('#navLinks a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        document.body.classList.remove('drawer-open');
-        menuToggle.innerHTML = '☰';
-      });
-    });
+        document.querySelectorAll('#navLinks a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                document.body.classList.remove('drawer-open');
+                menuToggle.innerHTML = '☰';
+            });
+        });
 
-    // close drawer when clicking outside
-    document.addEventListener('click', (e) => {
-      const clickedInsideDrawer = navLinks.contains(e.target);
-      const clickedToggle = menuToggle.contains(e.target);
+        // close drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            const clickedInsideDrawer = navLinks.contains(e.target);
+            const clickedToggle = menuToggle.contains(e.target);
 
-      if (!clickedInsideDrawer && !clickedToggle && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        document.body.classList.remove('drawer-open');
-        menuToggle.innerHTML = '☰';
-      }
-    });
-  </script>
+            if (!clickedInsideDrawer && !clickedToggle && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                document.body.classList.remove('drawer-open');
+                menuToggle.innerHTML = '☰';
+            }
+        });
+    </script>
 
-<script>
+    <script>
 
-function showShareModal() {
+        function showShareModal() {
 
-  document
-    .getElementById("shareModal")
-    .classList.add("show");
+            document
+                .getElementById("shareModal")
+                .classList.add("show");
 
-}
+        }
 
-function closeShareModal() {
+        function closeShareModal() {
 
-  document
-    .getElementById("shareModal")
-    .classList.remove("show");
+            document
+                .getElementById("shareModal")
+                .classList.remove("show");
 
-}
+        }
 
-function shareProfile(profile) {
+        function shareProfile(profile) {
 
-  const profileId = profile.id;
+            const profileId = profile.id;
 
-  const shareUrl =
-    `${window.location.origin}/hookup/book.html?id=${encodeURIComponent(profileId)}`;
+            const shareUrl =
+                `${window.location.origin}/hookup/CreatorProfile.html?id=${encodeURIComponent(profileId)}`;
 
-  navigator.clipboard.writeText(shareUrl)
+            navigator.clipboard.writeText(shareUrl)
 
-    .then(() => {
+                .then(() => {
 
-      showShareModal();
+                    showShareModal();
 
-    })
+                })
 
-    .catch(() => {
+                .catch(() => {
 
-      const modal =
-        document.getElementById("shareModal");
+                    const modal =
+                        document.getElementById("shareModal");
 
-      modal.classList.add("show");
+                    modal.classList.add("show");
 
-      modal.querySelector("p").innerHTML = `
+                    modal.querySelector("p").innerHTML = `
         Unable to automatically copy.<br><br>
         <input
           value="${shareUrl}"
@@ -1558,11 +1557,11 @@ function shareProfile(profile) {
           ">
       `;
 
-    });
+                });
 
-}
+        }
 
-</script>
+    </script>
 
 </body>
 
