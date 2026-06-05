@@ -499,15 +499,16 @@
 
 .media-tab-navbar{
   display:grid;
-  gap:10px;
   grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  gap:10px;
   margin-top:30px;
   margin-bottom:20px;
   padding:8px;
   background:#f8fafc;
   border:1px solid #e5e7eb;
   border-radius:16px;
-  flex-wrap:wrap;
+  overflow-x: auto;
 }
 
 .media-tab-btn{
@@ -520,7 +521,7 @@
   align-items:center;
   justify-content:center;
   gap:10px;
-  font-size:14px;
+  font-size:0.8rem;
   font-weight:600;
   color:#6b7280;
   transition:.25s;
@@ -610,8 +611,7 @@
 @media(max-width:700px){
 
   .media-tab-btn{
-    min-width:100%;
-    justify-content:flex-start;
+    font-size: 12px;
   }
 
 }
