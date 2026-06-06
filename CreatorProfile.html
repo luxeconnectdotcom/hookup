@@ -819,6 +819,87 @@
 
 </style>
 
+<style>
+  /* =========================
+   RECEIPT UPLOAD
+========================= */
+
+.receipt-upload-wrapper{
+  margin-top:18px;
+}
+
+.receipt-upload-label{
+  display:block;
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:10px;
+}
+
+.receipt-upload-box{
+  border:2px dashed #d1d5db;
+  border-radius:16px;
+  padding:24px;
+  text-align:center;
+  cursor:pointer;
+  transition:.25s;
+  background:#fafafa;
+}
+
+.receipt-upload-box:hover{
+  border-color:#8b5cf6;
+  background:#faf7ff;
+}
+
+.receipt-upload-box i{
+  font-size:28px;
+  color:#8b5cf6;
+  margin-bottom:10px;
+}
+
+.receipt-upload-box h4{
+  color:#111827;
+  margin-bottom:6px;
+}
+
+.receipt-upload-box p{
+  font-size:13px;
+  color:#6b7280;
+}
+
+.receipt-preview{
+  display:none;
+  margin-top:12px;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:12px;
+  background:#ffffff;
+}
+
+.receipt-preview img{
+  width:100%;
+  max-height:220px;
+  object-fit:contain;
+  border-radius:10px;
+}
+
+.receipt-file{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#111827;
+  font-weight:600;
+}
+
+.receipt-file i{
+  color:#ef4444;
+}
+
+.receipt-success{
+  margin-top:8px;
+  font-size:13px;
+  color:#16a34a;
+}
+</style>
 
 </head>
 
@@ -1120,6 +1201,44 @@
         Select a payment method to view details
       </div>
 
+<!-- RECEIPT UPLOAD -->
+
+<div class="receipt-upload-wrapper" id="receiptUploadWrapper">
+
+  <label class="receipt-upload-label">
+    Upload Payment Receipt
+  </label>
+
+  <div
+    class="receipt-upload-box"
+    onclick="document.getElementById('receiptInput').click()"
+  >
+
+    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+    <h4>Upload Receipt</h4>
+
+    <p>
+      JPG, PNG or PDF
+    </p>
+
+    <input
+      type="file"
+      id="receiptInput"
+      accept="image/*,.pdf"
+      hidden
+    >
+
+  </div>
+
+  <div
+    class="receipt-preview"
+    id="receiptPreview"
+  >
+  </div>
+
+</div>      
+
       <!-- SUBMIT -->
 
       <button
@@ -1129,6 +1248,7 @@
         Confirm Booking
       </button>
 
+    
     </div>
 
 
@@ -1165,6 +1285,7 @@ const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
 
 let profile = null;
+let receiptFile = null;
 
 /* ======================
    PAGE LOADER
@@ -1756,9 +1877,104 @@ const payload = {
       "loadingOverlay"
     ).style.display = "none";
 
-    if (data.status) {
-      showSuccess();
+if (data.status) {
+
+  try {
+
+    if (receiptFile) {
+
+      const base64 =
+        await fileToBase64(
+          receiptFile
+        );
+
+      await fetch(
+        SCRIPT_URL,
+        {
+          method: "POST",
+          body: JSON.stringify({
+
+            action: "sendReceipt",
+
+            fileName:
+              receiptFile.name,
+
+            mimeType:
+              receiptFile.type,
+
+            fileData:
+              base64,
+
+            bookingId:
+              data.bookingId,
+
+            workerId:
+              profile.id,
+
+            workerName:
+              profile.name,
+
+            userId:
+              user.uid,
+
+            userName:
+              user.name,
+
+            service:
+              serviceSelect.options[
+                serviceSelect.selectedIndex
+              ].text,
+
+            location:
+              document.getElementById(
+                "location"
+              ).value,
+
+            date:
+              dateInput.value
+                ? new Date(
+                    dateInput.value
+                  ).toDateString()
+                : "",
+
+            time:
+              timeInput.value
+                ? new Date(
+                    `1970-01-01T${timeInput.value}`
+                  ).toLocaleTimeString(
+                    [],
+                    {
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hour12: true
+                    }
+                  )
+                : "",
+
+            amount:
+              serviceSelect.value,
+
+            paymentMethod:
+              paymentMethod.value
+
+          })
+        }
+      );
+
     }
+
+  } catch (receiptErr) {
+
+    console.log(
+      "Receipt upload failed",
+      receiptErr
+    );
+
+  }
+
+  showSuccess();
+
+}
 
   } catch (e) {
 
@@ -1769,6 +1985,99 @@ const payload = {
   }
 
 }
+
+
+/* ======================
+   RECEIPT UPLOAD
+====================== */
+
+const receiptInput =
+  document.getElementById("receiptInput");
+
+const receiptPreview =
+  document.getElementById("receiptPreview");
+
+receiptInput?.addEventListener(
+  "change",
+  function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    receiptFile = file;
+
+    receiptPreview.style.display =
+      "block";
+
+    if (
+      file.type.startsWith("image/")
+    ) {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = e => {
+
+        receiptPreview.innerHTML = `
+          <img src="${e.target.result}">
+          <div class="receipt-success">
+            Receipt attached successfully
+          </div>
+        `;
+
+      };
+
+      reader.readAsDataURL(file);
+
+    } else {
+
+      receiptPreview.innerHTML = `
+        <div class="receipt-file">
+          <i class="fa-solid fa-file-pdf"></i>
+          ${file.name}
+        </div>
+
+        <div class="receipt-success">
+          Receipt attached successfully
+        </div>
+      `;
+
+    }
+
+  }
+);
+
+/* ======================
+   FILE TO BASE64
+====================== */
+
+function fileToBase64(file) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = () => {
+
+        resolve(
+          reader.result.split(",")[1]
+        );
+
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
 
 /* ======================
    START
