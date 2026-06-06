@@ -745,69 +745,168 @@
         }
     </style>
 
-
 <style>
-    /* ==========================
-   APP LOADER
+/* ==========================
+   PROFILE SKELETONS
 ========================== */
 
-.app-loader{
-    position:fixed;
-    inset:0;
-    background:#ffffff;
-    z-index:999999;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:20px;
-}
-
-.loader-wrapper{
+.skeleton-card{
+    background:#fff;
+    border-radius:28px;
+    padding:18px;
+    border:1px solid #eef2f7;
+    overflow:hidden;
     position:relative;
-    width:90px;
-    height:90px;
 }
 
-.loader-ring{
+.skeleton-card::after{
+    content:"";
     position:absolute;
-    inset:0;
-    border:4px solid #ececec;
-    border-top:4px solid #8b5cf6;
+    top:0;
+    left:-150%;
+    width:80%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.85),
+        transparent
+    );
+
+    animation:skeletonSweep 1.4s infinite;
+}
+
+.skeleton-avatar,
+.skeleton-name,
+.skeleton-status,
+.skeleton-caption,
+.skeleton-tag,
+.skeleton-photo,
+.skeleton-btn{
+    background:#edf1f7;
+    border-radius:12px;
+}
+
+.skeleton-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.skeleton-user{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.skeleton-avatar{
+    width:52px;
+    height:52px;
     border-radius:50%;
-    animation:loaderSpin .8s linear infinite;
 }
 
-.loader-logo{
-    width:42px;
-    height:42px;
-    object-fit:contain;
-
-    position:absolute;
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%, -50%);
+.skeleton-name{
+    width:120px;
+    height:14px;
+    margin-bottom:8px;
 }
 
-.app-loader p{
-    color:#6b7280;
-    font-size:15px;
-    font-weight:600;
+.skeleton-status{
+    width:90px;
+    height:10px;
 }
 
-@keyframes loaderSpin{
+.skeleton-btn{
+    width:80px;
+    height:36px;
+    border-radius:999px;
+}
+
+.skeleton-caption{
+    width:100%;
+    height:12px;
+    margin-bottom:10px;
+}
+
+.skeleton-caption.short{
+    width:70%;
+}
+
+.skeleton-tag{
+    width:140px;
+    height:12px;
+    margin-bottom:16px;
+}
+
+.skeleton-gallery{
+    display:grid;
+    grid-template-columns:1.6fr 1fr;
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.skeleton-photo.large{
+    height:280px;
+}
+
+.skeleton-side{
+    display:grid;
+    gap:8px;
+}
+
+.skeleton-photo.small{
+    height:136px;
+}
+
+.skeleton-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:16px;
+}
+
+.skeleton-pill{
+    width:70px;
+    height:32px;
+    border-radius:999px;
+    background:#edf1f7;
+}
+
+@keyframes skeletonSweep{
 
     from{
-        transform:rotate(0deg);
+        left:-150%;
     }
 
     to{
-        transform:rotate(360deg);
+        left:150%;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .skeleton-gallery{
+        grid-template-columns:1fr;
+    }
+
+    .skeleton-side{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .skeleton-photo.large{
+        height:380px;
+    }
+
+    .skeleton-photo.small{
+        height:120px;
     }
 
 }
 </style>
+
 
 </head>
 
@@ -1014,24 +1113,6 @@
     </div>
 
 
-<!-- APP LOADER -->
-
-<div id="appLoader" class="app-loader">
-
-    <div class="loader-wrapper">
-
-        <div class="loader-ring"></div>
-
-        <img
-            src="icon/logo.png"
-            alt="Logo"
-            class="loader-logo">
-
-    </div>
-
-    <p>Loading account...</p>
-
-</div>
 
 
 <script>
@@ -1039,33 +1120,7 @@
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwsrg89zEsQ7oA_00NOrONLZagmkjl0vEhJskL5CqqzXG1ehPCLlJZ13V_T5JP2EcCtyw/exec";
 
-/* ================================
-   APP LOADER
-================================ */
 
-function showLoader(){
-
-    const loader =
-    document.getElementById("appLoader");
-
-    if(loader){
-        loader.style.display = "flex";
-    }
-
-}
-
-function hideLoader(){
-
-    const loader =
-    document.getElementById("appLoader");
-
-    if(loader){
-        loader.style.display = "none";
-    }
-
-}
-
-showLoader();
 
 
         /* ================================
@@ -1127,8 +1182,6 @@ async function loadUserProfile() {
         });
 
         if (!data || data.status !== true) {
-
-            hideLoader();
 
             localStorage.removeItem("luxeUser");
 
@@ -1226,13 +1279,12 @@ async function loadUserProfile() {
 
         await loadNotifications(user.uid);
 
-        hideLoader();
+
 
     } catch (err) {
 
         console.log(err);
 
-        hideLoader();
 
         alert(
             "Unable to load account."
@@ -1286,6 +1338,71 @@ async function loadUserProfile() {
             }
         }
 
+
+
+function showProfileSkeletons(){
+
+    const grid =
+    document.getElementById("profilesGrid");
+
+    let html = "";
+
+    for(let i = 0; i < 20; i++){
+
+        html += `
+        <div class="skeleton-card">
+
+            <div class="skeleton-top">
+
+                <div class="skeleton-user">
+
+                    <div class="skeleton-avatar"></div>
+
+                    <div>
+                        <div class="skeleton-name"></div>
+                        <div class="skeleton-status"></div>
+                    </div>
+
+                </div>
+
+                <div class="skeleton-btn"></div>
+
+            </div>
+
+            <div class="skeleton-caption"></div>
+            <div class="skeleton-caption short"></div>
+
+            <div class="skeleton-tag"></div>
+
+            <div class="skeleton-gallery">
+
+                <div class="skeleton-photo large"></div>
+
+                <div class="skeleton-side">
+                    <div class="skeleton-photo small"></div>
+                    <div class="skeleton-photo small"></div>
+                </div>
+
+            </div>
+
+            <div class="skeleton-footer">
+
+                <div style="display:flex;gap:10px;">
+                    <div class="skeleton-pill"></div>
+                    <div class="skeleton-pill"></div>
+                    <div class="skeleton-pill"></div>
+                </div>
+
+                <div class="skeleton-btn"></div>
+
+            </div>
+
+        </div>
+        `;
+    }
+
+    grid.innerHTML = html;
+}
 
 
 
@@ -1605,6 +1722,11 @@ async function loadUserProfile() {
 
         document.addEventListener("DOMContentLoaded", () => {
 
+    showProfileSkeletons();
+
+    loadProfiles();
+
+
             const search =
                 document.getElementById("searchInput");
 
@@ -1618,6 +1740,9 @@ async function loadUserProfile() {
             if (location) {
                 location.addEventListener("change", filterProfiles);
             }
+
+
+
 
         });
 
