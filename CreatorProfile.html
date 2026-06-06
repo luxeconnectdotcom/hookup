@@ -325,6 +325,7 @@
 
     .input-pill i {
       color: #8b5cf6;
+      margin: none;
     }
 
     .info-pill {
@@ -353,13 +354,19 @@
       background: linear-gradient(135deg, #f5f3ff, #ffffff);
       border: 1px solid #ede9fe;
     }
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+    
 
     .fee-box i {
       font-size: 20px;
       color: #8b5cf6;
     }
 
-    .fee-box small {
+    .fee-box p {
       color: #6b7280;
     }
 
@@ -374,15 +381,106 @@
       color: #6b7280;
     }
 
-    .payment-details {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #374151;
-      background: #f9fafb;
-      padding: 10px;
-      border-radius: 10px;
-    }
+.payment-details{
+  display:none;
+  margin-top:14px;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+  background:#ffffff;
+  box-shadow:0 4px 12px rgba(0,0,0,.04);
+}
 
+.payment-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+  background:linear-gradient(
+    135deg,
+    #faf7ff,
+    #ffffff
+  );
+  border-bottom:1px solid #ede9fe;
+}
+
+.payment-header-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#8b5cf6;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  flex-shrink:0;
+}
+
+.payment-header h4{
+  margin:0;
+  font-size:15px;
+  color:#111827;
+}
+
+.payment-header p{
+  margin-top:3px;
+  font-size:12px;
+  color:#6b7280;
+}
+
+.payment-body{
+  padding:16px;
+}
+
+.payment-row{
+  display:flex;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.payment-row:last-child{
+  margin-bottom:0;
+}
+
+.payment-row i{
+  color:#8b5cf6;
+  font-size:15px;
+  margin-top:2px;
+}
+
+.payment-row-content{
+  flex:1;
+}
+
+.payment-label{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:4px;
+}
+
+.payment-value{
+  color:#111827;
+  font-size:14px;
+  font-weight:600;
+  word-break:break-word;
+}
+
+.payment-note{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  font-size:13px;
+  color:#374151;
+  line-height:1.6;
+}
+
+.payment-note i{
+  color:#f59e0b;
+  margin-right:6px;
+}
     /* MODAL */
     .modal {
       position: fixed;
@@ -391,6 +489,7 @@
       align-items: center;
       justify-content: center;
       background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
     }
 
     .modal-content {
@@ -415,6 +514,7 @@
       flex-direction: column;
       background: rgba(0, 0, 0, 0.4);
       color: white;
+      z-index:    2100;
     }
   </style>
 
@@ -635,15 +735,15 @@
   display:flex;
   align-items:center;
   padding:0 25px;
-  z-index:9999;
+  z-index:190;
   transition:.3s ease;
   background:transparent;
 }
 
 .floating-navbar.scrolled{
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  background:rgba(255, 255, 255, 0.18);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid #e5e7eb;
   box-shadow:0 2px 20px rgba(0,0,0,.05);
 }
@@ -657,32 +757,56 @@
   align-items:center;
   gap:10px;
   text-decoration:none;
-  color:white;
+
+  height:48px;
+  padding:0 18px;
+
+  border-radius:999px;
+
+  background:rgba(92, 92, 92, 0.18);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  border:1px solid rgba(255,255,255,.25);
+
+  color:#ffffff;
   font-size:15px;
   font-weight:700;
-  transition:.25s;
+
+  transition:.25s ease;
 }
 
 .back-home-btn i{
   font-size:16px;
 }
 
+/* When navbar becomes solid on scroll */
+
 .floating-navbar.scrolled .back-home-btn{
+  background:#ffffff;
   color:#111827;
+  border:none;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.06);
 }
 
 /* Hover */
 
 .back-home-btn:hover{
-  opacity:.85;
+  transform:translateY(-1px);
+}
+
+.floating-navbar.scrolled .back-home-btn:hover{
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.08);
 }
 
 /* Mobile */
 
 @media(max-width:600px){
 
-  .floating-navbar{
-    height:70px;
+  .back-home-btn{
+    height:44px;
     padding:0 15px;
   }
 
@@ -691,6 +815,8 @@
   }
 
 }
+
+
 </style>
 
 
@@ -705,7 +831,7 @@
 
     <i class="fa-solid fa-arrow-left"></i>
 
-    <span>Back to Home Page</span>
+    <span>Go to Home Page</span>
 
   </a>
 
@@ -771,7 +897,7 @@
 
         <div class="meta-row">
           <i class="fa-solid fa-money-bill-wave"></i>
-          <span>Fee: </span>
+          <span>Minimum Fee: </span>
           <span id="profilePrice">
             Not specified
           </span>
@@ -861,60 +987,161 @@
 
       <h3>Book Session</h3>
 
-      <!-- SERVICE / PACKAGE -->
-      <select id="service">
-        <option value="">Select Service / Package</option>
-      </select>
+      <!-- SERVICE -->
 
-      <!-- LOCATION (icon inside right) -->
-      <div class="input-pill">
-        <input id="location" type="text" placeholder="Meetup location/address">
-        <i class="fa-solid fa-location-dot"></i>
+      <div class="field-group">
+
+        <select id="service">
+
+          <option value="">
+            Select Service / Package
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- LOCATION -->
+
+      <div class="field-group">
+
+        <div class="input-pill" id="locationWrapper">
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <input
+            id="location"
+            type="text"
+            placeholder="Meetup location/address"
+          >
+
+        </div>
+
       </div>
 
       <!-- DATE -->
-      <div class="info-pill">
-        <i class="fa-regular fa-calendar"></i>
-        <p id="dateText">Date: Not selected</p>
-        <input id="date" type="date" hidden>
+
+      <div class="field-group">
+
+        <div class="info-pill" id="dateWrapper">
+
+          <i class="fa-regular fa-calendar"></i>
+
+          <p id="dateText">
+            Date: Not selected
+          </p>
+
+          <input
+            id="date"
+            type="date"
+            hidden
+          >
+
+        </div>
+
       </div>
 
       <!-- TIME -->
-      <div class="info-pill">
-        <i class="fa-regular fa-clock"></i>
-        <p id="timeText">Time: Not selected</p>
-        <input id="time" type="time" hidden>
-      </div>
 
-      <!-- FEE DISPLAY (NOT INPUT) -->
-      <div class="fee-box">
-        <i class="fa-solid fa-money-bill-wave"></i>
-        <div>
-          <small>Fee</small>
-          <h4 id="feeDisplay">$0</h4>
+      <div class="field-group">
+
+        <div class="info-pill" id="timeWrapper">
+
+          <i class="fa-regular fa-clock"></i>
+
+          <p id="timeText">
+            Time: Not selected
+          </p>
+
+          <input
+            id="time"
+            type="time"
+            hidden
+          >
+
         </div>
+
       </div>
 
-      <!-- PAYMENT METHODS -->
-      <h4 class="pay-title">Payment Method</h4>
+      <!-- FEE -->
 
-      <select id="paymentMethod">
-        <option value="">Select Payment Method</option>
-        <option value="giftcard">Gift Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="btc">Bitcoin (BTC)</option>
-      </select>
+      <div class="fee-box">
+
+        <i class="fa-solid fa-money-bill-wave"></i>
+
+        <div class="fee-row">
+
+          <p>Fee</p>
+
+          <h4 id="feeDisplay">$0</h4>
+
+        </div>
+
+      </div>
+
+      <!-- PAYMENT TITLE -->
+
+      <h4 class="pay-title">
+        Payment Method
+      </h4>
+
+      <!-- PAYMENT METHOD -->
+
+      <div class="field-group">
+
+        <select id="paymentMethod">
+
+          <option value="">
+            Select Payment Method
+          </option>
+
+          <option value="giftcard">
+            Gift Card
+          </option>
+
+          <option value="paypal">
+            PayPal
+          </option>
+
+          <option value="btc">
+            Bitcoin (BTC)
+          </option>
+
+        </select>
+
+      </div>
 
       <!-- PAYMENT DETAILS -->
-      <div class="payment-details" id="paymentDetails">
+
+      <div
+        class="payment-details"
+        id="paymentDetails"
+      >
         Select a payment method to view details
       </div>
 
-      <button class="btn" onclick="confirmBooking()">
+      <!-- SUBMIT -->
+
+      <button
+        class="btn"
+        onclick="confirmBooking()"
+      >
         Confirm Booking
       </button>
 
     </div>
+
+
+
+  </div>
+
+
+<!-- PAGE LOADER -->
+
+<div id="pageLoader" class="page-loader">
+  <div class="page-loader-spinner"></div>
+  <p>Loading profile...</p>
+</div>
 
     <!-- SUCCESS MODAL -->
     <div class="modal" id="successModal">
@@ -930,16 +1157,6 @@
       <div class="loader"></div>
       <p>Processing booking...</p>
     </div>
-
-  </div>
-
-
-<!-- PAGE LOADER -->
-
-<div id="pageLoader" class="page-loader">
-  <div class="page-loader-spinner"></div>
-  <p>Loading profile...</p>
-</div>
 
 
 <script>
@@ -1230,53 +1447,157 @@ timeInput.addEventListener("change", () => {
 
 paymentMethod.addEventListener("change", () => {
 
-  const fee =
-    serviceSelect.value || 0;
+  const fee = serviceSelect.value || 0;
 
   let html = "";
 
   if (paymentMethod.value === "giftcard") {
 
     html = `
-      <strong>Gift Card Payment</strong><br>
-      Send a $${fee} gift card code to:<br>
-      <b>giftpay-demo@service.com</b><br>
-      Include your booking name in the message.
+      <div class="payment-header">
+
+        <div class="payment-header-icon">
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <div>
+          <h4>Gift Card Payment</h4>
+          <p>Complete payment using a gift card</p>
+        </div>
+
+      </div>
+
+      <div class="payment-body">
+
+        <div class="payment-row">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">Amount Required</div>
+            <div class="payment-value">$${fee}</div>
+          </div>
+        </div>
+
+        <div class="payment-row">
+          <i class="fa-solid fa-envelope"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">Send Gift Card To</div>
+            <div class="payment-value">
+              giftpay-demo@service.com
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-note">
+          <i class="fa-solid fa-circle-info"></i>
+          Include your booking name when sending the gift card code.
+        </div>
+
+      </div>
     `;
 
   }
 
-  if (paymentMethod.value === "paypal") {
+  else if (paymentMethod.value === "paypal") {
 
     html = `
-      <strong>PayPal Payment</strong><br>
-      Pay <b>$${fee}</b> to:<br>
-      <b>paypal-demo@bookingservice.com</b><br>
-      Note: Include your full name in description.
+      <div class="payment-header">
+
+        <div class="payment-header-icon">
+          <i class="fa-brands fa-paypal"></i>
+        </div>
+
+        <div>
+          <h4>PayPal Payment</h4>
+          <p>Send payment through PayPal</p>
+        </div>
+
+      </div>
+
+      <div class="payment-body">
+
+        <div class="payment-row">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">Amount Required</div>
+            <div class="payment-value">$${fee}</div>
+          </div>
+        </div>
+
+        <div class="payment-row">
+          <i class="fa-solid fa-envelope"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">PayPal Account</div>
+            <div class="payment-value">
+              paypal-demo@bookingservice.com
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-note">
+          <i class="fa-solid fa-circle-info"></i>
+          Include your full name in the payment description.
+        </div>
+
+      </div>
     `;
 
   }
 
-  if (paymentMethod.value === "btc") {
+  else if (paymentMethod.value === "btc") {
 
     html = `
-      <strong>Bitcoin Payment</strong><br>
-      Send <b>$${fee} worth of BTC</b> to:<br>
-      <b>bc1q-demo-wallet-address-123456789</b><br>
-      Wait for 1 confirmation before booking is approved.
+      <div class="payment-header">
+
+        <div class="payment-header-icon">
+          <i class="fa-brands fa-bitcoin"></i>
+        </div>
+
+        <div>
+          <h4>Bitcoin Payment</h4>
+          <p>Transfer BTC to the wallet below</p>
+        </div>
+
+      </div>
+
+      <div class="payment-body">
+
+        <div class="payment-row">
+          <i class="fa-solid fa-money-bill-wave"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">Amount Required</div>
+            <div class="payment-value">$${fee} worth of BTC</div>
+          </div>
+        </div>
+
+        <div class="payment-row">
+          <i class="fa-solid fa-wallet"></i>
+          <div class="payment-row-content">
+            <div class="payment-label">Wallet Address</div>
+            <div class="payment-value">
+              bc1q-demo-wallet-address-123456789
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-note">
+          <i class="fa-solid fa-circle-info"></i>
+          Wait for at least 1 blockchain confirmation before your booking can be approved.
+        </div>
+
+      </div>
     `;
 
   }
 
-  paymentDetails.style.display = "block";
+  paymentDetails.style.display =
+    paymentMethod.value ? "block" : "none";
 
-  paymentDetails.innerHTML =
-    html ||
-    "Select a payment method to view details";
+  paymentDetails.innerHTML = html;
 
   clearError(paymentMethod);
 
 });
+
 
 /* ======================
    VALIDATION HELPERS
