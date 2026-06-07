@@ -901,6 +901,18 @@
 }
 </style>
 
+<style>
+  .receipt-upload-box.dragover{
+  border-color:#8b5cf6;
+  background:#faf7ff;
+  transform:scale(1.01);
+}
+
+.receipt-upload-box.dragover i{
+  color:#7c3aed;
+}
+</style>
+
 </head>
 
 <body>
@@ -1209,27 +1221,30 @@
     Upload Payment Receipt
   </label>
 
-  <div
-    class="receipt-upload-box"
-    onclick="document.getElementById('receiptInput').click()"
+<div
+  class="receipt-upload-box"
+  id="receiptDropZone"
+  onclick="document.getElementById('receiptInput').click()"
+>
+
+  <i class="fa-solid fa-cloud-arrow-up"></i>
+
+  <h4>Upload Receipt</h4>
+
+  <p>
+    Click or drag & drop JPG, PNG or PDF here
+  </p>
+
+  <input
+    type="file"
+    id="receiptInput"
+    accept="image/*,.pdf"
+    hidden
   >
 
-    <i class="fa-solid fa-cloud-arrow-up"></i>
+</div>
 
-    <h4>Upload Receipt</h4>
 
-    <p>
-      JPG, PNG or PDF
-    </p>
-
-    <input
-      type="file"
-      id="receiptInput"
-      accept="image/*,.pdf"
-      hidden
-    >
-
-  </div>
 
   <div
     class="receipt-preview"
@@ -1514,6 +1529,18 @@ const paymentMethod =
 const paymentDetails =
   document.getElementById("paymentDetails");
 
+const locationInput =
+  document.getElementById("location");
+
+locationInput.addEventListener(
+  "input",
+  function () {
+
+    clearError(this);
+
+  }
+);  
+
 /* ======================
    SERVICE PRICE
 ====================== */
@@ -1784,30 +1811,136 @@ async function confirmBooking() {
 
   let valid = true;
 
+  const locationInput =
+    document.getElementById("location");
+
+  // clear previous errors
+
+  clearError(serviceSelect);
+  clearError(locationInput);
+  clearError(dateInput);
+  clearError(timeInput);
+  clearError(paymentMethod);
+
+  // service
+
   if (!serviceSelect.value) {
-    setError(serviceSelect, "Select a service");
+
+    setError(
+      serviceSelect,
+      "Please select a service package"
+    );
+
     valid = false;
+
   }
+
+  // location
+
+  if (!locationInput.value.trim()) {
+
+    setError(
+      locationInput,
+      "Meetup location is required"
+    );
+
+    valid = false;
+
+  }
+
+  // date
 
   if (!dateInput.value) {
-    setError(dateInput, "Select date");
+
+    setError(
+      dateInput,
+      "Please select a date"
+    );
+
     valid = false;
+
   }
+
+  // time
 
   if (!timeInput.value) {
-    setError(timeInput, "Select time");
+
+    setError(
+      timeInput,
+      "Please select a time"
+    );
+
     valid = false;
+
   }
 
+  // payment method
+
   if (!paymentMethod.value) {
-    setError(paymentMethod, "Select payment method");
+
+    setError(
+      paymentMethod,
+      "Please select a payment method"
+    );
+
     valid = false;
+
+  }
+
+  // receipt upload
+
+  if (!receiptFile) {
+
+    const uploadWrapper =
+      document.getElementById(
+        "receiptUploadWrapper"
+      );
+
+    let err =
+      uploadWrapper.querySelector(
+        ".error-text"
+      );
+
+    if (!err) {
+
+      err =
+        document.createElement("div");
+
+      err.className =
+        "error-text";
+
+      uploadWrapper.appendChild(err);
+
+    }
+
+    err.textContent =
+      "Payment receipt is required";
+
+    valid = false;
+
+  } else {
+
+    const err =
+      document
+      .getElementById(
+        "receiptUploadWrapper"
+      )
+      .querySelector(
+        ".error-text"
+      );
+
+    if (err) err.remove();
+
   }
 
   if (!valid) return;
 
   const user =
-    JSON.parse(localStorage.getItem("luxeUser"));
+    JSON.parse(
+      localStorage.getItem(
+        "luxeUser"
+      )
+    );
 
   if (!user) {
 
@@ -1819,6 +1952,12 @@ async function confirmBooking() {
     return;
 
   }
+
+  // KEEP THE REST OF YOUR EXISTING
+  // BOOKING CODE BELOW THIS POINT
+
+
+
 
   document.getElementById(
     "loadingOverlay"
@@ -2006,6 +2145,20 @@ receiptInput?.addEventListener(
     if (!file) return;
 
     receiptFile = file;
+
+
+    const receiptUploadError =
+  document
+    .getElementById(
+      "receiptUploadWrapper"
+    )
+    .querySelector(
+      ".error-text"
+    );
+
+if (receiptUploadError) {
+  receiptUploadError.remove();
+}
 
     receiptPreview.style.display =
       "block";
